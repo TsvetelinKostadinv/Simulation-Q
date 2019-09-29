@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry kind="src" output="test_results" path="src/test/java">
 		<attributes>
-			<attribute name="module" value="true"/>
+			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="gui/|computation/" kind="src" path="src"/>
-	<classpathentry kind="src" path="src/gui"/>
-	<classpathentry kind="src" path="src/computation"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
