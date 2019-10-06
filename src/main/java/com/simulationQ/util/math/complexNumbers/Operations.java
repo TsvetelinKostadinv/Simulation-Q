@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.simulationQ.util.math.QMath;
+
 
 /**
  * 
@@ -22,11 +24,7 @@ import java.util.regex.Pattern;
 public interface Operations
 {
 
-    /**
-     * This is the precision with which the modulus(and for now only the
-     * modulus) will be calculated
-     */
-    public static final int PRECISION = 100;
+
 
     /**
      * 
@@ -36,7 +34,7 @@ public interface Operations
     public static BigDecimal modulus ( ComplexNumber a )
     {
         return a.getReal().pow( 2 ).add( a.getImaginary().pow( 2 ) )
-                .sqrt( new MathContext( PRECISION ) );
+                .sqrt( new MathContext( QMath.PRECISION ) );
     }
 
     /**

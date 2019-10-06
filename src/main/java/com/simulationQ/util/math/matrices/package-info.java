@@ -4,9 +4,9 @@
  */
 /**
  * 
- * Package with all math associated stuff
+ * Package with all matrix stuff
  * 
  * @author Tsvetelin
  *
  */
-package com.simulationQ.util.math;
+package com.simulationQ.util.math.matrices;
