@@ -7,7 +7,6 @@ package com.simulationQ.util.math;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 
 
 /**
@@ -60,22 +59,23 @@ public interface QMath
                 BigDecimal.ONE.divide( SQRT_3.value ,
                                        new MathContext( PRECISION ) )
         );
-        
+
         /**
          * The value of the constant
          */
         public final BigDecimal value;
-        
+
         /**
          * 
-         * @param a - value of the constant
+         * @param a
+         *            - value of the constant
          */
         private Constants ( BigDecimal a )
         {
             this.value = a;
         }
     }
-    
+
     /**
      * 
      * Refresher on linear combination: a^2+b^2
@@ -90,7 +90,7 @@ public interface QMath
         return a.pow( 2 )
                 .add( b.pow( 2 ) )
                 .sqrt( new MathContext( PRECISION ) )
-                .setScale( 1 , RoundingMode.HALF_UP )
+                .setScale( BigDecimal.ONE.scale() )
                 .equals( BigDecimal.ONE );
     }
 }

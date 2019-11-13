@@ -82,6 +82,7 @@ public final class ComplexNumber
      * @param real
      * @param imaginary
      */
+    @Deprecated
     public ComplexNumber ( double real , double imaginary )
     {
         super();

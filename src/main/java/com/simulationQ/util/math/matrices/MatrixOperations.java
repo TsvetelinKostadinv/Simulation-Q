@@ -6,6 +6,8 @@ package com.simulationQ.util.math.matrices;
 
 
 import com.simulationQ.util.math.ArithmeticOperations;
+import com.simulationQ.util.math.complexNumbers.ComplexNumber;
+import com.simulationQ.util.math.functional.TriFunction;
 
 
 /**
@@ -17,6 +19,22 @@ import com.simulationQ.util.math.ArithmeticOperations;
  */
 public interface MatrixOperations extends ArithmeticOperations< Matrix >
 {
+
+    public Matrix multiplyWithScalar ( final ComplexNumber a );
+
+    public static Matrix multiplyWithScalar ( final ComplexNumber a ,
+                                              final Matrix b )
+    {
+        return b.multiplyWithScalar( a );
+    }
+
+    public Matrix map ( TriFunction< Integer , Integer , ComplexNumber , ComplexNumber > mapper );
+
+    public static Matrix map ( TriFunction< Integer , Integer , ComplexNumber , ComplexNumber > mapper ,
+                               Matrix a )
+    {
+        return a.map( mapper );
+    }
 
     /**
      * 
@@ -65,25 +83,5 @@ public interface MatrixOperations extends ArithmeticOperations< Matrix >
     {
         return a.getRows() == b.getRows() && a.getColons() == b.getColons();
     }
-
-    // public static void main ( String [] args )
-    // {
-    // final Double [] [] m1 = {
-    // { 1.0, 2.0 },
-    // { 3.0, 4.0 }
-    // };
-    //
-    // final Double [] [] m2 = {
-    // { 4.0, 3.0 },
-    // { 2.0, 1.0 }
-    // };
-    //
-    // Matrix a = new Matrix( m1 );
-    // Matrix b = new Matrix( m2 );
-    //
-    // System.out.println( ArithmeticOperations.multiply( a , b ) );
-    // System.out.println();
-    // System.out.println( ArithmeticOperations.multiply( b , a ) );
-    // }
 
 }
