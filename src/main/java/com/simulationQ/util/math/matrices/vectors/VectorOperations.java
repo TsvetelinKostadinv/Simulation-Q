@@ -15,12 +15,14 @@ import com.simulationQ.util.math.matrices.MatrixOperations;
  */
 public interface VectorOperations extends MatrixOperations
 {
-    public static Vector tensorProduct( Vector a , Vector b)
+    public static Vector tensorProduct( final Vector a , final Vector b)
     {
         return a.tensorProduct(b);
     }
     
-    public Vector tensorProduct(Vector a);
+    public Vector tensorProduct( final Vector a);
     
+    public Vector get( final int indexFrom, final int indexTo );
     
+    public int size();
 }

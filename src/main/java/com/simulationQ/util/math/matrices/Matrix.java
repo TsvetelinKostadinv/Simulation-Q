@@ -85,6 +85,28 @@ public class Matrix implements MatrixOperations
         return res;
 
     }
+    
+    public static final ComplexNumber [] [] multiplicativeIdentity ( final int rows ,
+                                                               final int colons )
+    {
+        final ComplexNumber [] [] res = new ComplexNumber[rows][colons];
+
+        for ( int i = 0 ; i < rows ; i++ )
+        {
+            for ( int j = 0 ; j < colons ; j++ )
+            {
+                if( i==j )
+                {
+                    res[i][j] = ComplexNumber.REAL_UNIT;
+                }else {
+                    res[i][j] = ComplexNumber.ORIGIN;
+                }
+                
+            }
+        }
+        return res;
+
+    }
 
     /**
      * @return the rows
@@ -243,7 +265,9 @@ public class Matrix implements MatrixOperations
         {
             for ( int j = 0 ; j < this.getColons() ; j++ )
             {
-                res.setAt( i , j , this.getAt( i , j ).multiply( a ) );
+                res.setAt( i , j ,
+                           this.getAt( i , j )
+                           .multiply( a ) );
             }
         }
         return res;

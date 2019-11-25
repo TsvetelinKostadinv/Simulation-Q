@@ -6,4 +6,4 @@
  * @author Tsvetelin
  *
  */
-package com.simulationQ.computation.quibits;
+package com.simulationQ.computation.qubits;

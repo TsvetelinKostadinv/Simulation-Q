@@ -103,7 +103,8 @@ public interface Operations
             ComplexNumber a ,
             ComplexNumber b )
     {
-        BigDecimal real = a.getReal().multiply( b.getReal() )
+        BigDecimal real = a.getReal()
+                .multiply( b.getReal() )
                 .subtract( a.getImaginary().multiply( b.getImaginary() ) );
         BigDecimal imaginary = a.getReal().multiply( b.getImaginary() )
                 .add( a.getImaginary().multiply( b.getReal() ) );
@@ -157,6 +158,7 @@ public interface Operations
      * @param a
      * @return sin(a)
      */
+    @SuppressWarnings ( "deprecation" ) // sin function cannot be made to return a double
     public static ComplexNumber sin ( ComplexNumber a )
     {
         double exponent = Math.exp( a.getImaginary().doubleValue() );
@@ -173,6 +175,7 @@ public interface Operations
      * @param a
      * @return cos(a)
      */
+    @SuppressWarnings ( "deprecation" ) // cos function cannot be made to return a double
     public static ComplexNumber cos ( ComplexNumber a )
     {
         double exponent = Math.exp( a.getImaginary().doubleValue() );

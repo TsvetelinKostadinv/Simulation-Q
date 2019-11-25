@@ -7,6 +7,8 @@ package com.simulationQ.util.math.complexNumbers;
 
 import java.math.BigDecimal;
 
+import com.simulationQ.util.math.QMath;
+
 
 /**
  * 
@@ -23,19 +25,25 @@ public final class ComplexNumber
     /**
      * This is the number that represents the origin point = 0 + 0i
      */
-    public static final ComplexNumber ORIGIN    = new ComplexNumber( 0 , 0 );
+    public static final ComplexNumber ORIGIN          = new ComplexNumber( 0 ,
+                                                                           0 );
 
     /**
      * This is the number that represents a single unit in the real axis
      * direction = 1 + 0i
      */
-    public static final ComplexNumber REAL_UNIT = new ComplexNumber( 1 , 0 );
+    public static final ComplexNumber REAL_UNIT       = new ComplexNumber( 1 ,
+                                                                           0 );
 
     /**
      * This is the number that represents a single unit in the imaginary axis
      * direction = 0 + 1i
      */
-    public static final ComplexNumber IMAG_UNIT = new ComplexNumber( 0 , 1 );
+    public static final ComplexNumber IMAG_UNIT       = new ComplexNumber( 0 ,
+                                                                           1 );
+
+    public static final ComplexNumber ONE_OVER_SQRT_2 = ComplexNumber.real(
+                                                                            QMath.Constants.ONE_OVER_SQRT_2.value );
 
     /**
      * The real part of the number
@@ -151,13 +159,13 @@ public final class ComplexNumber
     public static ComplexNumber imaginary ( double imaginary )
     {
         return new ComplexNumber( BigDecimal.ZERO ,
-                new BigDecimal( imaginary ) );
+                                  new BigDecimal( imaginary ) );
     }
 
     public static ComplexNumber imaginary ( String imaginary )
     {
         return new ComplexNumber( BigDecimal.ZERO ,
-                new BigDecimal( imaginary ) );
+                                  new BigDecimal( imaginary ) );
     }
 
     /**
@@ -354,8 +362,8 @@ public final class ComplexNumber
     public boolean equals ( Object obj )
     {
         return obj instanceof ComplexNumber
-                && ( (ComplexNumber) obj ).real.equals( this.real )
-                && ( (ComplexNumber) obj ).imaginary.equals( this.imaginary );
+                && ( ( ComplexNumber ) obj ).real.equals( this.real )
+                && ( ( ComplexNumber ) obj ).imaginary.equals( this.imaginary );
     }
 
     @Override

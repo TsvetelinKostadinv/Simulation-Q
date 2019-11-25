@@ -2,7 +2,7 @@
  * 29/09/2019 15:51:28
  * Qubit.java created by Tsvetelin
  */
-package com.simulationQ.computation.quibits;
+package com.simulationQ.computation.qubits;
 
 
 import java.math.BigDecimal;
@@ -19,11 +19,14 @@ import com.simulationQ.util.math.matrices.vectors.Vector;
 public class Qubit
 {
 
-    public static final Qubit QUBIT_ON  = new Qubit( ComplexNumber.ORIGIN ,
-                                                     ComplexNumber.REAL_UNIT );
+    public static final Qubit QUBIT_ON        = new Qubit( ComplexNumber.ORIGIN ,
+                                                           ComplexNumber.REAL_UNIT );
 
-    public static final Qubit QUBIT_OFF = new Qubit( ComplexNumber.REAL_UNIT ,
-                                                     ComplexNumber.ORIGIN );
+    public static final Qubit QUBIT_OFF       = new Qubit( ComplexNumber.REAL_UNIT ,
+                                                           ComplexNumber.ORIGIN );
+
+    public static final Qubit QUBIT_HALF_HALF = new Qubit( ComplexNumber.ONE_OVER_SQRT_2 ,
+                                                           ComplexNumber.ONE_OVER_SQRT_2 );
 
     private ComplexNumber     ketOFF;
 

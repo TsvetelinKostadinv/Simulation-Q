@@ -39,7 +39,20 @@ public class Vector extends Matrix implements VectorOperations , Iterable< Compl
     public Vector ( final ComplexNumber [] data )
     {
         super( new ComplexNumber[][] { data } );
-
+    }
+    
+    public static final Vector multiplicativeIdentity(int size)
+    {
+        ComplexNumber[] res = new ComplexNumber[size];
+        
+        res[0] = ComplexNumber.REAL_UNIT;
+        
+        for( int i=1;i<size;i++ )
+        {
+            res[i] = ComplexNumber.ORIGIN;
+        }
+        
+        return new Vector( res );
     }
 
     @Override
@@ -54,7 +67,13 @@ public class Vector extends Matrix implements VectorOperations , Iterable< Compl
         return this.getMatrix()[0];
     }
 
-    @Override 
+    @Override
+    public int size ()
+    {
+        return this.getColons();
+    }
+
+    @Override
     public Vector tensorProduct ( Vector a )
     {
         final Vector [] scaledVectors = new Vector[this.getColons()];
@@ -87,20 +106,45 @@ public class Vector extends Matrix implements VectorOperations , Iterable< Compl
         return Arrays.stream( this.getScalars() ).iterator();
     }
 
-    public static void main ( String [] args )
+    @Override
+    public Vector get ( int indexFrom , int indexTo )
     {
-        Vector a = new Vector( new ComplexNumber[] { ComplexNumber.REAL_UNIT,
-                ComplexNumber.REAL_UNIT } );
+        if ( indexFrom < 0 ||
+                indexTo < 0
+                || indexTo < indexFrom
+                || indexTo >= this.size() )
+            throw new IndexOutOfBoundsException();
 
-        Vector b = new Vector( a.multiplyWithScalar( ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ) )
-                                .getMatrix()[0] );
-        
-        
-        System.out.println( a );
-        System.out.println( "X" );
-        System.out.println( b );
-        System.out.println( "-------------------" );
-        System.out.println( a.tensorProduct( b ) );
-        
+        ComplexNumber [] res = new ComplexNumber[indexTo - indexFrom + 1];
+        int counter = 0;
+        for ( int i = indexFrom ; i <= indexTo ; i++ )
+        {
+            res[counter++] = this.getScalars()[i];
+        }
+
+        return new Vector( res );
     }
+
+    // public static void main ( String [] args )
+    // {
+    // Vector a = new Vector( new ComplexNumber[] {
+    // ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT,
+    // ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT,
+    // ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT,
+    // ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT,
+    // ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT } );
+    //
+    // System.out.println( a.get( 0 , 1 ) );
+    //
+    // Vector b = new Vector( a.multiplyWithScalar( ComplexNumber.REAL_UNIT.add(
+    // ComplexNumber.REAL_UNIT ) )
+    // .getMatrix()[0] );
+    //
+    // System.out.println( a );
+    // System.out.println( "X" );
+    // System.out.println( b );
+    // System.out.println( "-------------------" );
+    // System.out.println( a.tensorProduct( b ) );
+    //
+    // }
 }
