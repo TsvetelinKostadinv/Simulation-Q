@@ -6,4 +6,4 @@
  * @author Tsvetelin
  *
  */
-package com.simulationQ.computation.quibits.register;
+package com.simulationQ.computation.qubits.register;

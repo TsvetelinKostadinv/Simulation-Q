@@ -2,7 +2,7 @@
  * 13/11/2019 15:14:50
  * QRegister.java created by Tsvetelin
  */
-package com.simulationQ.computation.quibits.register;
+package com.simulationQ.computation.qubits.register;
 
 
 import java.util.ArrayList;
