@@ -19,7 +19,7 @@ public interface QMath
     /**
      * This is the default precision for calculations
      */
-    public static final int PRECISION = 101;
+    public static final int PRECISION = 10;
 
     /**
      * Some constants for calculation

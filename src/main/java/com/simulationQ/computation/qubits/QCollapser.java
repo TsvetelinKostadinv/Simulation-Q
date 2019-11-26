@@ -51,10 +51,6 @@ public interface QCollapser
         }
 
         return on < off ? Qubit.QUBIT_OFF : Qubit.QUBIT_ON;
-
-        // TODO Needed to sort out the collapsing in a better way!!!!!!
-        // throw new UnsupportedOperationException( "The collapse of a quibit is
-        // not yet supported" );
     }
 
     /**

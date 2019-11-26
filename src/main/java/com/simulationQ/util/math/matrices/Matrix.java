@@ -189,10 +189,22 @@ public class Matrix implements MatrixOperations
     @Override
     public Matrix multiply ( final Matrix a )
     {
-        if ( a.getColons() != this.getRows() )
-            throw new IllegalArgumentException( "Illegal matrix dimensions." );
-
+        
+        System.out.println( "Multiplication." );
+        
         final Matrix res = new Matrix( this.getRows() , a.getColons() );
+        
+        System.out.println( "THIS: " + this );
+        System.out.println( this.rows );
+        System.out.println( "* by : "+ a );
+        System.out.println( a.getColons() );
+        
+        if ( a.getColons() != this.getRows() )
+        {
+            throw new IllegalArgumentException( "Illegal matrix dimensions." );
+        }
+            
+        System.out.println( res );
 
         for ( int i = 0 ; i < res.getRows() ; i++ )
         {

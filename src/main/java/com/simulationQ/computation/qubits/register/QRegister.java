@@ -33,15 +33,24 @@ public class QRegister
         
         for( int i=1;i<this.register.size();i++ )
         {
-            System.out.println( res );
             res = res.tensorProduct( this.register.get( i ).getAsVector() );
         }
-        System.out.println( res );
 
         return res;
 
     }
+    
+    public final int size()
+    {
+        return register.size();
+    }
 
+    @Override
+    public String toString ()
+    {
+        return this.getComputationalVector().toString();
+    }
+    
     // public static void main ( String [] args )
     // {
     // final ComplexNumber ONE_OVER_SQRT_2 = ComplexNumber.real(

@@ -7,6 +7,7 @@ package com.simulationQ.util.math.complexNumbers;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,8 +25,6 @@ import com.simulationQ.util.math.QMath;
 public interface Operations
 {
 
-
-
     /**
      * 
      * @param a
@@ -33,7 +32,9 @@ public interface Operations
      */
     public static BigDecimal modulus ( ComplexNumber a )
     {
-        return a.getReal().pow( 2 ).add( a.getImaginary().pow( 2 ) )
+        return a.getReal()
+                .pow( 2 )
+                .add( a.getImaginary().pow( 2 ) )
                 .sqrt( new MathContext( QMath.PRECISION ) );
     }
 
@@ -64,7 +65,7 @@ public interface Operations
     public static ComplexNumber negate ( ComplexNumber a )
     {
         return new ComplexNumber( a.getReal().negate() ,
-                a.getImaginary().negate() );
+                                  a.getImaginary().negate() );
     }
 
     /**
@@ -76,8 +77,8 @@ public interface Operations
     public static ComplexNumber add ( ComplexNumber a , ComplexNumber b )
     {
         return new ComplexNumber(
-                a.getReal().add( b.getReal() ) ,
-                a.getImaginary().add( b.getImaginary() ) );
+                                  a.getReal().add( b.getReal() ) ,
+                                  a.getImaginary().add( b.getImaginary() ) );
     }
 
     /**
@@ -87,8 +88,8 @@ public interface Operations
      * @return a-b
      */
     public static ComplexNumber subtract (
-            ComplexNumber a ,
-            ComplexNumber b )
+                                           ComplexNumber a ,
+                                           ComplexNumber b )
     {
         return add( a , negate( b ) );
     }
@@ -100,14 +101,21 @@ public interface Operations
      * @return a*b
      */
     public static ComplexNumber multiply (
-            ComplexNumber a ,
-            ComplexNumber b )
+                                           ComplexNumber a ,
+                                           ComplexNumber b )
     {
+
         BigDecimal real = a.getReal()
-                .multiply( b.getReal() )
-                .subtract( a.getImaginary().multiply( b.getImaginary() ) );
-        BigDecimal imaginary = a.getReal().multiply( b.getImaginary() )
-                .add( a.getImaginary().multiply( b.getReal() ) );
+                           .multiply( b.getReal() )
+                           .subtract( a.getImaginary()
+                                       .multiply( b.getImaginary() ) )
+                           .setScale( QMath.PRECISION , RoundingMode.HALF_UP );
+
+        BigDecimal imaginary = a.getReal()
+                                .multiply( b.getImaginary() )
+                                .add( a.getImaginary()
+                                       .multiply( b.getReal() ) )
+                                .setScale( QMath.PRECISION , RoundingMode.HALF_UP );
 
         return new ComplexNumber( real , imaginary );
     }
@@ -123,13 +131,14 @@ public interface Operations
         ComplexNumber output = multiply( a , conjugate( b ) );
         BigDecimal divisor = modulus( b ).pow( 2 );
         return new ComplexNumber(
-                output.getReal().divide( divisor ) ,
-                output.getImaginary().divide( divisor ) );
+                                  output.getReal().divide( divisor ) ,
+                                  output.getImaginary().divide( divisor ) );
     }
 
     /**
      * 
-     * @param a - complex number
+     * @param a
+     *            - complex number
      * @return The absolute value of the complex number
      */
     public static BigDecimal abs ( ComplexNumber a )
@@ -158,7 +167,8 @@ public interface Operations
      * @param a
      * @return sin(a)
      */
-    @SuppressWarnings ( "deprecation" ) // sin function cannot be made to return a double
+    @SuppressWarnings ( "deprecation" ) // sin function cannot be made to return
+                                        // a double
     public static ComplexNumber sin ( ComplexNumber a )
     {
         double exponent = Math.exp( a.getImaginary().doubleValue() );
@@ -175,7 +185,8 @@ public interface Operations
      * @param a
      * @return cos(a)
      */
-    @SuppressWarnings ( "deprecation" ) // cos function cannot be made to return a double
+    @SuppressWarnings ( "deprecation" ) // cos function cannot be made to return
+                                        // a double
     public static ComplexNumber cos ( ComplexNumber a )
     {
         double exponent = Math.exp( a.getImaginary().doubleValue() );
@@ -227,10 +238,12 @@ public interface Operations
 
             m.find();
             BigDecimal real = new BigDecimal(
-                    s.substring( m.start() , m.end() ) );
+                                              s.substring( m.start() ,
+                                                           m.end() ) );
             m.find();
             BigDecimal imaginary = new BigDecimal(
-                    s.substring( m.start() , m.end() ) );
+                                                   s.substring( m.start() ,
+                                                                m.end() ) );
 
             return Optional.of( new ComplexNumber( real , imaginary ) );
 

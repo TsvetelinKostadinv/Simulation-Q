@@ -40,18 +40,18 @@ public class Vector extends Matrix implements VectorOperations , Iterable< Compl
     {
         super( new ComplexNumber[][] { data } );
     }
-    
-    public static final Vector multiplicativeIdentity(int size)
+
+    public static final Vector multiplicativeIdentity ( int size )
     {
-        ComplexNumber[] res = new ComplexNumber[size];
-        
+        ComplexNumber [] res = new ComplexNumber[size];
+
         res[0] = ComplexNumber.REAL_UNIT;
-        
-        for( int i=1;i<size;i++ )
+
+        for ( int i = 1 ; i < size ; i++ )
         {
             res[i] = ComplexNumber.ORIGIN;
         }
-        
+
         return new Vector( res );
     }
 
@@ -65,6 +65,16 @@ public class Vector extends Matrix implements VectorOperations , Iterable< Compl
     public ComplexNumber [] getScalars ()
     {
         return this.getMatrix()[0];
+    }
+
+    public ComplexNumber getAt ( final int index )
+    {
+        return this.getAt( 0 , index );
+    }
+    
+    public void setAt ( final int index, final ComplexNumber a )
+    {
+        this.setAt( 0 , index , a);
     }
 
     @Override

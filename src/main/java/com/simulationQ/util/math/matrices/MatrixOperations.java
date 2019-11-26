@@ -5,9 +5,12 @@
 package com.simulationQ.util.math.matrices;
 
 
+import java.util.Arrays;
+
 import com.simulationQ.util.math.ArithmeticOperations;
 import com.simulationQ.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.util.math.functional.TriFunction;
+import com.simulationQ.util.math.matrices.vectors.Vector;
 
 
 /**
@@ -83,5 +86,66 @@ public interface MatrixOperations extends ArithmeticOperations< Matrix >
     {
         return a.getRows() == b.getRows() && a.getColons() == b.getColons();
     }
+
+    public static Vector multiply ( final Matrix a , final Vector b )
+    {
+        if ( a.getColons() != b.size() )
+        {
+            throw new IllegalArgumentException( "The number of cols in the matrix should be equal to the number of elements in the vector" );
+        }
+
+        final Vector res = new Vector( a.getRows() );
+
+        for ( int i = 0 ; i < a.getRows() ; i++ )
+        {
+            ComplexNumber [] row = a.getMatrix()[i];
+
+            ComplexNumber sumOfRow = ComplexNumber.ORIGIN;
+           
+            
+            for ( int j = 0 ; j < b.size() ; j++ )
+            {
+                sumOfRow = sumOfRow.add( row[j].multiply( b.getAt( j ) ) );
+            }
+            
+
+            res.setAt( i , sumOfRow );
+
+        }
+
+        return res;
+
+    }
+
+//    public static void main ( String [] args )
+//    {
+//        Matrix m = new Matrix( new ComplexNumber[][] {
+//                { ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT.negate(),
+//                        ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ) }, // 1,
+//                                                                                  // -1,
+//                                                                                  // 2
+//                { ComplexNumber.ORIGIN,
+//                        ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ) )
+//                                               .negate(),
+//                        ComplexNumber.REAL_UNIT } // 0, -3, 1
+//        } );
+//
+//        System.out.println( m );
+//
+//        Vector v = new Vector( new ComplexNumber[] {
+//                ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ),
+//                ComplexNumber.REAL_UNIT,
+//                ComplexNumber.ORIGIN
+//        } );
+//        
+//        System.out.println(  );
+//        
+//        System.out.println( v );
+//        
+//        System.out.println(  );
+//        
+//        System.out.println( MatrixOperations.multiply( m , v ) );
+//
+//    }
 
 }
