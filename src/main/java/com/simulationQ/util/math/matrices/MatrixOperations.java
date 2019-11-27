@@ -5,8 +5,6 @@
 package com.simulationQ.util.math.matrices;
 
 
-import java.util.Arrays;
-
 import com.simulationQ.util.math.ArithmeticOperations;
 import com.simulationQ.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.util.math.functional.TriFunction;

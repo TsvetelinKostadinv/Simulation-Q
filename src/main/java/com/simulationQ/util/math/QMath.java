@@ -7,6 +7,7 @@ package com.simulationQ.util.math;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 
 /**
@@ -35,7 +36,7 @@ public interface QMath
          */
         SQRT_2(
                 BigDecimal.ONE.add( BigDecimal.ONE )
-                              .sqrt( new MathContext( 101 ) )
+                              .sqrt( new MathContext( PRECISION ) )
         ),
         /**
          * Obviously 1/sqrt(2)
@@ -50,7 +51,7 @@ public interface QMath
         SQRT_3(
                 BigDecimal.ONE.add( BigDecimal.ONE )
                               .add( BigDecimal.ONE )
-                              .sqrt( new MathContext( 101 ) )
+                              .sqrt( new MathContext( PRECISION ) )
         ),
         /**
          * Obviously 1/sqrt(2)
@@ -90,7 +91,7 @@ public interface QMath
         return a.pow( 2 )
                 .add( b.pow( 2 ) )
                 .sqrt( new MathContext( PRECISION ) )
-                .setScale( BigDecimal.ONE.scale() )
+                .setScale( BigDecimal.ONE.scale(), RoundingMode.HALF_UP )
                 .equals( BigDecimal.ONE );
     }
 }

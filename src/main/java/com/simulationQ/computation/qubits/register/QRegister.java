@@ -40,6 +40,11 @@ public class QRegister
 
     }
     
+    public Qubit getQubit( final int index )
+    {
+        return register.get( index );
+    }
+    
     public final int size()
     {
         return register.size();

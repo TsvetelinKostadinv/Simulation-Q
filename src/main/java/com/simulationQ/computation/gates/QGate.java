@@ -9,7 +9,6 @@ import java.util.Objects;
 
 import com.simulationQ.computation.qubits.Qubit;
 import com.simulationQ.computation.qubits.register.QRegister;
-import com.simulationQ.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.util.math.matrices.Matrix;
 import com.simulationQ.util.math.matrices.MatrixOperations;
 import com.simulationQ.util.math.matrices.vectors.Vector;
@@ -84,21 +83,21 @@ public abstract class QGate
         if ( reg.size() != this.numberInputBits )
             throw new IllegalArgumentException( "The register must be with the same number of bits as the input of the gate!" );
 
-        System.out.println( "Applying: " );
-        System.out.println( this.operation );
-        System.out.println( "To:" );
-        System.out.println( reg );
+        System.out.println( "QGate | Applying: " );
+        System.out.println( "QGate | " + this.operation );
+        System.out.println( "QGate | To:" );
+        System.out.println( "QGate | " + reg );
 
         if ( this.numberInputBits == 1 )
         {
 
             final Vector qubitVector = reg.getComputationalVector();
-            
-            final Matrix qubitVectorTransposed = MatrixOperations.transpose( reg.getComputationalVector() );
-            
-            final Vector res = MatrixOperations.multiply( this.operation , qubitVector );
 
-            return new QRegister( new Qubit[] { new Qubit( res.getAt( 0 ) , res.getAt( 1 ) ) } );
+            final Vector res = MatrixOperations.multiply( this.operation ,
+                                                          qubitVector );
+
+            return new QRegister( new Qubit[] {
+                    new Qubit( res.getAt( 0 ) , res.getAt( 1 ) ) } );
 
         } else
         {
@@ -122,12 +121,12 @@ public abstract class QGate
     private static final boolean checkMatrixUnarity ( Matrix matrix ,
                                                       int period )
     {
+
+        return true;
         // return matrix.pow( period )
         // .equals( new Matrix( Matrix.multiplicativeIdentity( matrix.getRows()
         // ,
         // matrix.getColons() ) ) );
-        // TODO Fix rounding issue!!
-        return true;
     }
 
     private static final boolean isMatrixSquare ( Matrix a )
@@ -135,26 +134,32 @@ public abstract class QGate
         return a.getRows() == a.getColons();
     }
 
-    public static void main ( String [] args )
-    {
-        Matrix a = new Matrix( new ComplexNumber[][] {
-                { ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT },
-                { ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT.negate() }
-        } ).multiplyWithScalar( ComplexNumber.ONE_OVER_SQRT_2 );
-
-        Qubit q = Qubit.QUBIT_ON;
-
-        System.out.println( q );
-
-        QRegister reg = new QRegister( new Qubit[] { q } );
-
-        QGate g = new QGate( a , 1 , 2 , "" )
-        {};
-
-        System.out.println( "Got: " + g.apply( reg ) );
-        
-        System.out.println( "Again: " + g.apply( g.apply( reg ) ) );
-
-    }
+//    public static void main ( String [] args )
+//    {
+//        Matrix a = new Matrix( new ComplexNumber[][] {
+//                { ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT },
+//                { ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT.negate() }
+//        } ).multiplyWithScalar( ComplexNumber.ONE_OVER_SQRT_2 );
+//
+//        Qubit q = Qubit.QUBIT_OFF;
+//
+//        System.out.println( q );
+//
+//        System.out.println( a.square() );
+//
+//        QRegister reg = new QRegister( new Qubit[] { q } );
+//
+//        QGate g = new QGate( a , 1 , 2 , "" )
+//        {};
+//        
+//        QRegister res = g.apply( reg );
+//
+//        System.out.println( "Got: " + res );
+//        
+//        System.out.println( "100 collapses: " + QCollapser.collapse( 100 , res.getQubit( 0 ) ) );
+//
+//        System.out.println( "Again: " + g.apply( res ) );
+//
+//    }
 
 }
