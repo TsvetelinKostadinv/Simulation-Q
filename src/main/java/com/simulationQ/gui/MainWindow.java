@@ -6,6 +6,7 @@ package com.simulationQ.gui;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,8 +17,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import com.simulationQ.computation.gates.QGate;
+import com.simulationQ.computation.gates.impl.Hadamard;
+import com.simulationQ.computation.gates.impl.NOT;
+import com.simulationQ.computation.gates.impl.PauliY;
+import com.simulationQ.computation.gates.impl.PauliZ;
 import com.simulationQ.computation.qubits.QCollapser;
 import com.simulationQ.computation.qubits.Qubit;
+import com.simulationQ.computation.qubits.register.QRegister;
 
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
@@ -25,6 +32,7 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 
 /**
@@ -37,13 +45,25 @@ public class MainWindow extends JFrame implements Runnable
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
+    private static final long   serialVersionUID = 1L;
 
-    private JPanel            contentPane;
+    private JPanel              contentPane;
 
-    private JLabel            lblRes;
+    private JLabel              lblRes;
 
-    private JTextArea         txtCollapseCounting;
+    private JTextArea           txtCollapseCounting;
+
+    private JComboBox< String > gate1;
+
+    private JComboBox< String > gate2;
+
+    private QGate               hadamard         = new Hadamard();
+
+    private QGate               not              = new NOT();
+
+    private QGate               pauliY           = new PauliY();
+
+    private QGate               pauliZ           = new PauliZ();
 
     public void run ()
     {
@@ -83,7 +103,7 @@ public class MainWindow extends JFrame implements Runnable
         txtCollapseCounting.setBounds( 150 , 10 , 200 , 20 );
         contentPane.add( txtCollapseCounting );
 
-        JLabel lblQubit = new JLabel( "|0>" );
+        JLabel lblQubit = new JLabel( "|1>" );
         lblQubit.setBounds( 10 , 40 , 20 , 20 );
         contentPane.add( lblQubit );
 
@@ -122,27 +142,181 @@ public class MainWindow extends JFrame implements Runnable
         lblRes.setBounds( 300 , 40 , 500 , 20 );
         lblRes.setVisible( false );
         contentPane.add( lblRes );
+
+        JButton btnCollapseWithoutFinalResult = new JButton( "Show computation value" );
+        btnCollapseWithoutFinalResult.setBounds( 10 , 657 , 750 , 30 );
+
+        btnCollapseWithoutFinalResult.addMouseListener( new MouseListener()
+        {
+
+            @Override
+            public void mouseReleased ( MouseEvent e )
+            {}
+
+            @Override
+            public void mousePressed ( MouseEvent e )
+            {}
+
+            @Override
+            public void mouseExited ( MouseEvent e )
+            {}
+
+            @Override
+            public void mouseEntered ( MouseEvent e )
+            {}
+
+            @Override
+            public void mouseClicked ( MouseEvent e )
+            {
+                updateIntospectionInfo();
+            }
+        } );
+
+        contentPane.add( btnCollapseWithoutFinalResult );
+
+        gate1 = new JComboBox< String >();
+        gate1.setBounds( 70 , 40 , 100 , 20 );
+
+        gate1.addItem( "None" );
+        gate1.addItem( "Hadamard" );
+        gate1.addItem( "Pauli-X/NOT" );
+        gate1.addItem( "Pauli-Y" );
+        gate1.addItem( "Pauli-Z" );
+
+        contentPane.add( gate1 );
+
+        gate2 = new JComboBox< String >();
+        gate2.setBounds( 190 , 40 , 100 , 20 );
+
+        gate2.addItem( "None" );
+        gate2.addItem( "Hadamard" );
+        gate2.addItem( "Pauli-X/NOT" );
+        gate2.addItem( "Pauli-Y" );
+        gate2.addItem( "Pauli-Z" );
+
+        contentPane.add( gate2 );
     }
 
     public void paint ( Graphics gp )
     {
         super.paint( gp );
         Graphics2D graphics = ( Graphics2D ) gp;
-        Line2D line = new Line2D.Float( 40 , 80 , 300 , 80 );
-        graphics.draw( line );
+        // Line2D line = new Line2D.Float( 40 , 80 , 300 , 80 );
+        // graphics.draw( line );
     }
 
     private void updateCollapseInfo ()
     {
         lblRes.setVisible( true );
-        
-        Qubit input = Qubit.QUBIT_HALF_HALF;
-        
-        Qubit res = QCollapser.collapse( Long.parseLong( txtCollapseCounting.getText() ) , input );
-        
+
+        Qubit input = Qubit.QUBIT_ON;
+        QRegister inputReg = new QRegister( new Qubit[] { input } );
+
+        switch ( gate1.getSelectedIndex() )
+            {
+                case 1 :
+
+                    input = hadamard.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 2 :
+                    input = not.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 3 :
+                    input = pauliY.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 4 :
+                    input = pauliZ.apply( inputReg ).getQubit( 0 );
+                    break;
+
+                default :
+                    break;
+            }
+
+        inputReg = new QRegister( new Qubit[] { input } );
+
+        switch ( gate2.getSelectedIndex() )
+            {
+                case 1 :
+
+                    input = hadamard.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 2 :
+                    input = not.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 3 :
+                    input = pauliY.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 4 :
+                    input = pauliZ.apply( inputReg ).getQubit( 0 );
+                    break;
+
+                default :
+                    break;
+            }
+
+        Qubit res = QCollapser.collapse( Long.parseLong( txtCollapseCounting.getText() ) ,
+                                         input );
+
         lblRes.setText( res.toString() );
         
         this.paint( this.getGraphics() );
+
+    }
+
+    private void updateIntospectionInfo ()
+    {
+        lblRes.setVisible( true );
+
+        Qubit input = Qubit.QUBIT_ON;
         
+        QRegister inputReg = new QRegister( new Qubit[] { input } );
+
+        switch ( gate1.getSelectedIndex() )
+            {
+                case 1 :
+
+                    input = hadamard.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 2 :
+                    input = not.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 3 :
+                    input = pauliY.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 4 :
+                    input = pauliZ.apply( inputReg ).getQubit( 0 );
+                    break;
+
+                default :
+                    break;
+            }
+
+        inputReg = new QRegister( new Qubit[] { input } );
+
+        switch ( gate2.getSelectedIndex() )
+            {
+                case 1 :
+
+                    input = hadamard.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 2 :
+                    input = not.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 3 :
+                    input = pauliY.apply( inputReg ).getQubit( 0 );
+                    break;
+                case 4 :
+                    input = pauliZ.apply( inputReg ).getQubit( 0 );
+                    break;
+
+                default :
+                    break;
+            }
+        
+        lblRes.setText( input.toString() );
+        
+
+        this.paint( this.getGraphics() );
+
     }
 }
