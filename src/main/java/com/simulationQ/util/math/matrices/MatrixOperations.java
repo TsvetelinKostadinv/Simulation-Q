@@ -21,18 +21,44 @@ import com.simulationQ.util.math.matrices.vectors.Vector;
 public interface MatrixOperations extends ArithmeticOperations< Matrix >
 {
 
+    /**
+     * Multiplies the scalar with the matrix
+     * 
+     * @param a
+     *            - the scalar
+     * @return this*a
+     */
     public Matrix multiplyWithScalar ( final ComplexNumber a );
 
+    /**
+     * Multiplies the scalar with the matrix
+     * 
+     * @param a
+     *            - the scalar
+     * @param b
+     *            - the matrix
+     * @return a*b
+     */
     public static Matrix multiplyWithScalar ( final ComplexNumber a ,
                                               final Matrix b )
     {
         return b.multiplyWithScalar( a );
     }
+    
+    /**
+     * Applies the trifunction to each element of the matrix
+     * @param mapper - a trifunction receiving the x, y and value and producing the new value
+     * @return
+     */
+    public Matrix map ( final TriFunction< Integer , Integer , ComplexNumber , ComplexNumber > mapper );
 
-    public Matrix map ( TriFunction< Integer , Integer , ComplexNumber , ComplexNumber > mapper );
-
-    public static Matrix map ( TriFunction< Integer , Integer , ComplexNumber , ComplexNumber > mapper ,
-                               Matrix a )
+    /**
+     * Applies the trifunction to each element of the matrix
+     * @param mapper - a trifunction receiving the x, y and value and producing the new value
+     * @return
+     */
+    public static Matrix map ( final TriFunction< Integer , Integer , ComplexNumber , ComplexNumber > mapper ,
+                               final Matrix a )
     {
         return a.map( mapper );
     }
@@ -43,7 +69,7 @@ public interface MatrixOperations extends ArithmeticOperations< Matrix >
      * @return true if the number of rows equals the number of colons, false
      *         otherwise
      */
-    public static < T > boolean isMatrixRectangular ( final T [] [] matrix )
+    public static < T > boolean isMatrixSquare ( final T [] [] matrix )
     {
         final int checkAgainst = matrix[0].length;
 
@@ -99,13 +125,11 @@ public interface MatrixOperations extends ArithmeticOperations< Matrix >
             ComplexNumber [] row = a.getMatrix()[i];
 
             ComplexNumber sumOfRow = ComplexNumber.ORIGIN;
-           
-            
+
             for ( int j = 0 ; j < b.size() ; j++ )
             {
                 sumOfRow = sumOfRow.add( row[j].multiply( b.getAt( j ) ) );
             }
-            
 
             res.setAt( i , sumOfRow );
 
@@ -115,35 +139,36 @@ public interface MatrixOperations extends ArithmeticOperations< Matrix >
 
     }
 
-//    public static void main ( String [] args )
-//    {
-//        Matrix m = new Matrix( new ComplexNumber[][] {
-//                { ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT.negate(),
-//                        ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ) }, // 1,
-//                                                                                  // -1,
-//                                                                                  // 2
-//                { ComplexNumber.ORIGIN,
-//                        ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ) )
-//                                               .negate(),
-//                        ComplexNumber.REAL_UNIT } // 0, -3, 1
-//        } );
-//
-//        System.out.println( m );
-//
-//        Vector v = new Vector( new ComplexNumber[] {
-//                ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ),
-//                ComplexNumber.REAL_UNIT,
-//                ComplexNumber.ORIGIN
-//        } );
-//        
-//        System.out.println(  );
-//        
-//        System.out.println( v );
-//        
-//        System.out.println(  );
-//        
-//        System.out.println( MatrixOperations.multiply( m , v ) );
-//
-//    }
+    // public static void main ( String [] args )
+    // {
+    // Matrix m = new Matrix( new ComplexNumber[][] {
+    // { ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT.negate(),
+    // ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ) }, // 1,
+    // // -1,
+    // // 2
+    // { ComplexNumber.ORIGIN,
+    // ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT.add(
+    // ComplexNumber.REAL_UNIT ) )
+    // .negate(),
+    // ComplexNumber.REAL_UNIT } // 0, -3, 1
+    // } );
+    //
+    // System.out.println( m );
+    //
+    // Vector v = new Vector( new ComplexNumber[] {
+    // ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ),
+    // ComplexNumber.REAL_UNIT,
+    // ComplexNumber.ORIGIN
+    // } );
+    //
+    // System.out.println( );
+    //
+    // System.out.println( v );
+    //
+    // System.out.println( );
+    //
+    // System.out.println( MatrixOperations.multiply( m , v ) );
+    //
+    // }
 
 }

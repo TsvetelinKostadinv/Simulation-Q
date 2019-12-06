@@ -43,7 +43,7 @@ public class Matrix implements MatrixOperations
     public Matrix ( final ComplexNumber [] [] matrix )
     {
         super();
-        if ( !MatrixOperations.isMatrixRectangular( matrix ) )
+        if ( !MatrixOperations.isMatrixSquare( matrix ) )
             throw new IllegalArgumentException( "The matrix HAS to be rectangular" );
         this.matrix = matrix;
         this.rows = matrix.length;
@@ -51,6 +51,8 @@ public class Matrix implements MatrixOperations
     }
 
     /**
+     * 
+     * Constructs an empty matrix
      * 
      * @param rows
      * @param colons
@@ -65,6 +67,9 @@ public class Matrix implements MatrixOperations
     }
 
     /**
+     * 
+     * Generates a matrix -g with the specified dimensions,
+     * that satisfies a + g = a
      * 
      * @param rows
      * @param colons
@@ -86,8 +91,17 @@ public class Matrix implements MatrixOperations
 
     }
     
+    /**
+     * 
+     * Generates a matrix -g with the specified dimensions,
+     * that satisfies a * g = a
+     * 
+     * @param rows
+     * @param colons
+     * @return the multiplicative identity.
+     */
     public static final ComplexNumber [] [] multiplicativeIdentity ( final int rows ,
-                                                               final int colons )
+                                                                     final int colons )
     {
         final ComplexNumber [] [] res = new ComplexNumber[rows][colons];
 
@@ -95,13 +109,14 @@ public class Matrix implements MatrixOperations
         {
             for ( int j = 0 ; j < colons ; j++ )
             {
-                if( i==j )
+                if ( i == j )
                 {
                     res[i][j] = ComplexNumber.REAL_UNIT;
-                }else {
+                } else
+                {
                     res[i][j] = ComplexNumber.ORIGIN;
                 }
-                
+
             }
         }
         return res;
@@ -141,9 +156,9 @@ public class Matrix implements MatrixOperations
     public ComplexNumber getAt ( final int row , final int colon )
     {
         if ( row < 0 || row >= this.rows )
-            throw new IndexOutOfBoundsException( row );
+            throw new IndexOutOfBoundsException( "" + row );
         if ( colon < 0 || colon >= this.colons )
-            throw new IndexOutOfBoundsException( colon );
+            throw new IndexOutOfBoundsException( "" + colon );
 
         return matrix[row][colon];
     }
@@ -161,9 +176,9 @@ public class Matrix implements MatrixOperations
                         final ComplexNumber value )
     {
         if ( row < 0 || row >= this.rows )
-            throw new IndexOutOfBoundsException( row );
+            throw new IndexOutOfBoundsException( "" + row );
         if ( colon < 0 || colon >= this.colons )
-            throw new IndexOutOfBoundsException( colon );
+            throw new IndexOutOfBoundsException( "" + colon );
 
         this.matrix[row][colon] = value;
     }
@@ -189,22 +204,20 @@ public class Matrix implements MatrixOperations
     @Override
     public Matrix multiply ( final Matrix a )
     {
-        
-//        System.out.println( "Multiplication." );
-        
+
+        // System.out.println( "Multiplication." );
+
         final Matrix res = new Matrix( this.getRows() , a.getColons() );
-        
-//        System.out.println( "THIS: " + this );
-//        System.out.println( this.rows );
-//        System.out.println( "* by : "+ a );
-//        System.out.println( a.getColons() );
-        
+
+        // System.out.println( "THIS: " + this );
+        // System.out.println( this.rows );
+        // System.out.println( "* by : "+ a );
+        // System.out.println( a.getColons() );
+
         if ( a.getColons() != this.getRows() )
-        {
-            throw new IllegalArgumentException( "Illegal matrix dimensions." );
-        }
-            
-//        System.out.println( res );
+        { throw new IllegalArgumentException( "Illegal matrix dimensions." ); }
+
+        // System.out.println( res );
 
         for ( int i = 0 ; i < res.getRows() ; i++ )
         {
@@ -277,9 +290,10 @@ public class Matrix implements MatrixOperations
         {
             for ( int j = 0 ; j < this.getColons() ; j++ )
             {
-                res.setAt( i , j ,
+                res.setAt( i ,
+                           j ,
                            this.getAt( i , j )
-                           .multiply( a ) );
+                               .multiply( a ) );
             }
         }
         return res;

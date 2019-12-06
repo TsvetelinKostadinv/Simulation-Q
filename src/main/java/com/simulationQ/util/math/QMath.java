@@ -85,8 +85,8 @@ public interface QMath
      * @param b
      * @return true if the linear combination was 1, and false otherwise
      */
-    public static boolean checkLinearCombinationEqualToOne ( BigDecimal a ,
-                                                             BigDecimal b )
+    public static boolean checkLinearCombinationEqualToOne ( final BigDecimal a ,
+                                                             final BigDecimal b )
     {
         return a.pow( 2 )
                 .add( b.pow( 2 ) )
