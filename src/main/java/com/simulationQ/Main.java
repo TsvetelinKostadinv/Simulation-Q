@@ -4,8 +4,6 @@
  */
 package com.simulationQ;
 
-import com.simulationQ.gui.MainWindow;
-
 /**
  * @author Tsvetelin
  *
@@ -24,9 +22,7 @@ public class Main
      */
     public static void main ( String [] args )
     {
-        Thread main = new Thread( new MainWindow() );
         
-        main.start();
     }
 
 }
