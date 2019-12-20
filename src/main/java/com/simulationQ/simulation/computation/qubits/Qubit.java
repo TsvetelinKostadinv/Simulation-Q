@@ -7,6 +7,7 @@ package com.simulationQ.simulation.computation.qubits;
 
 import java.math.BigDecimal;
 
+import com.simulationQ.simulation.computation.QCollapser;
 import com.simulationQ.simulation.util.math.QMath;
 import com.simulationQ.simulation.util.math.QMath.Constants;
 import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
@@ -66,11 +67,6 @@ public class Qubit
         return ketON;
     }
 
-    public Qubit collapseSuperposition ()
-    {
-        return QCollapser.collapse( this );
-    }
-
     public Vector getAsVector ()
     {
         return new Vector( new ComplexNumber[] { ketOFF, ketON } );
@@ -93,41 +89,41 @@ public class Qubit
                               this.ketON.toString() );
     }
 
-    public static void main ( String [] args )
-    {
-        System.out.println( "Testing..." );
-
-        final int iterations = 1000000;
-
-        final ComplexNumber oneSqrt2 = new ComplexNumber( Constants.ONE_OVER_SQRT_2.value ,
-                                                          BigDecimal.ZERO );
-
-        System.out.println( oneSqrt2.abs().pow( 2 ) );
-
-        Qubit q = new Qubit( oneSqrt2 , oneSqrt2 );
-
-        int ones = 0;
-        int zeroes = 0;
-
-        for ( int i = 0 ; i < iterations ; i++ )
-        {
-
-            boolean isOn = q.collapseSuperposition().equals( QUBIT_ON );
-
-            if ( isOn )
-            {
-                ones++;
-            } else
-            {
-                zeroes++;
-            }
-        }
-
-        System.out.println( "Final results: " );
-        System.out.println( "On states: " + ones );
-        System.out.println( "Off state: " + zeroes );
-        System.out.println( "Total: " + ( ones + zeroes ) );
-
-    }
+//    public static void main ( String [] args )
+//    {
+//        System.out.println( "Testing..." );
+//
+//        final int iterations = 1000000;
+//
+//        final ComplexNumber oneSqrt2 = new ComplexNumber( Constants.ONE_OVER_SQRT_2.value ,
+//                                                          BigDecimal.ZERO );
+//
+//        System.out.println( oneSqrt2.abs().pow( 2 ) );
+//
+//        Qubit q = new Qubit( oneSqrt2 , oneSqrt2 );
+//
+//        int ones = 0;
+//        int zeroes = 0;
+//
+//        for ( int i = 0 ; i < iterations ; i++ )
+//        {
+//
+//            boolean isOn = q.collapseSuperposition().equals( QUBIT_ON );
+//
+//            if ( isOn )
+//            {
+//                ones++;
+//            } else
+//            {
+//                zeroes++;
+//            }
+//        }
+//
+//        System.out.println( "Final results: " );
+//        System.out.println( "On states: " + ones );
+//        System.out.println( "Off state: " + zeroes );
+//        System.out.println( "Total: " + ( ones + zeroes ) );
+//
+//    }
 
 }

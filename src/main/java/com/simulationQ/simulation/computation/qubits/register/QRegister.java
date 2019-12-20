@@ -5,11 +5,8 @@
 package com.simulationQ.simulation.computation.qubits.register;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.simulationQ.simulation.computation.qubits.Qubit;
+import com.simulationQ.simulation.util.math.QMath;
 import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
 
 
@@ -20,53 +17,76 @@ import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
 public class QRegister
 {
 
-    private final List< Qubit > register = new ArrayList<>();
+    private final Vector computationalVector;
 
     public QRegister ( Qubit [] qubits )
     {
-        Arrays.stream( qubits ).forEach( this.register::add );
+        this.computationalVector = getAsComputationalVector( qubits );
+    }
+    
+    /**
+     * 
+     * This should be used with caution as it does not perform checking as the vector might be entangled
+     * 
+     * @param vector
+     */
+    public QRegister ( Vector vector )
+    {
+        this.computationalVector = vector;
     }
 
+    public Qubit head ()
+    {
+        return this.computationalVector.size() == 2
+                ? new Qubit( this.computationalVector.getAt( 0 ) ,
+                             this.computationalVector.getAt( 1 ) )
+                : null;
+    }
+
+    public final int size ()
+    {
+        return QMath.log2( this.computationalVector.size() );
+    }
+
+    
+    /**
+     * @return the computationalVector
+     */
     public Vector getComputationalVector ()
     {
-        Vector res = this.register.get( 0 ).getAsVector();
-        
-        for( int i=1;i<this.register.size();i++ )
+        return this.computationalVector;
+    }
+
+    private static Vector getAsComputationalVector ( Qubit [] qubits )
+    {
+        Vector res = qubits[0].getAsVector();
+    
+        for ( int i = 1 ; i < qubits.length ; i++ )
         {
-            res = res.tensorProduct( this.register.get( i ).getAsVector() );
+            res = res.tensorProduct( qubits[i].getAsVector() );
         }
-
         return res;
-
+    
     }
     
-    public Qubit getQubit( final int index )
+    @Override
+    public boolean equals ( Object obj )
     {
-        return register.get( index );
-    }
-    
-    public final int size()
-    {
-        return register.size();
+        if( obj instanceof QRegister ) 
+        {
+            QRegister reg = ( QRegister ) obj;
+            
+            return reg.getComputationalVector().equals( this.getComputationalVector() );
+        }
+        return false;
     }
 
     @Override
     public String toString ()
     {
-        return this.getComputationalVector().toString();
+        return this.computationalVector.toString();
     }
     
-    // public static void main ( String [] args )
-    // {
-    // final ComplexNumber ONE_OVER_SQRT_2 = ComplexNumber.real(
-    // QMath.Constants.ONE_OVER_SQRT_2.value );
-    //
-    // final Qubit bit = new Qubit( ONE_OVER_SQRT_2 , ONE_OVER_SQRT_2 );
-    //
-    // final QRegister r = new QRegister( new Qubit[] { bit, bit } );
-    //
-    // System.out.println( r.getComputationalVector() );
-    //
-    // }
+    
 
 }
