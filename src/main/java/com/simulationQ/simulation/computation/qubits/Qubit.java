@@ -5,11 +5,7 @@
 package com.simulationQ.simulation.computation.qubits;
 
 
-import java.math.BigDecimal;
-
-import com.simulationQ.simulation.computation.QCollapser;
 import com.simulationQ.simulation.util.math.QMath;
-import com.simulationQ.simulation.util.math.QMath.Constants;
 import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
 

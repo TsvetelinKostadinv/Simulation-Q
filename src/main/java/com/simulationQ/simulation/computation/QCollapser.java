@@ -66,7 +66,7 @@ public interface QCollapser
 
         for ( long i = 0 ; i < n ; i++ )
         {
-            if ( q.collapseSuperposition().equals( Qubit.QUBIT_ON ) )
+            if ( collapse( q ).equals( Qubit.QUBIT_ON ) )
                 on++;
             else
                 off++;
@@ -92,7 +92,7 @@ public interface QCollapser
 
         for ( long i = 0 ; i < n ; i++ )
         {
-            res.add( String.format( FORMAT , n , q.collapseSuperposition() ) );
+            res.add( String.format( FORMAT , n , collapse( q ) ) );
         }
 
         return res;
@@ -117,7 +117,7 @@ public interface QCollapser
 
         for ( long i = 0 ; i < n ; i++ )
         {
-            res.add( String.format( format , n , q.collapseSuperposition() ) );
+            res.add( String.format( format , n , collapse( q ) ) );
         }
 
         return res;
