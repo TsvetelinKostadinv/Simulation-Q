@@ -100,10 +100,10 @@ public class Vector extends Matrix implements VectorOperations , Iterable< Compl
 
         for ( int i = 0 ; i < scaledVectors.length ; i++ )
         {
-            for ( int j = 0 ; j < this.getColons() ; j++ )
+            for ( int j = 0 ; j < scaledVectors[i].getColons() ; j++ )
             {
                 res.setAt( 0 ,
-                           this.getColons() * i + j ,
+                           scaledVectors[i].getColons() * i + j ,
                            scaledVectors[i].getAt( 0 , j ) );
             }
         }

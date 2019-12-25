@@ -4,10 +4,12 @@
  */
 package com.simulationQ.simulation.util.math.matrices;
 
+
 import com.simulationQ.simulation.util.math.ArithmeticOperations;
 import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.functional.TriFunction;
 import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
+
 
 /**
  * 
@@ -42,17 +44,23 @@ public interface MatrixOperations extends ArithmeticOperations< Matrix >
     {
         return b.multiplyWithScalar( a );
     }
-    
+
     /**
      * Applies the trifunction to each element of the matrix
-     * @param mapper - a trifunction receiving the x, y and value and producing the new value
+     * 
+     * @param mapper
+     *            - a trifunction receiving the x, y and value and producing the
+     *            new value
      * @return
      */
     public Matrix map ( final TriFunction< Integer , Integer , ComplexNumber , ComplexNumber > mapper );
 
     /**
      * Applies the trifunction to each element of the matrix
-     * @param mapper - a trifunction receiving the x, y and value and producing the new value
+     * 
+     * @param mapper
+     *            - a trifunction receiving the x, y and value and producing the
+     *            new value
      * @return
      */
     public static Matrix map ( final TriFunction< Integer , Integer , ComplexNumber , ComplexNumber > mapper ,
@@ -137,36 +145,69 @@ public interface MatrixOperations extends ArithmeticOperations< Matrix >
 
     }
 
-    // public static void main ( String [] args )
-    // {
-    // Matrix m = new Matrix( new ComplexNumber[][] {
-    // { ComplexNumber.REAL_UNIT, ComplexNumber.REAL_UNIT.negate(),
-    // ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ) }, // 1,
-    // // -1,
-    // // 2
-    // { ComplexNumber.ORIGIN,
-    // ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT.add(
-    // ComplexNumber.REAL_UNIT ) )
-    // .negate(),
-    // ComplexNumber.REAL_UNIT } // 0, -3, 1
-    // } );
-    //
-    // System.out.println( m );
-    //
-    // Vector v = new Vector( new ComplexNumber[] {
-    // ComplexNumber.REAL_UNIT.add( ComplexNumber.REAL_UNIT ),
-    // ComplexNumber.REAL_UNIT,
-    // ComplexNumber.ORIGIN
-    // } );
-    //
-    // System.out.println( );
-    //
-    // System.out.println( v );
-    //
-    // System.out.println( );
-    //
-    // System.out.println( MatrixOperations.multiply( m , v ) );
-    //
-    // }
+    /**
+     * Find the Kronecker product of the arguments.
+     * 
+     * @param a
+     *            The first matrix to multiply.
+     * @param b
+     *            The second matrix to multiply.
+     * @return A new matrix: the Kronecker product of the arguments.
+     * 
+     * @author https://rosettacode.org/wiki/Kronecker_product#Java
+     */
+    public static Matrix productKronecker ( final Matrix a , final Matrix b )
+    {
+        // Create matrix c as the matrix to fill and return.
+        // The length of a matrix is its number of rows.
+        final ComplexNumber [] [] res = new ComplexNumber[a.getRows()
+                * b.getRows()][];
+
+        // Fill in the (empty) rows of c.
+        // The length of each row is the number of columns.
+        for ( int ix = 0 ; ix < res.length ; ix++ )
+        {
+            final int colomns = a.getColons() * b.getColons();
+            res[ix] = new ComplexNumber[colomns];
+        }
+
+        // Now fill in the values: the products of each pair.
+        // Go through all the elements of a.
+        for ( int ia = 0 ; ia < a.getRows() ; ia++ )
+        {
+            for ( int ja = 0 ; ja < a.getColons() ; ja++ )
+            {
+                // For each element of a, multiply it by all the elements of b.
+                for ( int ib = 0 ; ib < b.getRows() ; ib++ )
+                {
+                    for ( int jb = 0 ; jb < b.getColons() ; jb++ )
+                    {
+                        res[b.getRows() * ia + ib][b.getColons() * ja
+                                + jb] = a.getAt( ia , ja )
+                                         .multiply( b.getAt( ib , jb ) );
+                    }
+                }
+            }
+        }
+
+        // Return the completed product matrix c.
+        return new Matrix( res );
+    }
+
+//    public static void main ( String [] args )
+//    {
+//        final Matrix m1 = new Matrix( new ComplexNumber[][] {
+//                { ComplexNumber.real( "1" ), ComplexNumber.real( "2" ) },
+//                { ComplexNumber.real( "3" ), ComplexNumber.real( "4" ) }
+//        } );
+//
+//        final Matrix m2 = new Matrix( new ComplexNumber[][] {
+//                { ComplexNumber.real( "0" ), ComplexNumber.real( "5" ) },
+//                { ComplexNumber.real( "6" ), ComplexNumber.real( "7" ) }
+//        } );
+//
+//        System.out.println( productKronecker( m1 , m2 ) );
+//
+//    }
 
 }

@@ -101,7 +101,7 @@ public class Matrix implements MatrixOperations
      * @param colons
      * @return the multiplicative identity.
      */
-    public static final ComplexNumber [] [] multiplicativeIdentity ( final int rows ,
+    public static final Matrix multiplicativeIdentity ( final int rows ,
                                                                      final int colons )
     {
         final ComplexNumber [] [] res = new ComplexNumber[rows][colons];
@@ -120,7 +120,7 @@ public class Matrix implements MatrixOperations
 
             }
         }
-        return res;
+        return new Matrix( res );
 
     }
 

@@ -168,13 +168,13 @@ public interface QCollapser
      */
     public static QRegister collapse ( final QRegister reg , final long rounds )
     {
-        final int [] counters = Arrays.stream( "0".repeat( reg.size() )
+        final int [] counters = Arrays.stream( "0".repeat( QMath.pow( 2 , reg.size() ) )
                                                   .split( "" ) )
                                       .mapToInt( Integer::parseInt )
                                       .toArray();
 
         final List< String > possibilities = generateBinaryStringValues( reg.size() );
-
+        
         for ( int i = 0 ; i < rounds ; i++ )
         {
             final String collapsed = collapseToString( reg );

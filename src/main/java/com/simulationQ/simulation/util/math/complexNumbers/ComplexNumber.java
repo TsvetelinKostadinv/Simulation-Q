@@ -19,7 +19,7 @@ import com.simulationQ.simulation.util.math.QMath;
  * @author Tsvetelin
  *
  */
-public final class ComplexNumber
+public class ComplexNumber
 {
 
     /**
@@ -138,17 +138,17 @@ public final class ComplexNumber
 
     public static ComplexNumber real ( BigDecimal real )
     {
-        return new ComplexNumber( real , BigDecimal.ZERO );
+        return new RealNumber( real );
     }
 
     public static ComplexNumber real ( double real )
     {
-        return new ComplexNumber( new BigDecimal( real ) , BigDecimal.ZERO );
+        return new RealNumber( new BigDecimal( real ) );
     }
 
     public static ComplexNumber real ( String real )
     {
-        return new ComplexNumber( new BigDecimal( real ) , BigDecimal.ZERO );
+        return new RealNumber( new BigDecimal( real ) );
     }
 
     public static ComplexNumber imaginary ( BigDecimal imaginary )
