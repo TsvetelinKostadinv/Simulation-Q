@@ -17,21 +17,28 @@ public class Main
      */
     public Main ()
     {}
-    
+
     /**
      * 
      * @param args
+     * @throws Exception
      */
-    public static void main ( String [] args )
+    public static void main ( String [] args ) throws Exception
     {
+
         try
         {
-            switch( args[0] )
-            {
-                case "gui": startInGUIMode(args); break;
-                case "nogui": startInNOGUIMode(args); break;
-                default: System.out.println( "Unexpected command: " + args[0] );
-            }
+            switch ( args[0] )
+                {
+                    case "gui" :
+                        startInGUIMode( args );
+                        break;
+                    case "nogui" :
+                        startInNOGUIMode( args );
+                        break;
+                    default :
+                        System.out.println( "Unexpected command: " + args[0] );
+                }
         } catch ( IndexOutOfBoundsException e )
         {
             System.out.println( "You must specify the mode first - gui/nogui" );
@@ -44,7 +51,7 @@ public class Main
     private static void startInGUIMode ( String [] args )
     {
         System.out.println( "String GUI" );
-        
+
     }
 
     /**
@@ -54,5 +61,5 @@ public class Main
     {
         System.out.println( "String NOGUI" );
     }
-    
+
 }

@@ -18,8 +18,8 @@ public class QRegister
 {
 
     private final Vector computationalVector;
-
-    public QRegister ( Qubit [] qubits )
+    
+    public QRegister ( Qubit... qubits )
     {
         this.computationalVector = getAsComputationalVector( qubits );
     }

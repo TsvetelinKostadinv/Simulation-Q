@@ -7,11 +7,7 @@ package com.simulationQ.simulation.computation.gates;
 
 import java.util.Objects;
 
-import com.simulationQ.simulation.computation.qubits.Qubit;
-import com.simulationQ.simulation.computation.qubits.register.QRegister;
 import com.simulationQ.simulation.util.math.matrices.Matrix;
-import com.simulationQ.simulation.util.math.matrices.MatrixOperations;
-import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
 
 
 /**
@@ -23,7 +19,7 @@ public abstract class QGate
 
     private final Matrix operation;
 
-    private final int    numberInputBits;
+    private final int    numberInputCoeficients;
 
     private final String informationForGate;
 
@@ -49,7 +45,7 @@ public abstract class QGate
             throw new IllegalArgumentException( " Cannot construct gate with the given input " );
         }
 
-        this.numberInputBits = numberInputBits;
+        this.numberInputCoeficients = numberInputBits;
         this.operation = operation;
         this.informationForGate = information;
     }
@@ -65,9 +61,9 @@ public abstract class QGate
     /**
      * @return the numberInputBits
      */
-    public int getNumberInputBits ()
+    public int getNumberInputCoeficients ()
     {
-        return numberInputBits;
+        return numberInputCoeficients;
     }
 
     /**
@@ -76,30 +72,6 @@ public abstract class QGate
     public String getInformationForGate ()
     {
         return informationForGate;
-    }
-
-    public QRegister apply ( QRegister reg )
-    {
-        if ( reg.size() != this.numberInputBits )
-            throw new IllegalArgumentException( "The register must be with the same number of bits as the input of the gate!" );
-
-        if ( this.numberInputBits == 1 )
-        {
-
-            final Vector qubitVector = reg.getComputationalVector();
-
-            final Vector res = MatrixOperations.multiply( this.operation ,
-                                                          qubitVector );
-
-            return new QRegister( new Qubit[] {
-                    new Qubit( res.getAt( 0 ) , res.getAt( 1 ) ) } );
-
-        } else
-        {
-            // TODO Implement more bits in the gates
-            throw new UnsupportedOperationException( "More bits are not as of yet supported!" );
-        }
-
     }
 
     /**

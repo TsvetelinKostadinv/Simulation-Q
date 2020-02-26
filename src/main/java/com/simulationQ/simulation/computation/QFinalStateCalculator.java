@@ -8,6 +8,7 @@ package com.simulationQ.simulation.computation;
 import java.util.List;
 
 import com.simulationQ.simulation.computation.gates.QGate;
+import com.simulationQ.simulation.computation.gates.QGateApplier;
 import com.simulationQ.simulation.computation.qubits.register.QRegister;
 
 
@@ -24,7 +25,7 @@ public interface QFinalStateCalculator
 
         return gates.stream()
              .reduce( startState ,
-                      ( state , gate ) -> gate.apply( state ) ,
+                      ( state , gate ) -> QGateApplier.apply( gate , state ) ,
                       ( oldState , newState ) -> newState );
     }
     
