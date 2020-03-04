@@ -1,9 +1,9 @@
 /*
- * 27/11/2019 15:54:35
+ * 20/12/2019 19:34:04
  * package-info.java created by Tsvetelin
  */
 /**
  * @author Tsvetelin
  *
  */
-package com.simulationQ.GUI;
+package com.simulation;
