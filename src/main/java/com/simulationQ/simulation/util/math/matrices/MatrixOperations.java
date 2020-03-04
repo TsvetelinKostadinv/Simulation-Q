@@ -121,6 +121,11 @@ public interface MatrixOperations extends ArithmeticOperations< Matrix >
     {
         if ( a.getColons() != b.size() )
         {
+            System.err.println( "Unable To Multiply:" );
+            System.err.println( "Matrix: " );
+            System.err.println( a );
+            System.err.println( "Vector: " );
+            System.err.println( b );
             throw new IllegalArgumentException( "The number of cols in the matrix should be equal to the number of elements in the vector" );
         }
 

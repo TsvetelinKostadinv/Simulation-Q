@@ -24,12 +24,12 @@ public abstract class QGateApplierTest
         final QGate oper = new Hadamard();
         
         System.out.println( "------ H * |1>" );
-        System.out.println( QGateApplier.apply( oper , on ) );
+        System.out.println( QGateApplier.applyGateToQubit( oper , on ) );
         
         System.out.println(  );
         
         System.out.println( "------ H * |0>" );
-        System.out.println( QGateApplier.apply( oper , off ) );
+        System.out.println( QGateApplier.applyGateToQubit( oper , off ) );
         
     }
 

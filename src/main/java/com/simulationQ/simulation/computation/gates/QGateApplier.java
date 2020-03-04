@@ -32,19 +32,55 @@ public interface QGateApplier
         if ( startingVerticalIndex
                 + gate.getOperation().getRows() > QMath.pow( 2 , reg.size() ) )
             throw new IllegalArgumentException( "The starting index cannot be such that the operation cannot fit!" );
-
-        final Matrix extended = extendMatrixForWholeRegister( gate.getOperation() ,
-                                                              QMath.pow( 2 ,
-                                                                         startingVerticalIndex ) ,
-                                                              QMath.pow( 2 ,
-                                                                         reg.size() ) );
         
-        System.out.println( "Adapted: " );
-        System.out.println( extended );
+        
+        final Vector vectorOfReg = reg.getComputationalVector();
+        final Matrix extended = extendMatrixForWholeRegister( gate.getOperation() ,
+                                                              startingVerticalIndex,
+                                                              vectorOfReg.size() );
+        
+        
+        
+        try
+        {
+            return debugApply( extended , reg );
+        } catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-        Vector res = MatrixOperations.multiply( extended , reg.getComputationalVector() );
-
-        return new QRegister( res );
+    /**
+     * @param operation
+     * @param startingVerticalIndex
+     * @param sizeOfVector
+     * @return
+     */
+    public static Matrix extendMatrixForWholeRegister ( final Matrix operation ,
+                                                        final int startingVerticalIndex ,
+                                                        final int sizeOfVector )
+    {
+    
+        Matrix extended = Matrix.multiplicativeIdentity( 1 , 1 );
+        final Matrix ident_2x2 = Matrix.multiplicativeIdentity( 2 , 2 );
+    
+        for ( int i = 0 ; i < startingVerticalIndex ; i++ )
+        {
+            extended = MatrixOperations.productKronecker( extended ,
+                                                          ident_2x2 );
+        }
+    
+        extended = MatrixOperations.productKronecker( extended ,
+                                                      operation);
+    
+        while ( extended.getColons() < sizeOfVector )
+        {
+            extended = MatrixOperations.productKronecker( extended ,
+                                                          ident_2x2 );
+        }
+    
+        return extended;
     }
 
     /**
@@ -53,7 +89,7 @@ public interface QGateApplier
      * @param reg
      * @return
      */
-    public static QRegister apply ( final QGate gate , final QRegister reg )
+    public static QRegister applyAppropriateGate ( final QGate gate , final QRegister reg )
     {
         if ( gate.getNumberInputCoeficients() != reg.getComputationalVector()
                                                     .size() )
@@ -66,7 +102,7 @@ public interface QGateApplier
         return new QRegister( res );
     }
 
-    public static Qubit apply ( final QGate gate , final Qubit qubit )
+    public static Qubit applyGateToQubit ( final QGate gate , final Qubit qubit )
     {
         final Vector qbit = qubit.getAsVector();
         final Matrix operation = gate.getOperation();
@@ -76,7 +112,7 @@ public interface QGateApplier
         return new Qubit( res.getAt( 0 ) , res.getAt( 1 ) );
     }
 
-    public static QRegister apply ( final Matrix operation ,
+    public static QRegister debugApply ( final Matrix operation ,
                                     final QRegister reg ) throws Exception
     {
         final Vector vec = reg.getComputationalVector();
@@ -85,36 +121,22 @@ public interface QGateApplier
 
         return new QRegister( res );
     }
-
-    /**
-     * @param operation
-     * @param startingVerticalIndex
-     * @param sizeOfRegister
-     * @return
-     */
-    public static Matrix extendMatrixForWholeRegister ( final Matrix operation ,
-                                                        final int startingVerticalIndex ,
-                                                        final int sizeOfRegister )
-    {
-
-        Matrix extended = Matrix.multiplicativeIdentity( 2 , 2 );
-        final Matrix ident_2x2 = Matrix.multiplicativeIdentity( 2 , 2 );
-
-        for ( int i = 1 ; i < startingVerticalIndex ; i++ )
-        {
-            extended = MatrixOperations.productKronecker( extended ,
-                                                          ident_2x2 );
-        }
-
-        extended = MatrixOperations.productKronecker( operation ,
-                                                      extended);
-
-        while ( extended.getColons() < sizeOfRegister )
-        {
-            extended = MatrixOperations.productKronecker( extended ,
-                                                          ident_2x2 );
-        }
-
-        return extended;
-    }
+    
+//    public static void main ( String [] args )
+//    {
+//        final Matrix a = NOT.OPERATION_MATRIX;
+//        System.out.println( "--- Index = 0 ---" );
+//        System.out.println( extendMatrixForWholeRegister( a , 0 , 4 ) );
+//        System.out.println( "--- Index = 1 ---" );
+//        System.out.println( extendMatrixForWholeRegister( a , 1 , 4 ) );
+//        
+//        System.out.println(  );
+//        System.out.println(  );
+//        
+//        final Matrix b = Hadamard.OPERATION_MATRIX;
+//        System.out.println( "--- Index = 0 ---" );
+//        System.out.println( extendMatrixForWholeRegister( b , 0 , 4 ) );
+//        System.out.println( "--- Index = 1 ---" );
+//        System.out.println( extendMatrixForWholeRegister( b , 1 , 4 ) );
+//    }
 }
