@@ -166,7 +166,7 @@ public interface QCollapser
      * @param rounds
      * @return
      */
-    public static QRegister collapse ( final QRegister reg , final long rounds )
+    public static CRegister collapse ( final QRegister reg , final long rounds )
     {
         final int [] counters = Arrays.stream( "0".repeat( QMath.pow( 2 , reg.size() ) )
                                                   .split( "" ) )

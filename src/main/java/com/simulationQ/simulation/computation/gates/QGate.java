@@ -16,7 +16,8 @@ import com.simulationQ.simulation.util.math.matrices.Matrix;
  */
 public abstract class QGate
 {
-
+    private final String name;
+    
     private final Matrix operation;
 
     private final int    numberInputCoeficients;
@@ -30,7 +31,8 @@ public abstract class QGate
      * @param periodOfOperation
      * @param information
      */
-    public QGate ( Matrix operation ,
+    public QGate ( String name ,
+            Matrix operation ,
             int numberInputBits ,
             int periodOfOperation ,
             String information )
@@ -44,7 +46,8 @@ public abstract class QGate
         {
             throw new IllegalArgumentException( " Cannot construct gate with the given input " );
         }
-
+        
+        this.name = name;
         this.numberInputCoeficients = numberInputBits;
         this.operation = operation;
         this.informationForGate = information;
@@ -99,5 +102,11 @@ public abstract class QGate
     private static final boolean isMatrixSquare ( Matrix a )
     {
         return a.getRows() == a.getColons();
+    }
+
+    @Override
+    public String toString ()
+    {
+        return this.name;
     }
 }

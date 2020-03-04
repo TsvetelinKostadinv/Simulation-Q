@@ -6,7 +6,6 @@ package com.simulationQ.simulation.computation.qubits.register;
 
 
 import com.simulationQ.simulation.computation.qubits.Qubit;
-import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 
 
 /**
@@ -57,14 +56,7 @@ public class CRegister extends QRegister
     @Override
     public String toString ()
     {
-        StringBuilder sb = new StringBuilder();
-
-        for ( ComplexNumber bit : this.getComputationalVector() )
-        {
-            sb.append( bit.equals( ComplexNumber.REAL_UNIT ) ? '1' : '0' );
-        }
-
-        return sb.toString();
+        return this.state;
     }
 
 }

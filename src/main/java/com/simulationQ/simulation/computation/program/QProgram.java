@@ -85,6 +85,18 @@ public class QProgram implements Iterable< QProgram.QProgramPart >
         {
             return startIndexInRegister;
         }
-
+        
+        @Override
+        public String toString ()
+        {
+            return oper.toString();
+        }
+        
+    }
+    
+    @Override
+    public String toString ()
+    {
+        return program.toString();
     }
 }

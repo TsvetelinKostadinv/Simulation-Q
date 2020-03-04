@@ -4,9 +4,11 @@
  */
 package com.simulationQ.simulation.computation.gates.impl;
 
+
 import com.simulationQ.simulation.computation.gates.QGate;
 import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.matrices.Matrix;
+
 
 /**
  * @author Tsvetelin
@@ -14,6 +16,8 @@ import com.simulationQ.simulation.util.math.matrices.Matrix;
  */
 public class NOT extends QGate
 {
+
+    public static final String NAME                 = "Pauli-X/NOT";
 
     public static final Matrix OPERATION_MATRIX     = new Matrix( new ComplexNumber[][] {
             { ComplexNumber.ORIGIN, ComplexNumber.REAL_UNIT },
@@ -34,7 +38,11 @@ public class NOT extends QGate
      */
     public NOT ()
     {
-        super( OPERATION_MATRIX , NUMBER_OF_INPUT_BITS , PERIOD , INFORMATION );
+        super( NAME ,
+               OPERATION_MATRIX ,
+               NUMBER_OF_INPUT_BITS ,
+               PERIOD ,
+               INFORMATION );
     }
 
 }
