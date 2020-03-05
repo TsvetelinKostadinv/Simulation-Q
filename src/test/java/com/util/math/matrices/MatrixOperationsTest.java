@@ -8,8 +8,6 @@ package com.util.math.matrices;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Ignore;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
@@ -203,8 +201,6 @@ class MatrixOperationsTest
      * {@link com.simulationQ.util.math.matrices.Matrix#multiplyWithScalar(com.simulationQ.util.math.complexNumbers.ComplexNumber)}.
      */
     @Test
-    @Ignore
-    @Disabled
     final void testMultiplyWithScalar ()
     {
         assertEquals( sample2x2matrix_ones.multiplyWithScalar( TWO ) , sample2x2matrix_twoes );
