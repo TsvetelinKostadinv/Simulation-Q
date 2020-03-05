@@ -5,7 +5,6 @@
  * For more details take a look at the Java Quickstart chapter in the Gradle
  * User Manual available at https://docs.gradle.org/6.2.2/userguide/tutorial_java_projects.html
  */
-
 plugins {
     // Apply the java plugin to add support for Java
     id 'java'
@@ -13,6 +12,8 @@ plugins {
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
 }
+
+version = '1.2.0.0'
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -33,3 +34,41 @@ test{
 application {
 	mainClassName ''
 }
+
+
+//this increments the version number up there
+ext.assembleNextVersionNumber = { oldVersion ->
+	
+	def parts = oldVersion.tokenize(".")
+	int buildCode = parts[parts.size()-1] as Integer
+	
+	buildCode+=1
+	
+	return parts[0] + '.' + parts[1] + '.' + parts[2] + '.' + buildCode
+}
+
+task patch{
+	def parts = version.tokenize(".")
+	int patchCode = parts[2] as Integer
+	
+	patchCode+=1
+	
+	return parts[0] + '.' + parts[1] + '.' + patchCode + '.' + parts[3]
+}
+
+task minor{
+	def parts = version.tokenize(".")
+	int minorCode = parts[1] as Integer
+	
+	minorCode+=1
+	
+	return parts[0] + '.' + minorCode + '.' + parts[2] + '.' + parts[3]
+}
+
+//this replaces the version up there with the one here
+task incrementVersion{
+	String newVersion = assembleNextVersionNumber(version)
+	def s = buildFile.getText().replaceFirst("version = '$version'", "version = '" + newVersion + "'")
+	buildFile.setText(s)
+}
+
