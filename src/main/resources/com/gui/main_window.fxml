@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane fx:id="tab_pane_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.FXMLController">
+  <tabs>
+    <Tab fx:id="tab_quantum_program" closable="false" text="Quantum Program Editor">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btn_plus" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#addNewQubit" prefHeight="25.0" prefWidth="25.0" text="+" textAlignment="CENTER" AnchorPane.leftAnchor="14.0" />
+                  <Button fx:id="btn_minus" layoutX="40.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#deleteLastQubit" prefHeight="25.0" prefWidth="25.0" text="-" textAlignment="CENTER" AnchorPane.leftAnchor="40.0" />
+                  <Button fx:id="btn_calculate" layoutX="497.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#calculateAndPopulateGraph" prefHeight="44.0" prefWidth="89.0" text="Calculate" textAlignment="JUSTIFY" AnchorPane.bottomAnchor="12.600000000000023" AnchorPane.rightAnchor="13.400000000000006">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab fx:id="tab_quantum_results" closable="false" text="Results">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <BarChart fx:id="bar_results" alternativeColumnFillVisible="true" barGap="0.5" categoryGap="0.5" legendVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="600.0" title="Results" AnchorPane.bottomAnchor="-0.7999999999999545" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

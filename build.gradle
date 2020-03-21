@@ -11,6 +11,12 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
+    
+    // The JavaFX plugin
+  	id 'org.openjfx.javafxplugin' version '0.0.8'
+  	
+  	// The eclipse otherwise it will emmit errors
+  	id 'eclipse'
 }
 
 version = '1.2.0.0'
@@ -31,6 +37,18 @@ test{
   useJUnitPlatform()
 }
 
+javafx {
+    version = "13"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+run {
+    if (javafx.platform.classifier == 'win') {
+        // Temporal fix for Eclipse with JDK 1.8 and Windows 
+        systemProperty "java.library.path", "C:\tmp"
+    }
+}
+
 application {
-	mainClassName 'com.presenting.Presenting'
+	mainClassName 'com.gui.GUIStarter'
 }
