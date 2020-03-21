@@ -168,13 +168,14 @@ public interface QCollapser
      */
     public static CRegister collapse ( final QRegister reg , final long rounds )
     {
-        final int [] counters = Arrays.stream( "0".repeat( QMath.pow( 2 , reg.size() ) )
+        final int [] counters = Arrays.stream( "0".repeat( QMath.pow( 2 ,
+                                                                      reg.size() ) )
                                                   .split( "" ) )
                                       .mapToInt( Integer::parseInt )
                                       .toArray();
 
         final List< String > possibilities = generateBinaryStringValues( reg.size() );
-        
+
         for ( int i = 0 ; i < rounds ; i++ )
         {
             final String collapsed = collapseToString( reg );
@@ -253,5 +254,21 @@ public interface QCollapser
         }
 
         return index - 1;
+    }
+
+    /**
+     * @param reg
+     * @param n
+     * @return
+     */
+    public static List< String > generateCollapseData ( final QRegister reg ,
+                                                        final long n )
+    {
+        List< String > res = new LinkedList< String >();
+        for ( int i = 0 ; i < n ; i++ )
+        {
+            res.add( collapseToString( reg ) );
+        }
+        return res;
     }
 }

@@ -7,21 +7,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.simulationQ.simulation.computation.program.QProgram;
+import com.simulationQ.simulation.computation.qubits.register.CRegister;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 
 
-public class FXMLController
+public class MainWindowController
 {
 
     @FXML
@@ -41,6 +47,9 @@ public class FXMLController
 
     @FXML
     private Button                      btn_minus;
+
+    @FXML
+    private TextField                   txt_number_of_collapses;
 
     private final List< Label >         labelsQubits              = new LinkedList< Label >();
 
@@ -93,22 +102,38 @@ public class FXMLController
     {
         // graphSample();
 
-        List< Character > zerosAndOnes = labelsQubits.stream()
-                                                     .map( x -> x.getText()
-                                                                 .toCharArray()[1] )
-                                                     .collect( Collectors.toUnmodifiableList() );
+        final List< Character > zerosAndOnes = labelsQubits.stream()
+                                                           .map( x -> x.getText()
+                                                                       .toCharArray()[1] )
+                                                           .collect( Collectors.toUnmodifiableList() );
 
-        System.out.println( zerosAndOnes );
+        final String startingState = zerosAndOnes.toString()
+                                                 .replaceAll( "\\[|\\]|\\s|\\," ,
+                                                              "" );
 
-        String startingState = zerosAndOnes.toString()
-                                           .replaceAll( "\\[|\\]|\\s|\\," ,
-                                                        "" );
+        final CRegister reg = new CRegister( startingState );
 
-        System.out.println( startingState );
+        // TODO parse the QProgram and pass it in here
+        
+        try
+        {
+            String number = txt_number_of_collapses.getText();
+            Integer collapses = Integer.parseInt( txt_number_of_collapses.getText() );
 
-        graphData( QCollapserModelDummy.generateCollapseData( startingState ) );
+            graphData( CollapseDataModel.generateCollapseData( reg ,
+                                                               new QProgram() ,
+                                                               collapses ) );
+            
+        } catch ( NumberFormatException e )
+        {
+            Alert alert = new Alert( AlertType.ERROR );
+            alert.setTitle( "Unexpected number format" );
+            alert.setHeaderText( "Check the number of collapses text field" );
+            alert.setContentText( txt_number_of_collapses.getText()
+                    + " is not a number" );
 
-        // String res = QCollapser.collapseToString( reg );
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -121,12 +146,12 @@ public class FXMLController
         XYChart.Series< String , Number > chart = new Series< String , Number >();
 
         chart.getData()
-                 .addAll(
-                          collapseData.entrySet()
-                                      .stream()
-                                      .map( x -> new XYChart.Data< String , Number >( x.getKey() ,
-                                                                                      x.getValue() ) )
-                                      .collect( Collectors.toList() ));
+             .addAll(
+                      collapseData.entrySet()
+                                  .stream()
+                                  .map( x -> new XYChart.Data< String , Number >( x.getKey() ,
+                                                                                  x.getValue() ) )
+                                  .collect( Collectors.toList() ) );
 
         bar_results.getData().add( chart );
 
