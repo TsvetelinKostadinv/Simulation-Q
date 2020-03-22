@@ -5,11 +5,20 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.gui.events.DeleteNextEvent;
+import com.simulationQ.simulation.computation.gates.QGates;
 import com.simulationQ.simulation.computation.program.QProgram;
 import com.simulationQ.simulation.computation.qubits.register.CRegister;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
@@ -18,7 +27,10 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -54,6 +66,8 @@ public class MainWindowController
     private final List< Label >         labelsQubits              = new LinkedList< Label >();
 
     private static final int            ROW_HEIGHT                = 20;
+
+    private static final int            LINE_SPACING              = 10;
 
     private static int                  nextRowStarting_X_pointer = 20;
 
@@ -93,7 +107,7 @@ public class MainWindowController
                                                                 // label
 
         translatePlusAndMinusButtonsUp();
-        nextRowStarting_Y_pointer -= ROW_HEIGHT;
+        nextRowStarting_Y_pointer -= ( ROW_HEIGHT + LINE_SPACING );
 
     }
 
@@ -114,16 +128,46 @@ public class MainWindowController
         final CRegister reg = new CRegister( startingState );
 
         // TODO parse the QProgram and pass it in here
+
+        final QProgram program = new QProgram();
+
+        List< List< String > > namesOfGates = programRows.stream()
+                                                         .map( x -> x.stream()
+                                                                     .map( choice -> choice.getSelectionModel()
+                                                                                           .getSelectedItem() )
+                                                                     .collect( Collectors.toList() ))
+                                                         .collect( Collectors.toList() );
         
+        for( int i=0;i<namesOfGates.size();i++ )
+        {
+            for( String gate : namesOfGates.get( i ) )
+            {
+                if( gate != null
+                        && !gate.isBlank() )
+                {                    
+                    program.addPart( QGates.getGateByName( gate ) , i );
+                }
+            }
+        }
+
         try
         {
-            String number = txt_number_of_collapses.getText();
-            Integer collapses = Integer.parseInt( txt_number_of_collapses.getText() );
+            final String number = txt_number_of_collapses.getText();
+            Integer collapses;
+            if ( number == null
+                    || number.isEmpty()
+                    || number.isBlank() )
+            {
+                collapses = 1;
+            } else
+            {
+                collapses = Integer.parseInt( number );
+            }
 
             graphData( CollapseDataModel.generateCollapseData( reg ,
-                                                               new QProgram() ,
+                                                               program ,
                                                                collapses ) );
-            
+
         } catch ( NumberFormatException e )
         {
             Alert alert = new Alert( AlertType.ERROR );
@@ -139,7 +183,7 @@ public class MainWindowController
     /**
      * @param collapseData
      */
-    private void graphData ( Map< String , Number > collapseData )
+    private final void graphData ( Map< String , Number > collapseData )
     {
         bar_results.getData().clear();
 
@@ -158,31 +202,9 @@ public class MainWindowController
         tab_pane_main.getSelectionModel().select( tab_quantum_results );
     }
 
-    @SuppressWarnings ( "unchecked" )
-    private final void graphSample ()
-    {
+    private final List< List< ChoiceBox< String > > > programRows   = new LinkedList< List< ChoiceBox< String > > >();
 
-        bar_results.getData().clear();
-
-        XYChart.Series< String , Number > series1 = new Series< String , Number >();
-
-        series1.getData()
-               .addAll(
-                        new XYChart.Data[] {
-                                new XYChart.Data< String , Number >( "|00>" ,
-                                                                     0.4 ),
-                                new XYChart.Data< String , Number >( "|01>" ,
-                                                                     0.2 ),
-                                new XYChart.Data< String , Number >( "|10>" ,
-                                                                     0.9 ),
-                                new XYChart.Data< String , Number >( "|11>" ,
-                                                                     -0.2 )
-                        } );
-
-        bar_results.getData().add( series1 );
-
-        tab_pane_main.getSelectionModel().select( tab_quantum_results );
-    }
+    private int                                       nextRowNumber = 0;
 
     private final List< Node > constructNewQubitProgramRow ()
     {
@@ -191,20 +213,25 @@ public class MainWindowController
 
         this.labelsQubits.add( startingState );
 
+        final ChoiceBox< String > operationMenu = constructOperationMenu( nextRowNumber ,
+                                                                          0 ,
+                                                                          nextRowNumber );
+
+        programRows.add( new LinkedList< ChoiceBox< String > >() );
+        programRows.get( nextRowNumber ).add( operationMenu );
+
         // moving pointers
-        nextRowStarting_Y_pointer += ROW_HEIGHT;
-
+        nextRowStarting_Y_pointer += ROW_HEIGHT + LINE_SPACING;
         translatePlusAndMinusButtonsDown();
+        nextRowNumber++;
 
-        // TODO add the plus for the gate
-
-        return Arrays.asList( startingState );
+        return Arrays.asList( startingState , operationMenu );
     }
 
     /**
      * @return
      */
-    private Label constructStartingStateLabel ()
+    private final Label constructStartingStateLabel ()
     {
         final Label startingState = new Label( "|0>" );
         startingState.setFont( new Font( ROW_HEIGHT - 2 ) );
@@ -235,26 +262,134 @@ public class MainWindowController
         return startingState;
     }
 
+    private static final int EXPECTED_BOX_WIDTH              = 100;
+
+    private static final int SPACING                         = 5;
+
+    private static final int EXPECTED_BOX_WIDTH_WITH_SPACING = EXPECTED_BOX_WIDTH
+            + SPACING;
+
     /**
-     * 
+     * @param rowNumber
+     * @param translateY
+     * @param translate
+     * @return
      */
-    private void translatePlusAndMinusButtonsDown ()
+    private final ChoiceBox< String > constructOperationMenu ( int rowNumber ,
+                                                               int xIndexOffSet ,
+                                                               int yIndexOffSet )
     {
-        btn_plus.translateYProperty()
-                .setValue( nextRowStarting_Y_pointer + ROW_HEIGHT );
-        btn_minus.translateYProperty()
-                 .setValue( nextRowStarting_Y_pointer + ROW_HEIGHT );
+        final ChoiceBox< String > operationMenu = new ChoiceBox<>();
+
+        operationMenu.setTranslateX( nextRowStarting_X_pointer + 30
+                + xIndexOffSet * EXPECTED_BOX_WIDTH_WITH_SPACING );
+
+        operationMenu.setTranslateY( 10
+                + yIndexOffSet * ( ROW_HEIGHT + LINE_SPACING ) );
+
+        Set< String > items = QGates.getAllGates()
+                                    .stream()
+                                    .map( x -> x.getName() )
+                                    .collect( Collectors.toSet() );
+
+        items.add( "" );
+
+        operationMenu.getItems().addAll( items );
+
+        operationMenu.getSelectionModel()
+                     .selectedItemProperty()
+                     .addListener( new ChangeListener< String >()
+                     {
+
+                         private final int indexOfRow = rowNumber;
+
+                         private ChoiceBox< String > next;
+
+                         @Override
+                         public void changed ( ObservableValue< ? extends String > observable ,
+                                               String oldValue ,
+                                               String newValue )
+                         {
+                             if ( newValue != null
+                                     && !newValue.isBlank() )
+                             {
+                                 // From blank to gate
+                                 System.out.println( "Should Add +++++" );
+
+                                 next = constructOperationMenu( indexOfRow ,
+                                                                xIndexOffSet
+                                                                        + 1 ,
+                                                                yIndexOffSet );
+
+                                 // Adding it to the program rows
+                                 programRows.get( rowNumber )
+                                            .add( next );
+
+                                 // Actually visualizing it
+
+                                 ( ( AnchorPane ) tab_quantum_program.getContent() ).getChildren()
+                                                                                    .add( next );
+
+                                 operationMenu.addEventHandler( DeleteNextEvent.inst.getEventType() ,
+                                                                event -> {
+
+                                                                    if ( next != null )
+                                                                    {
+                                                                        next.fireEvent( event );
+                                                                    }
+
+                                                                    programRows.get( yIndexOffSet )
+                                                                               .remove( next );
+                                                                    ( ( AnchorPane ) tab_quantum_program.getContent() ).getChildren()
+                                                                                                                       .remove( next );
+                                                                } );
+
+                             } else
+                             {
+                                 if ( newValue.isBlank()
+                                         && oldValue != null
+                                         && !oldValue.isBlank() )
+                                 {
+                                     // from gate to blank
+                                     System.out.println( "Should remove -----" );
+                                     next.fireEvent( DeleteNextEvent.inst );
+
+                                     programRows.get( yIndexOffSet )
+                                                .remove( next );
+                                     ( ( AnchorPane ) tab_quantum_program.getContent() ).getChildren()
+                                                                                        .remove( next );
+                                 }
+                             }
+                         }
+                     } );
+
+        return operationMenu;
     }
 
     /**
      * 
      */
-    private void translatePlusAndMinusButtonsUp ()
+    private final void translatePlusAndMinusButtonsDown ()
     {
         btn_plus.translateYProperty()
-                .setValue( nextRowStarting_Y_pointer - ROW_HEIGHT );
+                .setValue( nextRowStarting_Y_pointer + ROW_HEIGHT
+                        + LINE_SPACING );
         btn_minus.translateYProperty()
-                 .setValue( nextRowStarting_Y_pointer - ROW_HEIGHT );
+                 .setValue( nextRowStarting_Y_pointer + ROW_HEIGHT
+                         + LINE_SPACING );
+    }
+
+    /**
+     * 
+     */
+    private final void translatePlusAndMinusButtonsUp ()
+    {
+        btn_plus.translateYProperty()
+                .setValue( nextRowStarting_Y_pointer - ROW_HEIGHT
+                        + LINE_SPACING );
+        btn_minus.translateYProperty()
+                 .setValue( nextRowStarting_Y_pointer - ROW_HEIGHT
+                         + LINE_SPACING );
     }
 
     @FXML
