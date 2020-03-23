@@ -51,6 +51,9 @@ public abstract class QGate
         this.numberInputCoeficients = numberInputBits;
         this.operation = operation;
         this.informationForGate = information;
+        
+        QGates.addGate(this);
+        
     }
 
     /**
@@ -75,6 +78,15 @@ public abstract class QGate
     public String getInformationForGate ()
     {
         return informationForGate;
+    }
+
+    
+    /**
+     * @return the name
+     */
+    public String getName ()
+    {
+        return name;
     }
 
     /**

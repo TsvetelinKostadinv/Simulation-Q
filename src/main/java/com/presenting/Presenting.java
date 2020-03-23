@@ -28,24 +28,24 @@ import com.simulationQ.simulation.computation.qubits.register.QRegister;
 public abstract class Presenting
 {
 
-    // допустими символи 1 и 0
-    // за всички останали недопустими символи се генерира грешка
+    // Allowed symbols 0 and 1
+    // Otherwise an exception is raised
 
     public static final String    REGISTER = "010";
 
+    // Allowed symbols H, X, Y, Z
+    // spaces and undescores are ignored
+    // an error will be generated for all other inputs
+    // the array should contain as many elements as the register
+    // in all other circumstances an exception is raised
     
-    
-    // допустими символи H, X, Y, Z
-    // разстояния и долни черти се игнорират,
-    // за всички останали недопустими символи се генерира грешка
-
     public static final String [] PROGRAM  = new String[] {
             "",
             "",
             ""
     };
     
-    
+    // Pretty much self explanatory
     public static final long COLLAPSES = 1_000_000L;
 
     /**
@@ -87,8 +87,8 @@ public abstract class Presenting
      */
     private static final QGate [] [] parseProgram ()
     {
-        final String registerAndProgramNotTheSameSizeMessage = "Размерността на регистърът и на първото измерение на програмата трябва да съвпадат";
-        final String unexpectedSymbolMessage = "Недопустим символ на ред %s - %s";
+        final String registerAndProgramNotTheSameSizeMessage = "The length of the register and the elements in the array should have the same size";
+        final String unexpectedSymbolMessage = "Unexpected symbol on line%s - %s";
         if ( PROGRAM.length != REGISTER.length() )
             throw new IllegalArgumentException( registerAndProgramNotTheSameSizeMessage );
 
@@ -138,7 +138,7 @@ public abstract class Presenting
      */
     private static final Qubit [] parseRegister ()
     {
-        final String unexpectedSymbolMessage = "Регистърът трябва да съдържа само символи 1 или 0";
+        final String unexpectedSymbolMessage = "UnexpectedSymbol: the register should contain only 0s and 1s";
 
         final List< Qubit > reg = new LinkedList< Qubit >();
         for ( char bit : REGISTER.toCharArray() )
