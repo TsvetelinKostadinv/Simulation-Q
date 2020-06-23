@@ -42,7 +42,7 @@ public abstract class Presenting
     public static final String [] PROGRAM  = new String[] {
             "",
             "",
-            ""
+            "",
     };
     
     // Pretty much self explanatory
