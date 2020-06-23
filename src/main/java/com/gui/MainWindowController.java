@@ -145,7 +145,7 @@ public class MainWindowController
                 if( gate != null
                         && !gate.isBlank() )
                 {                    
-                    program.addPart( QGates.getGateByName( gate ) , i );
+                    program.addPart( QGates.getGateByName( gate ).get() , i );
                 }
             }
         }

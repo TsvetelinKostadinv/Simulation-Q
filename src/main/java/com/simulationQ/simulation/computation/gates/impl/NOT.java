@@ -17,7 +17,7 @@ import com.simulationQ.simulation.util.math.matrices.Matrix;
 public class NOT extends QGate
 {
 
-    public static final String NAME                 = "Pauli-X/NOT";
+    public static final String NAME                 = "NOT";
 
     public static final Matrix OPERATION_MATRIX     = new Matrix( new ComplexNumber[][] {
             { ComplexNumber.ORIGIN, ComplexNumber.REAL_UNIT },

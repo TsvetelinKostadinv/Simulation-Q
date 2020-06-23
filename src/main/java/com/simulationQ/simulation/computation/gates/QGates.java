@@ -7,6 +7,7 @@ package com.simulationQ.simulation.computation.gates;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import com.simulationQ.simulation.computation.gates.impl.Hadamard;
@@ -56,9 +57,9 @@ public abstract class QGates
      * @param gate
      * @return
      */
-    public static QGate getGateByName ( String gate )
+    public static Optional< QGate > getGateByName ( String gate )
     {
-        return GATES.stream().filter( x -> x.getName().equals( gate ) ).findFirst().get();
+        return GATES.stream().filter( x -> x.getName().equals( gate ) ).findFirst();
     }
 
 }
