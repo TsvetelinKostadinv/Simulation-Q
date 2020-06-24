@@ -10,10 +10,12 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import com.simulationQ.simulation.computation.gates.impl.CNOT;
 import com.simulationQ.simulation.computation.gates.impl.Hadamard;
 import com.simulationQ.simulation.computation.gates.impl.NOT;
 import com.simulationQ.simulation.computation.gates.impl.PauliY;
 import com.simulationQ.simulation.computation.gates.impl.PauliZ;
+import com.simulationQ.simulation.computation.gates.impl.QIdentity;
 
 
 /**
@@ -32,6 +34,8 @@ public abstract class QGates
         NOT NOT = new NOT();
         PauliY Y = new PauliY();
         PauliZ Z = new PauliZ();
+        CNOT CNOT = new CNOT();
+        QIdentity identity = new QIdentity();
     }
 
     /**
@@ -62,4 +66,13 @@ public abstract class QGates
         return GATES.stream().filter( x -> x.getName().equals( gate ) ).findFirst();
     }
 
+    /**
+     * @param gate
+     * @return
+     */
+    public static Optional< QGate > getGateByNameIgnoreCase ( String gate )
+    {
+        return GATES.stream().filter( x -> x.getName().equalsIgnoreCase( gate ) ).findFirst();
+    }
+    
 }
