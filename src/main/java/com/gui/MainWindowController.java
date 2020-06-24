@@ -1,17 +1,22 @@
 package com.gui;
 
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.gui.events.DeleteNextEvent;
+import com.scripting.ScriptExecutor;
 import com.simulationQ.simulation.computation.gates.QGates;
 import com.simulationQ.simulation.computation.program.QProgram;
 import com.simulationQ.simulation.computation.qubits.register.CRegister;
+import com.simulationQ.simulation.computation.qubits.register.QRegister;
+import com.sun.javafx.tk.FileChooserType;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -37,6 +42,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 
 
 public class MainWindowController
@@ -62,6 +69,12 @@ public class MainWindowController
 
     @FXML
     private TextField                   txt_number_of_collapses;
+
+    @FXML
+    private TextField                   txt_path;
+
+    @FXML
+    private Button                      btn_select_script;
 
     private final List< Label >         labelsQubits              = new LinkedList< Label >();
 
@@ -134,10 +147,65 @@ public class MainWindowController
         final String startingState = zerosAndOnes.toString()
                                                  .replaceAll( "\\[|\\]|\\s|\\," ,
                                                               "" );
+        if ( startingState.isBlank() )
+        {
+            if ( !txt_path.getText().isEmpty() )
+            {
+                final Optional< QRegister > reg = ScriptExecutor.executeScript( txt_path.getText() );
+
+                reg.ifPresentOrElse(
+                                     register -> {
+                                         try
+                                         {
+                                             final String number = txt_number_of_collapses.getText();
+                                             Integer collapses;
+                                             if ( number == null
+                                                     || number.isEmpty()
+                                                     || number.isBlank() )
+                                             {
+                                                 collapses = 1;
+                                             } else
+                                             {
+                                                 collapses = Integer.parseInt( number );
+                                             }
+
+                                             graphData( CollapseDataModel.generateCollapseData( register ,
+                                                                                                collapses ) );
+
+                                         } catch ( NumberFormatException e )
+                                         {
+                                             Alert alert = new Alert( AlertType.ERROR );
+                                             alert.setTitle( "Unexpected number format" );
+                                             alert.setHeaderText( "Check the number of collapses text field" );
+                                             alert.setContentText( txt_number_of_collapses.getText()
+                                                     + " is not a number" );
+
+                                             alert.showAndWait();
+                                         }
+                                     } ,
+                                     () -> {
+                                         Alert alert = new Alert( AlertType.ERROR );
+                                         alert.setTitle( "Quantum script error" );
+                                         alert.setHeaderText( "Check the syntax and try again!" );
+                                         alert.setContentText( "For a richer error message try executing the script in the shell" );
+
+                                         alert.showAndWait();
+                                     } );
+            }else {
+                Alert alert = new Alert( AlertType.ERROR );
+                alert.setTitle( "Empty program error" );
+                alert.setHeaderText( "Add a qubit or load a script and try again" );
+                alert.showAndWait();
+            }
+        } else
+        {
+            Alert alert = new Alert( AlertType.ERROR );
+            alert.setTitle( "Empty program error" );
+            alert.setHeaderText( "Add a qubit or load a script and try again" );
+            alert.showAndWait();
+        }
 
         final CRegister reg = new CRegister( startingState );
-
-        // TODO parse the QProgram and pass it in here
 
         final QProgram program = new QProgram();
 
@@ -187,6 +255,22 @@ public class MainWindowController
                     + " is not a number" );
 
             alert.showAndWait();
+        }
+    }
+
+    @FXML
+    protected final void selectScript ()
+    {
+        FileChooser chooser = new FileChooser();
+        File selected = chooser.showOpenDialog( null );
+
+        if ( selected != null )
+        {
+            System.out.println( selected.getAbsolutePath() );
+            txt_path.setText( selected.getAbsolutePath() );
+        } else
+        {
+            // No Directory selected
         }
     }
 
@@ -395,11 +479,11 @@ public class MainWindowController
     private final void translatePlusAndMinusButtonsUp ()
     {
         btn_plus.translateYProperty()
-                .setValue( nextRowStarting_Y_pointer - (ROW_HEIGHT
-                        + LINE_SPACING) );
+                .setValue( nextRowStarting_Y_pointer - ( ROW_HEIGHT
+                        + LINE_SPACING ) );
         btn_minus.translateYProperty()
-                 .setValue( nextRowStarting_Y_pointer - (ROW_HEIGHT
-                         + LINE_SPACING) );
+                 .setValue( nextRowStarting_Y_pointer - ( ROW_HEIGHT
+                         + LINE_SPACING ) );
     }
 
     @FXML

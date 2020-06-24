@@ -50,4 +50,32 @@ public interface CollapseDataModel
 
         return res;
     }
+
+    /**
+     * @param register
+     * @param collapses
+     * @return
+     */
+    static Map< String , Number > generateCollapseData ( QRegister register ,
+                                                         Integer count )
+    {
+
+        final Map< String , Number > res = new LinkedHashMap<>();
+        if ( register.size() == 0 ) return res;
+        final List< String > results = QCollapser.generateCollapseData( register ,
+                                                                        count );
+
+        for ( String possibility : QCollapser.generateBinaryStringValues( register.size() ) )
+        {
+            res.put( possibility , 0 );
+        }
+
+        for ( String state : results )
+        {
+//            res.put( state , res.get( state ).intValue() + 1 );
+            res.compute( state , (str, n) -> n.intValue()+1 );
+        }
+
+        return res;
+    }
 }
