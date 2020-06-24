@@ -4,6 +4,7 @@
  */
 package com.scripting;
 
+import com.simulationQ.simulation.computation.QCollapser;
 
 /**
  * @author Tsvetelin
@@ -13,6 +14,9 @@ public interface ScriptTesting
 {
     public static void main ( String [] args )
     {
-        ScriptExecutor.executeScript( "src/text/java/com/scripting/text.sqr" );
+        ScriptExecutor.executeScript( "src/test/java/com/scripting/test.sqr" )
+            .map( reg -> QCollapser.collapse( reg ) )
+            .ifPresent( System.out::println );
+        
     }
 }
