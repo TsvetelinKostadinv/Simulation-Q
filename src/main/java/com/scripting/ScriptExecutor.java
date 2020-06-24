@@ -78,7 +78,7 @@ public interface ScriptExecutor
                     final int rowNumber = i;
                     for ( int j = 1 ; j < instructions.length ; j++ )
                     {
-                        QGates.getGateByName( instructions[j].trim() )
+                        QGates.getGateByNameIgnoreCase( instructions[j].trim() )
                               .ifPresentOrElse(
                                                 gate -> program.addPart( gate ,
                                                                          index ) ,
@@ -116,7 +116,7 @@ public interface ScriptExecutor
         System.err.println( desc );
         System.err.println( repeat( " " , numberOfDigits( line ) ) + "|" );
 
-        System.err.println( line + " | " + input );
+        System.err.println( (line+1) + " | " + input );
         System.err.print( repeat( " " , numberOfDigits( line )+1 ) + repeat( " " , index ) );
         System.err.print( repeat( " " , numberOfDigits( line ) ) + repeat( "^" , len ) );
 
