@@ -87,27 +87,37 @@ public class MainWindowController
     protected final void deleteLastQubit ()
     {
         System.out.println( "Deleting" );
-        this.labelsQubits.remove( this.labelsQubits.size() - 1 );
 
         List< Node > buttonsAndLabels = ( ( AnchorPane ) tab_quantum_program.getContent() ).getChildren();
 
-        if ( buttonsAndLabels.size() <= 2 ) return; // there are no labels
-
-        while ( ! ( buttonsAndLabels.get( buttonsAndLabels.size()
-                - 1 ) instanceof Label ) )
+        if ( buttonsAndLabels.size() <= 3 )
         {
+            nextRowStarting_Y_pointer = 10;
+            return; // there are no labels
+        } else
+        {
+            this.labelsQubits.remove( this.labelsQubits.size() - 1 );
+            while ( ! ( buttonsAndLabels.get( buttonsAndLabels.size()
+                    - 1 ) instanceof Label ) )
+            {
+                buttonsAndLabels.remove( buttonsAndLabels.size() - 1 ); // remove
+                                                                        // all
+                                                                        // the
+                                                                        // program
+                                                                        // operations
+                                                                        // on
+                                                                        // that
+                                                                        // row
+            }
             buttonsAndLabels.remove( buttonsAndLabels.size() - 1 ); // remove
-                                                                    // all the
-                                                                    // program
-                                                                    // operations
-                                                                    // on that
-                                                                    // row
-        }
-        buttonsAndLabels.remove( buttonsAndLabels.size() - 1 ); // remove the
-                                                                // label
+                                                                    // the
+                                                                    // label
 
-        translatePlusAndMinusButtonsUp();
-        nextRowStarting_Y_pointer -= ( ROW_HEIGHT + LINE_SPACING );
+            translatePlusAndMinusButtonsUp();
+            nextRowStarting_Y_pointer -= ( ROW_HEIGHT
+                    + LINE_SPACING );
+            nextRowNumber--;
+        }
 
     }
 
@@ -135,16 +145,16 @@ public class MainWindowController
                                                          .map( x -> x.stream()
                                                                      .map( choice -> choice.getSelectionModel()
                                                                                            .getSelectedItem() )
-                                                                     .collect( Collectors.toList() ))
+                                                                     .collect( Collectors.toList() ) )
                                                          .collect( Collectors.toList() );
-        
-        for( int i=0;i<namesOfGates.size();i++ )
+
+        for ( int i = 0 ; i < namesOfGates.size() ; i++ )
         {
-            for( String gate : namesOfGates.get( i ) )
+            for ( String gate : namesOfGates.get( i ) )
             {
-                if( gate != null
+                if ( gate != null
                         && !gate.isBlank() )
-                {                    
+                {
                     program.addPart( QGates.getGateByName( gate ).get() , i );
                 }
             }
@@ -385,11 +395,11 @@ public class MainWindowController
     private final void translatePlusAndMinusButtonsUp ()
     {
         btn_plus.translateYProperty()
-                .setValue( nextRowStarting_Y_pointer - ROW_HEIGHT
-                        + LINE_SPACING );
+                .setValue( nextRowStarting_Y_pointer - (ROW_HEIGHT
+                        + LINE_SPACING) );
         btn_minus.translateYProperty()
-                 .setValue( nextRowStarting_Y_pointer - ROW_HEIGHT
-                         + LINE_SPACING );
+                 .setValue( nextRowStarting_Y_pointer - (ROW_HEIGHT
+                         + LINE_SPACING) );
     }
 
     @FXML
