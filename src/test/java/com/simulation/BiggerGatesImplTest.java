@@ -2,7 +2,7 @@
  * 12/05/2020 16:18:55
  * BiggerGatesImpl.java created by Tsvetelin
  */
-package com;
+package com.simulation;
 
 import com.simulationQ.simulation.computation.QCollapser;
 import com.simulationQ.simulation.computation.QFinalStateCalculator;
@@ -17,10 +17,10 @@ import static com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber.
 /**
  * @author Tsvetelin
  */
-public class BiggerGatesImpl
+public class BiggerGatesImplTest
 {
     
-    public BiggerGatesImpl ()
+    public BiggerGatesImplTest ()
     {
     }
     
