@@ -4,19 +4,16 @@
  */
 package com.simulationQ.simulation.computation.qubits.register;
 
-
 import com.simulationQ.simulation.computation.qubits.Qubit;
 import com.simulationQ.simulation.util.math.QMath;
 import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
 
-
 /**
  * @author Tsvetelin
- *
  */
 public class QRegister
 {
-
+    
     private final Vector computationalVector;
     
     public QRegister ( Qubit... qubits )
@@ -25,8 +22,8 @@ public class QRegister
     }
     
     /**
-     * 
-     * This should be used with caution as it does not perform checking as the vector might be entangled
+     * This should be used with caution as it does not perform checking as
+     * the vector might be entangled
      * 
      * @param vector
      */
@@ -34,20 +31,20 @@ public class QRegister
     {
         this.computationalVector = vector;
     }
-
+    
     public Qubit head ()
     {
-        return this.computationalVector.size() == 2
-                ? new Qubit( this.computationalVector.getAt( 0 ) ,
-                             this.computationalVector.getAt( 1 ) )
-                : null;
+        return this.computationalVector.size() == 2 ?
+            new Qubit(
+                this.computationalVector.getAt( 0 ) ,
+                this.computationalVector.getAt( 1 ) ) :
+                null;
     }
-
+    
     public final int size ()
     {
         return QMath.log2( this.computationalVector.size() );
     }
-
     
     /**
      * @return the computationalVector
@@ -56,37 +53,36 @@ public class QRegister
     {
         return this.computationalVector;
     }
-
+    
     private static Vector getAsComputationalVector ( Qubit [] qubits )
     {
         Vector res = qubits[0].getAsVector();
-    
+        
         for ( int i = 1 ; i < qubits.length ; i++ )
         {
             res = res.tensorProduct( qubits[i].getAsVector() );
         }
         return res;
-    
+        
     }
     
     @Override
     public boolean equals ( Object obj )
     {
-        if( obj instanceof QRegister ) 
+        if ( obj instanceof QRegister )
         {
-            QRegister reg = ( QRegister ) obj;
+            QRegister reg = (QRegister) obj;
             
-            return reg.getComputationalVector().equals( this.getComputationalVector() );
+            return reg.getComputationalVector()
+                .equals( this.getComputationalVector() );
         }
         return false;
     }
-
+    
     @Override
     public String toString ()
     {
         return this.computationalVector.toString();
     }
     
-    
-
 }

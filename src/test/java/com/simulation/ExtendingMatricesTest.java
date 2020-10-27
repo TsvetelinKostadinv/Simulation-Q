@@ -10,16 +10,17 @@ import com.simulationQ.simulation.util.math.matrices.MatrixOperations;
 
 /**
  * @author Tsvetelin
- *
  */
 public abstract class ExtendingMatricesTest
 {
     public static void main ( String [] args )
     {
         final Matrix oper = NOT.OPERATION_MATRIX;
-        final Matrix identity = Matrix.multiplicativeIdentity( oper.getRows() , oper.getColons() );
+        final Matrix identity =
+            Matrix.multiplicativeIdentity( oper.getRows() , oper.getColons() );
         
-        System.out.println( MatrixOperations.productKronecker( oper , identity ) );
+        System.out
+            .println( MatrixOperations.productKronecker( oper , identity ) );
         
     }
 }

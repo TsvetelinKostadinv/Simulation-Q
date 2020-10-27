@@ -14,11 +14,10 @@ import com.simulationQ.simulation.computation.qubits.register.QRegister;
 
 /**
  * @author Tsvetelin
- *
  */
 public class Main
 {
-
+    
     /**
      * @param args
      */
@@ -27,17 +26,23 @@ public class Main
         if ( args.length == 0 )
         {
             GUIStarter.main( args );
-        }else if( args.length == 2
-                && args[0] == "-s")
-        {
-            Optional< QRegister > register = ScriptExecutor.executeScript( args[1] );
-            
-            register.ifPresentOrElse( reg-> System.out.println( "Result: " + QCollapser.collapse( reg ) ) , () -> System.err.println( "EXECUTION FAILED" ) );
-        }else {
-            System.err.println( "Unrecognised comman flags: " + Arrays.toString( args ) );
-        }
+        } else
+            if ( args.length == 2
+                && args[0] == "-s" )
+            {
+                Optional< QRegister > register =
+                    ScriptExecutor.executeScript( args[1] );
+                
+                register.ifPresentOrElse(
+                    reg -> System.out
+                        .println( "Result: " + QCollapser.collapse( reg ) ) ,
+                    () -> System.err.println( "EXECUTION FAILED" ) );
+            } else
+            {
+                System.err.println(
+                    "Unrecognised comman flags: " + Arrays.toString( args ) );
+            }
         
-
     }
-
+    
 }

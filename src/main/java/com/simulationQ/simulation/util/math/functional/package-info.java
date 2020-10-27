@@ -4,6 +4,5 @@
  */
 /**
  * @author Tsvetelin
- *
  */
 package com.simulationQ.simulation.util.math.functional;

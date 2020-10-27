@@ -4,7 +4,6 @@
  */
 package com.presenting;
 
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,34 +19,33 @@ import com.simulationQ.simulation.computation.qubits.Qubit;
 import com.simulationQ.simulation.computation.qubits.register.CRegister;
 import com.simulationQ.simulation.computation.qubits.register.QRegister;
 
-
 /**
  * @author Tsvetelin
- *
  */
 public abstract class Presenting
 {
-
+    
     // Allowed symbols 0 and 1
     // Otherwise an exception is raised
-
-    public static final String    REGISTER = "010";
-
+    
+    public static final String REGISTER = "010";
+    
     // Allowed symbols H, X, Y, Z
     // spaces and undescores are ignored
     // an error will be generated for all other inputs
     // the array should contain as many elements as the register
     // in all other circumstances an exception is raised
     
-    public static final String [] PROGRAM  = new String[] {
-            "",
-            "",
-            "",
-    };
+    public static final String [] PROGRAM =
+        new String[] {
+            "" ,
+            "" ,
+            "" ,
+        };
     
     // Pretty much self explanatory
     public static final long COLLAPSES = 1_000_000L;
-
+    
     /**
      * @param args
      */
@@ -55,11 +53,11 @@ public abstract class Presenting
     {
         final QRegister register = new QRegister( parseRegister() );
         System.out.println( "Start: " + register );
-
+        
         final QProgram program = new QProgram();
-
+        
         final QGate [] [] gates = parseProgram();
-
+        
         for ( int index = 0 ; index < gates.length ; index++ )
         {
             for ( int j = 0 ; j < gates[index].length ; j++ )
@@ -68,7 +66,8 @@ public abstract class Presenting
             }
         }
         
-        final QRegister finalState = QFinalStateCalculator.calculateFinalState( program , register );
+        final QRegister finalState =
+            QFinalStateCalculator.calculateFinalState( program , register );
         System.out.println( "Final state: " + finalState );
         
         long start = System.currentTimeMillis();
@@ -77,85 +76,94 @@ public abstract class Presenting
         
         long end = System.currentTimeMillis();
         
-        System.out.println( "Result(after "+COLLAPSES+" collapses) : " + result );
-        System.out.println( "Took: " + (end-start) + "ms" );
+        System.out
+            .println( "Result(after " + COLLAPSES + " collapses) : " + result );
+        System.out.println( "Took: " + ( end - start ) + "ms" );
         
     }
-
+    
     /**
      * @return
      */
     private static final QGate [] [] parseProgram ()
     {
-        final String registerAndProgramNotTheSameSizeMessage = "The length of the register and the elements in the array should have the same size";
-        final String unexpectedSymbolMessage = "Unexpected symbol on line%s - %s";
+        final String registerAndProgramNotTheSameSizeMessage =
+            "The length of the register and the elements in the array should have the same size";
+        final String unexpectedSymbolMessage =
+            "Unexpected symbol on line%s - %s";
         if ( PROGRAM.length != REGISTER.length() )
-            throw new IllegalArgumentException( registerAndProgramNotTheSameSizeMessage );
-
+            throw new IllegalArgumentException(
+                registerAndProgramNotTheSameSizeMessage );
+        
         List< QGate [] > programRows = new LinkedList<>();
-
+        
         for ( String row : PROGRAM )
         {
             List< QGate > currentRow = new LinkedList<>();
             for ( char symbol : row.toCharArray() )
             {
                 switch ( symbol )
-                    {
-                        case 'H' :
-                        case 'h' :
-                            currentRow.add( new Hadamard() );
-                            break;
-                        case 'X' :
-                        case 'x' :
-                            currentRow.add( new NOT() );
-                            break;
-                        case 'Y' :
-                        case 'y' :
-                            currentRow.add( new PauliY() );
-                            break;
-                        case 'Z' :
-                        case 'z' :
-                            currentRow.add( new PauliZ() );
-                            break;
-                        case ' ' :
-                        case '_' :
-                            break;
-                        default :
-                            throw new IllegalArgumentException( String.format( unexpectedSymbolMessage ,
-                                                                               row ,
-                                                                               symbol ) );
-                    }
+                {
+                    case 'H' :
+                    case 'h' :
+                        currentRow.add( new Hadamard() );
+                        break;
+                    case 'X' :
+                    case 'x' :
+                        currentRow.add( new NOT() );
+                        break;
+                    case 'Y' :
+                    case 'y' :
+                        currentRow.add( new PauliY() );
+                        break;
+                    case 'Z' :
+                    case 'z' :
+                        currentRow.add( new PauliZ() );
+                        break;
+                    case ' ' :
+                    case '_' :
+                        break;
+                    default :
+                        throw new IllegalArgumentException(
+                            String.format(
+                                unexpectedSymbolMessage ,
+                                row ,
+                                symbol ) );
+                }
             }
-            programRows.add( currentRow.toArray( new QGate[currentRow.size()] ) );
+            programRows
+                .add( currentRow.toArray( new QGate[currentRow.size()] ) );
         }
-
+        
         return programRows.toArray( new QGate[programRows.size()][] );
-
+        
     }
-
+    
     /**
      * @return
      */
     private static final Qubit [] parseRegister ()
     {
-        final String unexpectedSymbolMessage = "UnexpectedSymbol: the register should contain only 0s and 1s";
-
+        final String unexpectedSymbolMessage =
+            "UnexpectedSymbol: the register should contain only 0s and 1s";
+        
         final List< Qubit > reg = new LinkedList< Qubit >();
         for ( char bit : REGISTER.toCharArray() )
         {
             switch ( bit )
-                {
-                    case '0' :
-                        reg.add( Qubit.QUBIT_OFF );
-                        break;
-                    case '1' :
-                        reg.add( Qubit.QUBIT_ON );
-                        break;
-                    default :
-                        throw new IllegalArgumentException( unexpectedSymbolMessage );
-                }
+            {
+                case '0' :
+                    reg.add( Qubit.QUBIT_OFF );
+                    break;
+                case '1' :
+                    reg.add( Qubit.QUBIT_ON );
+                    break;
+                default :
+                    throw new IllegalArgumentException(
+                        unexpectedSymbolMessage );
+            }
         }
         return reg.toArray( new Qubit[reg.size()] );
     }
-
+    
 }

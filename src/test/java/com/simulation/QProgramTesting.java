@@ -12,11 +12,10 @@ import com.simulationQ.simulation.computation.qubits.register.QRegister;
 
 /**
  * @author Tsvetelin
- *
  */
 public abstract class QProgramTesting
 {
-
+    
     public static void main ( String [] args )
     {
         final QRegister reg = new QRegister( Qubit.QUBIT_ON , Qubit.QUBIT_ON );
@@ -29,10 +28,11 @@ public abstract class QProgramTesting
         program.addPart( gate , 0 );
         program.addPart( gate , 1 );
         
-        final QRegister res = QFinalStateCalculator.calculateFinalState( program , reg );
+        final QRegister res =
+            QFinalStateCalculator.calculateFinalState( program , reg );
         
         System.out.println( res );
-
+        
     }
-
+    
 }

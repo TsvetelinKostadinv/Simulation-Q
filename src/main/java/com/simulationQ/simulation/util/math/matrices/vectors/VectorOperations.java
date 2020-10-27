@@ -7,49 +7,43 @@ package com.simulationQ.simulation.util.math.matrices.vectors;
 import com.simulationQ.simulation.util.math.matrices.MatrixOperations;
 
 /**
- * 
  * An extension to arithmetic operations for vectors
  * 
  * @author Tsvetelin
- *
  */
 public interface VectorOperations extends MatrixOperations
 {
     /**
-     * 
      * Multiplies the vectors in a specific way, not sure of the term
      * 
-     * @param a
-     * @param b
+     * @param  a
+     * @param  b
      * @return
      */
-    public static Vector tensorProduct( final Vector a , final Vector b)
+    public static Vector tensorProduct ( final Vector a , final Vector b )
     {
-        return a.tensorProduct(b);
+        return a.tensorProduct( b );
     }
     
     /**
-     * 
      * Makes the tensor product of this and a
      * 
-     * @param a
+     * @param  a
      * @return
      */
-    public Vector tensorProduct( final Vector a);
+    public Vector tensorProduct ( final Vector a );
     
     /**
-     * 
      * Pretty much like List.sublist
      * 
-     * @param indexFrom
-     * @param indexTo
+     * @param  indexFrom
+     * @param  indexTo
      * @return
      */
-    public Vector get( final int indexFrom, final int indexTo );
+    public Vector get ( final int indexFrom , final int indexTo );
     
     /**
-     * 
      * @return size of the vector
      */
-    public int size();
+    public int size ();
 }

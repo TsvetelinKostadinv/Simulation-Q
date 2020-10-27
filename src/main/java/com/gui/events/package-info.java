@@ -4,6 +4,5 @@
  */
 /**
  * @author Tsvetelin
- *
  */
 package com.gui.events;

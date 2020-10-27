@@ -4,61 +4,63 @@
  */
 package com.simulationQ.simulation.util.math.complexNumbers;
 
-
 import java.math.BigDecimal;
 
 import com.simulationQ.simulation.util.math.QMath;
 
-
 /**
- * 
  * A class to represent a complex number with all it's operations
  * 
  * @apiNote uses BigDecimal
- * 
- * @author Tsvetelin
- *
+ * @author  Tsvetelin
  */
 public class ComplexNumber
 {
-
+    
     /**
      * This is the number that represents the origin point = 0 + 0i
      */
-    public static final ComplexNumber ORIGIN          = new ComplexNumber( new BigDecimal( "0" ).setScale( QMath.PRECISION ) ,
-                                                                           new BigDecimal( "0" ).setScale( QMath.PRECISION ) );
-
+    public static final ComplexNumber ORIGIN =
+        new ComplexNumber(
+            new BigDecimal( "0" ).setScale( QMath.PRECISION ) ,
+            new BigDecimal( "0" ).setScale( QMath.PRECISION ) );
+    
     /**
      * This is the number that represents a single unit in the real axis
      * direction = 1 + 0i
      */
-    public static final ComplexNumber REAL_UNIT       = new ComplexNumber( new BigDecimal( "1" ).setScale( QMath.PRECISION ) ,
-                                                                           new BigDecimal( "0" ).setScale( QMath.PRECISION ) );
-
+    public static final ComplexNumber REAL_UNIT =
+        new ComplexNumber(
+            new BigDecimal( "1" ).setScale( QMath.PRECISION ) ,
+            new BigDecimal( "0" ).setScale( QMath.PRECISION ) );
+    
     /**
-     * This is the number that represents a single unit in the imaginary axis
+     * This is the number that represents a single unit in the imaginary
+     * axis
      * direction = 0 + 1i
      */
-    public static final ComplexNumber IMAG_UNIT       = new ComplexNumber( new BigDecimal( "0" ).setScale( QMath.PRECISION ) ,
-                                                                           new BigDecimal( "1" ).setScale( QMath.PRECISION ) );
-
-    public static final ComplexNumber ONE_OVER_SQRT_2 = ComplexNumber.real(
-                                                                            QMath.Constants.ONE_OVER_SQRT_2.value );
-
+    public static final ComplexNumber IMAG_UNIT =
+        new ComplexNumber(
+            new BigDecimal( "0" ).setScale( QMath.PRECISION ) ,
+            new BigDecimal( "1" ).setScale( QMath.PRECISION ) );
+    
+    public static final ComplexNumber ONE_OVER_SQRT_2 =
+        ComplexNumber.real(
+            QMath.Constants.ONE_OVER_SQRT_2.value );
+    
     /**
      * The real part of the number
      */
-    private final BigDecimal          real;
-
+    private final BigDecimal real;
+    
     /**
      * The imaginary part of the number
      */
-    private final BigDecimal          imaginary;
-
+    private final BigDecimal imaginary;
+    
     /**
      * Constructs a new complex number object, without arguments the given
      * number represents the origin point a.k.a (0, 0)
-     * 
      */
     public ComplexNumber ()
     {
@@ -66,9 +68,8 @@ public class ComplexNumber
         this.real = BigDecimal.ZERO;
         this.imaginary = BigDecimal.ZERO;
     }
-
+    
     /**
-     * 
      * Constructs the complex number with the given arguments in the form
      * <b>real + imaginary * i</b>
      * 
@@ -81,9 +82,8 @@ public class ComplexNumber
         this.real = real;
         this.imaginary = imaginary;
     }
-
+    
     /**
-     * 
      * Constructs the complex number with the given arguments in the form
      * <b>real + imaginary * i</b>
      * 
@@ -97,18 +97,16 @@ public class ComplexNumber
         this.real = BigDecimal.valueOf( real );
         this.imaginary = BigDecimal.valueOf( imaginary );
     }
-
+    
     /**
-     * 
      * Constructs the complex number with the given arguments in the form
      * <b>real + imaginary * i</b> <br>
-     * 
      * NOTE: The same constraints are in place as with the constructor of
      * BigDecimal
      * 
      * @param real
      * @param imaginary
-     * @see BigDecimal
+     * @see             BigDecimal
      */
     public ComplexNumber ( String real , String imaginary )
     {
@@ -116,17 +114,15 @@ public class ComplexNumber
         this.real = new BigDecimal( real );
         this.imaginary = new BigDecimal( imaginary );
     }
-
+    
     /**
-     * 
      * Parses the argument to the form
      * <b>real + imaginary * i</b> <br>
-     * 
      * If it cannot be parsed an exception is thrown
      * 
      * @param real
      * @param imaginary
-     * @see Operations.parse()
+     * @see             Operations.parse()
      */
     public ComplexNumber ( String s )
     {
@@ -135,59 +131,60 @@ public class ComplexNumber
         this.real = copy.real;
         this.imaginary = copy.imaginary;
     }
-
+    
     public static ComplexNumber real ( BigDecimal real )
     {
         return new RealNumber( real );
     }
-
+    
     public static ComplexNumber real ( double real )
     {
         return new RealNumber( new BigDecimal( real ) );
     }
-
+    
     public static ComplexNumber real ( String real )
     {
         return new RealNumber( new BigDecimal( real ) );
     }
-
+    
     public static ComplexNumber imaginary ( BigDecimal imaginary )
     {
         return new ComplexNumber( BigDecimal.ZERO , imaginary );
     }
-
+    
     public static ComplexNumber imaginary ( double imaginary )
     {
-        return new ComplexNumber( BigDecimal.ZERO ,
-                                  new BigDecimal( imaginary ) );
+        return new ComplexNumber(
+            BigDecimal.ZERO ,
+            new BigDecimal( imaginary ) );
     }
-
+    
     public static ComplexNumber imaginary ( String imaginary )
     {
-        return new ComplexNumber( BigDecimal.ZERO ,
-                                  new BigDecimal( imaginary ) );
+        return new ComplexNumber(
+            BigDecimal.ZERO ,
+            new BigDecimal( imaginary ) );
     }
-
+    
     /**
-     * 
      * @return the real part of the number
      */
     public BigDecimal getReal ()
     {
         return real;
     }
-
+    
     /**
-     * 
      * @return the imaginary part of the number
      */
     public BigDecimal getImaginary ()
     {
         return imaginary;
     }
-
+    
     /**
-     * The modulus of the number which is equal to sqrt(real^2 + imaginary^2)
+     * The modulus of the number which is equal to sqrt(real^2 +
+     * imaginary^2)
      * 
      * @return
      */
@@ -195,7 +192,7 @@ public class ComplexNumber
     {
         return Operations.modulus( this );
     }
-
+    
     /**
      * Negates the real part of the number
      * <br>
@@ -207,7 +204,7 @@ public class ComplexNumber
     {
         return Operations.negateReal( this );
     }
-
+    
     /**
      * <br>
      * NOTE: This is a persistent method
@@ -218,10 +215,9 @@ public class ComplexNumber
     {
         return Operations.conjugate( this );
     }
-
+    
     /**
      * Negates the whole number
-     * 
      * <br>
      * NOTE: This is a persistent method
      * 
@@ -231,89 +227,82 @@ public class ComplexNumber
     {
         return Operations.negate( this );
     }
-
+    
     /**
      * Adds a ComplexNumber to this number
-     * 
      * <br>
      * NOTE: This is a persistent method
      * 
-     * @param a
-     *            - the number to be added
-     * @return the sum: this + a
+     * @param  a
+     *               - the number to be added
+     * @return   the sum: this + a
      */
     public ComplexNumber add ( ComplexNumber a )
     {
         return Operations.add( this , a );
     }
-
+    
     /**
-     * 
      * Subtracts the argument from the current number
-     * 
      * <br>
      * NOTE: This is a persistent method
      * 
-     * @param a
-     *            - the number to be subtracted
-     * @return the difference: this - a
+     * @param  a
+     *               - the number to be subtracted
+     * @return   the difference: this - a
      */
     public ComplexNumber subtract ( ComplexNumber a )
     {
         return Operations.subtract( this , a );
     }
-
+    
     /**
-     * 
      * Multiplies the current complex number with the argument
      * <br>
      * NOTE: This is a persistent method
      * 
-     * @param a
-     * @return the product
+     * @param  a
+     * @return   the product
      */
     public ComplexNumber multiply ( ComplexNumber a )
     {
         return Operations.multiply( this , a );
     }
-
+    
     /**
-     * 
      * Divides the current complex number by the argument
      * <br>
      * NOTE: This is a persistent method
      * 
-     * @param a
-     * @return the quotient
+     * @param  a
+     * @return   the quotient
      */
     public ComplexNumber divide ( ComplexNumber a )
     {
         return Operations.divide( this , a );
     }
-
+    
     /**
-     * 
      * Raises the current complex number to the n-th power
      * <br>
      * NOTE: This is a persistent method
      * 
-     * @param n
-     * @return the n-th power of the number
+     * @param  n
+     * @return   the n-th power of the number
      */
     public ComplexNumber power ( int n )
     {
         return Operations.power( this , n );
     }
-
+    
     /**
-     * 
      * @return The absolute value of the complex number
      */
     public BigDecimal abs ()
     {
         return Operations.abs( this );
     }
-
+    
     /**
      * <br>
      * NOTE: This is a persistent method
@@ -324,7 +313,7 @@ public class ComplexNumber
     {
         return Operations.sin( this );
     }
-
+    
     /**
      * <br>
      * NOTE: This is a persistent method
@@ -335,7 +324,7 @@ public class ComplexNumber
     {
         return Operations.cos( this );
     }
-
+    
     /**
      * <br>
      * NOTE: This is a persistent method
@@ -346,7 +335,7 @@ public class ComplexNumber
     {
         return Operations.tan( this );
     }
-
+    
     /**
      * <br>
      * NOTE: This is a persistent method
@@ -357,15 +346,15 @@ public class ComplexNumber
     {
         return Operations.cotan( this );
     }
-
+    
     @Override
     public boolean equals ( Object obj )
     {
         return obj instanceof ComplexNumber
-                && ( ( ComplexNumber ) obj ).real.equals( this.real )
-                && ( ( ComplexNumber ) obj ).imaginary.equals( this.imaginary );
+            && ( (ComplexNumber) obj ).real.equals( this.real )
+            && ( (ComplexNumber) obj ).imaginary.equals( this.imaginary );
     }
-
+    
     @Override
     public String toString ()
     {
@@ -374,5 +363,5 @@ public class ComplexNumber
         String imaginaryPart = this.imaginary.abs().toString();
         return String.format( "%s%s%s*i" , realPart , sign , imaginaryPart );
     }
-
+    
 }

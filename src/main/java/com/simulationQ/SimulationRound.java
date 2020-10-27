@@ -4,44 +4,42 @@
  */
 package com.simulationQ;
 
-
 import com.simulationQ.simulation.computation.QCollapser;
 import com.simulationQ.simulation.computation.qubits.register.QRegister;
 
-
 /**
  * @author Tsvetelin
- *
  */
 public class SimulationRound implements Runnable
 {
-
+    
     private final QRegister qReg;
-
-    private final long      rounds;
-
-    private QRegister       results;
-
+    
+    private final long rounds;
+    
+    private QRegister results;
+    
     /**
-     * Constructs a object representing the finished state of the computation,
+     * Constructs a object representing the finished state of the
+     * computation,
      * 
      * @param qReg
-     *            - the register to be collapsed
+     *                   - the register to be collapsed
      * @param rounds
-     *            - how many times to collapse
+     *                   - how many times to collapse
      */
     public SimulationRound ( final QRegister qReg , final long rounds )
     {
         this.qReg = qReg;
         this.rounds = rounds;
     }
-
+    
     @Override
     public void run ()
     {
         this.results = runSimulation();
     }
-
+    
     /**
      * @return the state after collapse
      */
@@ -49,7 +47,7 @@ public class SimulationRound implements Runnable
     {
         return QCollapser.collapse( this.qReg , this.rounds );
     }
-
+    
     /**
      * @return the results
      */
@@ -57,5 +55,5 @@ public class SimulationRound implements Runnable
     {
         return this.results;
     }
-
+    
 }

@@ -8,7 +8,6 @@ import com.simulationQ.simulation.computation.QCollapser;
 
 /**
  * @author Tsvetelin
- *
  */
 public interface ScriptTesting
 {

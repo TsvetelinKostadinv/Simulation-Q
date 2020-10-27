@@ -4,7 +4,6 @@
  */
 package com.simulationQ.simulation.util.math.complexNumbers;
 
-
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -14,30 +13,26 @@ import java.util.regex.Pattern;
 
 import com.simulationQ.simulation.util.math.QMath;
 
-
 /**
- * 
  * Interface for operations on complex numbers
  * 
  * @author Tsvetelin
- *
  */
 public interface Operations
 {
-
+    
     /**
-     * 
-     * @param a
-     * @return the modulus of the parameter
+     * @param  a
+     * @return   the modulus of the parameter
      */
     public static BigDecimal modulus ( ComplexNumber a )
     {
         return a.getReal()
-                .pow( 2 )
-                .add( a.getImaginary().pow( 2 ) )
-                .sqrt( new MathContext( QMath.PRECISION ) );
+            .pow( 2 )
+            .add( a.getImaginary().pow( 2 ) )
+            .sqrt( new MathContext( QMath.PRECISION ) );
     }
-
+    
     /**
      * Negates the real part of the number
      * 
@@ -47,110 +42,107 @@ public interface Operations
     {
         return new ComplexNumber( a.getReal().negate() , a.getImaginary() );
     }
-
+    
     /**
-     * 
      * @return the conjugate of the number
      */
     public static ComplexNumber conjugate ( ComplexNumber a )
     {
         return new ComplexNumber( a.getReal() , a.getImaginary().negate() );
     }
-
+    
     /**
-     * 
-     * @param a
-     * @return -a
+     * @param  a
+     * @return   -a
      */
     public static ComplexNumber negate ( ComplexNumber a )
     {
-        return new ComplexNumber( a.getReal().negate() ,
-                                  a.getImaginary().negate() );
+        return new ComplexNumber(
+            a.getReal().negate() ,
+            a.getImaginary().negate() );
     }
-
+    
     /**
-     * 
-     * @param a
-     * @param b
-     * @return a+b
+     * @param  a
+     * @param  b
+     * @return   a+b
      */
     public static ComplexNumber add ( ComplexNumber a , ComplexNumber b )
     {
         return new ComplexNumber(
-                                  a.getReal().add( b.getReal() ) ,
-                                  a.getImaginary().add( b.getImaginary() ) );
+            a.getReal().add( b.getReal() ) ,
+            a.getImaginary().add( b.getImaginary() ) );
     }
-
+    
     /**
-     * 
-     * @param a
-     * @param b
-     * @return a-b
+     * @param  a
+     * @param  b
+     * @return   a-b
      */
     public static ComplexNumber subtract (
-                                           ComplexNumber a ,
-                                           ComplexNumber b )
+        ComplexNumber a ,
+        ComplexNumber b )
     {
         return add( a , negate( b ) );
     }
-
+    
     /**
-     * 
-     * @param a
-     * @param b
-     * @return a*b
+     * @param  a
+     * @param  b
+     * @return   a*b
      */
     public static ComplexNumber multiply (
-                                           ComplexNumber a ,
-                                           ComplexNumber b )
+        ComplexNumber a ,
+        ComplexNumber b )
     {
-
-        BigDecimal real = a.getReal()
-                           .multiply( b.getReal() )
-                           .subtract( a.getImaginary()
-                                       .multiply( b.getImaginary() ) )
-                           .setScale( QMath.PRECISION , RoundingMode.HALF_UP );
-
-        BigDecimal imaginary = a.getReal()
-                                .multiply( b.getImaginary() )
-                                .add( a.getImaginary()
-                                       .multiply( b.getReal() ) )
-                                .setScale( QMath.PRECISION , RoundingMode.HALF_UP );
-
+        
+        BigDecimal real =
+            a.getReal()
+                .multiply( b.getReal() )
+                .subtract(
+                    a.getImaginary()
+                        .multiply( b.getImaginary() ) )
+                .setScale( QMath.PRECISION , RoundingMode.HALF_UP );
+        
+        BigDecimal imaginary =
+            a.getReal()
+                .multiply( b.getImaginary() )
+                .add(
+                    a.getImaginary()
+                        .multiply( b.getReal() ) )
+                .setScale( QMath.PRECISION , RoundingMode.HALF_UP );
+        
         return new ComplexNumber( real , imaginary );
     }
-
+    
     /**
-     * 
-     * @param a
-     * @param b
-     * @return a/b
+     * @param  a
+     * @param  b
+     * @return   a/b
      */
     public static ComplexNumber divide ( ComplexNumber a , ComplexNumber b )
     {
         ComplexNumber output = multiply( a , conjugate( b ) );
         BigDecimal divisor = modulus( b ).pow( 2 );
         return new ComplexNumber(
-                                  output.getReal().divide( divisor ) ,
-                                  output.getImaginary().divide( divisor ) );
+            output.getReal().divide( divisor ) ,
+            output.getImaginary().divide( divisor ) );
     }
-
+    
     /**
-     * 
-     * @param a
-     *            - complex number
-     * @return The absolute value of the complex number
+     * @param  a
+     *               - complex number
+     * @return   The absolute value of the complex number
      */
     public static BigDecimal abs ( ComplexNumber a )
     {
         return modulus( a );
     }
-
+    
     /**
-     * 
-     * @param a
-     * @param power
-     * @return a^power
+     * @param  a
+     * @param  power
+     * @return       a^power
      */
     public static ComplexNumber power ( ComplexNumber a , int power )
     {
@@ -161,11 +153,10 @@ public interface Operations
         }
         return res;
     }
-
+    
     /**
-     * 
-     * @param a
-     * @return sin(a)
+     * @param  a
+     * @return   sin(a)
      */
     @SuppressWarnings ( "deprecation" ) // sin function cannot be made to return
                                         // a double
@@ -173,17 +164,18 @@ public interface Operations
     {
         double exponent = Math.exp( a.getImaginary().doubleValue() );
         double exponentInv = 1 / exponent;
-        double real = Math.sin( a.getReal().doubleValue() )
+        double real =
+            Math.sin( a.getReal().doubleValue() )
                 * ( exponent + exponentInv ) / 2;
-        double imaginary = Math.cos( a.getReal().doubleValue() )
+        double imaginary =
+            Math.cos( a.getReal().doubleValue() )
                 * ( exponent - exponentInv ) / 2;
         return new ComplexNumber( real , imaginary );
     }
-
+    
     /**
-     * 
-     * @param a
-     * @return cos(a)
+     * @param  a
+     * @return   cos(a)
      */
     @SuppressWarnings ( "deprecation" ) // cos function cannot be made to return
                                         // a double
@@ -191,62 +183,68 @@ public interface Operations
     {
         double exponent = Math.exp( a.getImaginary().doubleValue() );
         double exponentInv = 1 / exponent;
-        double real = Math.cos( a.getReal().doubleValue() )
+        double real =
+            Math.cos( a.getReal().doubleValue() )
                 * ( exponent + exponentInv ) / 2;
-        double imaginary = -Math.sin( a.getReal().doubleValue() )
+        double imaginary =
+            -Math.sin( a.getReal().doubleValue() )
                 * ( exponent - exponentInv ) / 2;
         return new ComplexNumber( real , imaginary );
     }
-
+    
     /**
-     * 
-     * @param a
-     * @return tan(a)
+     * @param  a
+     * @return   tan(a)
      */
     public static ComplexNumber tan ( ComplexNumber a )
     {
         return divide( sin( a ) , cos( a ) );
     }
-
+    
     /**
-     * 
-     * @param a
-     * @return cotan(a)
+     * @param  a
+     * @return   cotan(a)
      */
     public static ComplexNumber cotan ( ComplexNumber a )
     {
         return divide( ComplexNumber.REAL_UNIT , tan( a ) );
     }
-
+    
     /**
-     * 
      * Parses a string to a complex number
      * 
-     * @param s
-     *            - the string to be parsed
-     * @return an optional of a complex number, if there is something in the
-     *         optional the parse was successful, if it is empty the parse
-     *         was not successfull
+     * @param  s
+     *               - the string to be parsed
+     * @return   an optional of a complex number, if there is something in
+     *               the
+     *               optional the parse was successful, if it is empty the
+     *               parse
+     *               was not successfull
      */
     public static Optional< ComplexNumber > parse ( String s )
     {
-        String fullRegex = "^([-+]?[0-9]*(\\.|,)?[0-9]+)( )*(\\+|\\-)( )*([-+]?[0-9]*(\\.|,)?[0-9]+)+\\*?(I|i)$";
+        String fullRegex =
+            "^([-+]?[0-9]*(\\.|,)?[0-9]+)( )*(\\+|\\-)( )*([-+]?[0-9]*(\\.|,)?[0-9]+)+\\*?(I|i)$";
         String numberRegex = "[-+]?[0-9]*(\\.|,)?[0-9]+";
         if ( s.matches( fullRegex ) )
         {
             Matcher m = Pattern.compile( numberRegex ).matcher( s );
-
+            
             m.find();
-            BigDecimal real = new BigDecimal(
-                                              s.substring( m.start() ,
-                                                           m.end() ) );
+            BigDecimal real =
+                new BigDecimal(
+                    s.substring(
+                        m.start() ,
+                        m.end() ) );
             m.find();
-            BigDecimal imaginary = new BigDecimal(
-                                                   s.substring( m.start() ,
-                                                                m.end() ) );
-
+            BigDecimal imaginary =
+                new BigDecimal(
+                    s.substring(
+                        m.start() ,
+                        m.end() ) );
+            
             return Optional.of( new ComplexNumber( real , imaginary ) );
-
+            
         } else
         {
             return Optional.empty();

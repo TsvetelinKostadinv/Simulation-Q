@@ -3,10 +3,8 @@
  * package-info.java created by Tsvetelin
  */
 /**
- * 
  * LEGACY CODE!!!!!!
  * 
  * @author Tsvetelin
- *
  */
 package com.simulationQ.simulation.util.math.complexNumbers;

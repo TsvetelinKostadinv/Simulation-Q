@@ -8,15 +8,14 @@ import java.math.BigDecimal;
 
 /**
  * @author Tsvetelin
- *
  */
 public class RealNumber extends ComplexNumber
 {
-
+    
     /**
      * 
      */
-    public RealNumber (BigDecimal value)
+    public RealNumber ( BigDecimal value )
     {
         super( value , BigDecimal.ZERO );
     }
@@ -24,7 +23,7 @@ public class RealNumber extends ComplexNumber
     /**
      * 
      */
-    public RealNumber (String value)
+    public RealNumber ( String value )
     {
         super( value , "0" );
     }
@@ -34,5 +33,5 @@ public class RealNumber extends ComplexNumber
     {
         return this.getReal().toPlainString();
     }
-
+    
 }

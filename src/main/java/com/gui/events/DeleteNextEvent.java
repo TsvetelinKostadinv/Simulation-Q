@@ -8,14 +8,12 @@ import javafx.event.Event;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
 
-
 /**
  * @author Tsvetelin
- *
  */
 public class DeleteNextEvent extends Event
 {
-
+    
     /**
      * 
      */
@@ -30,17 +28,18 @@ public class DeleteNextEvent extends Event
     {
         super( new EventType<>( DeleteNextEvent.class.getName() ) );
     }
-
+    
     /**
      * @param source
      * @param target
      * @param eventType
      */
-    public DeleteNextEvent ( Object source ,
-            EventTarget target ,
-            EventType< ? extends Event > eventType )
+    public DeleteNextEvent (
+        Object source ,
+        EventTarget target ,
+        EventType< ? extends Event > eventType )
     {
         super( source , target , eventType );
     }
-
+    
 }
