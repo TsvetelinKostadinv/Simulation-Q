@@ -11,10 +11,10 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
-    
+
     // The JavaFX plugin
   	id 'org.openjfx.javafxplugin' version '0.0.8'
-  	
+
   	// The eclipse otherwise it will emmit errors
   	id 'eclipse'
 }
@@ -27,7 +27,20 @@ repositories {
     jcenter()
 }
 
+def currentOS = org.gradle.internal.os.OperatingSystem.current()
+def platform
+if (currentOS.isWindows()) {
+    platform = 'win'
+} else if (currentOS.isLinux()) {
+    platform = 'linux'
+} else if (currentOS.isMacOsX()) {
+    platform = 'mac'
+}
 dependencies {
+    implementation "org.openjfx:javafx-base:11:${platform}"
+    implementation "org.openjfx:javafx-graphics:11:${platform}"
+    implementation "org.openjfx:javafx-controls:11:${platform}"
+
   testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 
@@ -38,17 +51,17 @@ test{
 }
 
 javafx {
-    version = "13"
+    version = "11"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 run {
     if (javafx.platform.classifier == 'win') {
-        // Temporal fix for Eclipse with JDK 1.8 and Windows 
+        // Temporal fix for Eclipse with JDK 1.8 and Windows
         systemProperty "java.library.path", "C:\tmp"
     }
 }
 
 application {
-	mainClassName 'com.gui.GUIStarter'
+	mainClassName 'com.Main'
 }

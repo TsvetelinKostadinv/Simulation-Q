@@ -192,18 +192,21 @@ public class MainWindowController
                                          alert.showAndWait();
                                      } );
             }else {
+                System.out.println( "Script is empty" );
                 Alert alert = new Alert( AlertType.ERROR );
                 alert.setTitle( "Empty program error" );
                 alert.setHeaderText( "Add a qubit or load a script and try again" );
                 alert.showAndWait();
             }
-        } else
-        {
-            Alert alert = new Alert( AlertType.ERROR );
-            alert.setTitle( "Empty program error" );
-            alert.setHeaderText( "Add a qubit or load a script and try again" );
-            alert.showAndWait();
-        }
+        } 
+//        else
+//        {
+//            System.out.println( "Program in GUI is empty" );
+//            Alert alert = new Alert( AlertType.ERROR );
+//            alert.setTitle( "Empty program error" );
+//            alert.setHeaderText( "Add a qubit or load a script and try again" );
+//            alert.showAndWait();
+//        }
 
         final CRegister reg = new CRegister( startingState );
 
