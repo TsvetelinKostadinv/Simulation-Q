@@ -4,14 +4,13 @@
  */
 package com.simulationQ.simulation.computation.gates.impl;
 
-import static com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber.ORIGIN;
-import static com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber.REAL_UNIT;
-
 import java.io.Serializable;
 
 import com.simulationQ.simulation.computation.gates.QGate;
-import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.matrices.Matrix;
+import com.simulation_q.math.complex_numbers.ComplexNumber;
+
+import static com.simulation_q.math.complex_numbers.ComplexNumber.Algebraic.*;
 
 /**
  * @author Tsvetelin
@@ -26,10 +25,10 @@ public class CNOT extends QGate implements Serializable
     public static final Matrix OPERATION =
         new Matrix(
             new ComplexNumber[][] {
-                { REAL_UNIT , ORIGIN , ORIGIN , ORIGIN } ,
-                { ORIGIN , REAL_UNIT , ORIGIN , ORIGIN } ,
-                { ORIGIN , ORIGIN , ORIGIN , REAL_UNIT } ,
-                { ORIGIN , ORIGIN , REAL_UNIT , ORIGIN }
+                { realUnit() , origin() , origin() , origin() } ,
+                { origin() , realUnit() , origin() , origin() } ,
+                { origin() , origin() , origin() , realUnit() } ,
+                { origin() , origin() , realUnit() , origin() }
             } );
     
     public CNOT ()

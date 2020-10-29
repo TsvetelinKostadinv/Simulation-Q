@@ -5,9 +5,9 @@
 package com.simulationQ.simulation.util.math.matrices;
 
 import com.simulationQ.simulation.util.math.ArithmeticOperations;
-import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.functional.TriFunction;
 import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
+import com.simulation_q.math.complex_numbers.ComplexNumber;
 
 /**
  * An extension to arithmetic operations for matrices
@@ -139,7 +139,7 @@ public interface MatrixOperations extends ArithmeticOperations< Matrix >
         {
             ComplexNumber [] row = a.getMatrix()[i];
             
-            ComplexNumber sumOfRow = ComplexNumber.ORIGIN;
+            ComplexNumber sumOfRow = ComplexNumber.Algebraic.origin();
             
             for ( int j = 0 ; j < b.size() ; j++ )
             {

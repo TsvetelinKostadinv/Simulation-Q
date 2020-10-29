@@ -5,8 +5,8 @@
 package com.simulationQ.simulation.computation.qubits;
 
 import com.simulationQ.simulation.util.math.QMath;
-import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
+import com.simulation_q.math.complex_numbers.ComplexNumber;
 
 /**
  * @author Tsvetelin
@@ -16,18 +16,18 @@ public class Qubit
     
     public static final Qubit QUBIT_ON =
         new Qubit(
-            ComplexNumber.ORIGIN ,
-            ComplexNumber.REAL_UNIT );
+            ComplexNumber.Algebraic.origin() ,
+            ComplexNumber.Algebraic.realUnit() );
     
     public static final Qubit QUBIT_OFF =
         new Qubit(
-            ComplexNumber.REAL_UNIT ,
-            ComplexNumber.ORIGIN );
+            ComplexNumber.Algebraic.realUnit() ,
+            ComplexNumber.Algebraic.origin() );
     
-    public static final Qubit QUBIT_HALF_HALF =
-        new Qubit(
-            ComplexNumber.ONE_OVER_SQRT_2 ,
-            ComplexNumber.ONE_OVER_SQRT_2 );
+//    public static final Qubit QUBIT_HALF_HALF =
+//        new Qubit(
+//            ComplexNumber.ONE_OVER_SQRT_2 ,
+//            ComplexNumber.ONE_OVER_SQRT_2 );
     
     private ComplexNumber ketOFF;
     

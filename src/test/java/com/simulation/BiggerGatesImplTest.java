@@ -9,10 +9,11 @@ import com.simulationQ.simulation.computation.QFinalStateCalculator;
 import com.simulationQ.simulation.computation.gates.QGate;
 import com.simulationQ.simulation.computation.program.QProgram;
 import com.simulationQ.simulation.computation.qubits.register.CRegister;
-import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.matrices.Matrix;
+import com.simulation_q.math.complex_numbers.ComplexNumber;
 
-import static com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber.*;
+import static com.simulation_q.math.complex_numbers.ComplexNumber.Algebraic.*;
+
 
 /**
  * @author Tsvetelin
@@ -27,10 +28,10 @@ public class BiggerGatesImplTest
     private static final Matrix operation =
         new Matrix(
             new ComplexNumber[][] {
-                { REAL_UNIT , ORIGIN , ORIGIN , ORIGIN } ,
-                { ORIGIN , REAL_UNIT , ORIGIN , ORIGIN } ,
-                { ORIGIN , ORIGIN , ORIGIN , REAL_UNIT } ,
-                { ORIGIN , ORIGIN , REAL_UNIT , ORIGIN }
+                { realUnit() , origin() , origin() , origin() } ,
+                { origin() , realUnit() , origin() , origin() } ,
+                { origin() , origin() , origin() , realUnit() } ,
+                { origin() , origin() , realUnit() , origin() }
             } );
     
     /**

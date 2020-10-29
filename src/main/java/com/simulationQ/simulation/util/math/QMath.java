@@ -31,7 +31,6 @@ public interface QMath
      */
     public static enum Constants
     {
-        
         /**
          * Obviously sqrt(2)
          */

@@ -6,11 +6,12 @@ package com.util.math.matrices;
 
 import org.junit.jupiter.api.Test;
 
-import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.matrices.Matrix;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import com.simulation_q.math.complex_numbers.ComplexNumber;
 
 /**
  * @author Tsvetelin
@@ -21,7 +22,7 @@ class MatrixOperationsTest
     /**
      * 1+0i
      */
-    public static final ComplexNumber ONE = ComplexNumber.REAL_UNIT;
+    public static final ComplexNumber ONE = ComplexNumber.Algebraic.realUnit();
     
     /**
      * 2+0i
@@ -155,7 +156,7 @@ class MatrixOperationsTest
                 sample2x2matrix_ones.setAt(
                     -1 ,
                     0 ,
-                    ComplexNumber.ORIGIN );
+                    ComplexNumber.Algebraic.origin() );
             } );
         
         assertThrows(
@@ -164,21 +165,21 @@ class MatrixOperationsTest
                 sample2x2matrix_ones.setAt(
                     0 ,
                     -1 ,
-                    ComplexNumber.ORIGIN );
+                    ComplexNumber.Algebraic.origin() );
             } );
         
         assertThrows( IndexOutOfBoundsException.class , () -> {
             sample2x2matrix_ones.setAt(
                 sample2x2matrix_ones.getRows() ,
                 0 ,
-                ComplexNumber.ORIGIN );
+                ComplexNumber.Algebraic.origin() );
         } );
         
         assertThrows( IndexOutOfBoundsException.class , () -> {
             sample2x2matrix_ones.setAt(
                 0 ,
                 sample2x2matrix_ones.getColons() ,
-                ComplexNumber.ORIGIN );
+                ComplexNumber.Algebraic.origin() );
         } );
     }
     

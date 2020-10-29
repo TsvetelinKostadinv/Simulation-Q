@@ -6,8 +6,8 @@ package com.simulationQ.simulation.util.math.matrices;
 
 import java.util.Arrays;
 
-import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.functional.TriFunction;
+import com.simulation_q.math.complex_numbers.ComplexNumber;
 
 /**
  * Matrix implementation for BigDecimal
@@ -80,7 +80,7 @@ public class Matrix implements MatrixOperations
         {
             for ( int j = 0 ; j < colons ; j++ )
             {
-                res[i][j] = ComplexNumber.ORIGIN;
+                res[i][j] = ComplexNumber.Algebraic.origin();
             }
         }
         return res;
@@ -107,10 +107,10 @@ public class Matrix implements MatrixOperations
             {
                 if ( i == j )
                 {
-                    res[i][j] = ComplexNumber.REAL_UNIT;
+                    res[i][j] = ComplexNumber.Algebraic.realUnit();
                 } else
                 {
-                    res[i][j] = ComplexNumber.ORIGIN;
+                    res[i][j] = ComplexNumber.Algebraic.origin();
                 }
                 
             }
@@ -273,7 +273,7 @@ public class Matrix implements MatrixOperations
             i < ( ( this.rows < this.colons ) ? this.rows : this.colons ) ;
             i++ )
         {
-            res.setAt( i , i , ComplexNumber.REAL_UNIT );
+            res.setAt( i , i , ComplexNumber.Algebraic.realUnit() );
         }
         return res;
     }

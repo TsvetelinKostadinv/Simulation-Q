@@ -7,9 +7,9 @@ package com.simulationQ.simulation.util.math.matrices.vectors;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.matrices.Matrix;
 import com.simulationQ.simulation.util.math.matrices.MatrixOperations;
+import com.simulation_q.math.complex_numbers.ComplexNumber;
 
 /**
  * Vector implementation with integration with matrices
@@ -43,11 +43,11 @@ public class Vector extends Matrix
     {
         ComplexNumber [] res = new ComplexNumber[size];
         
-        res[0] = ComplexNumber.REAL_UNIT;
+        res[0] = ComplexNumber.Algebraic.realUnit();
         
         for ( int i = 1 ; i < size ; i++ )
         {
-            res[i] = ComplexNumber.ORIGIN;
+            res[i] = ComplexNumber.Algebraic.origin();
         }
         
         return new Vector( res );

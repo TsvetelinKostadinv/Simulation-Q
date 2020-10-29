@@ -5,10 +5,10 @@
 package com.simulationQ.simulation.computation.gates.impl;
 
 import com.simulationQ.simulation.computation.gates.QGate;
-import com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber;
 import com.simulationQ.simulation.util.math.matrices.Matrix;
+import com.simulation_q.math.complex_numbers.ComplexNumber;
 
-import static com.simulationQ.simulation.util.math.complexNumbers.ComplexNumber.*;
+import static com.simulation_q.math.complex_numbers.ComplexNumber.Algebraic.*;
 
 /**
  * @author Tsvetelin
@@ -21,8 +21,8 @@ public class QIdentity extends QGate
     public static final Matrix operation =
         new Matrix(
             new ComplexNumber[][] {
-                { REAL_UNIT , ORIGIN } ,
-                { ORIGIN , REAL_UNIT } ,
+                { realUnit() , origin() } ,
+                { origin() , realUnit() } ,
             } );
     
     public QIdentity ()
