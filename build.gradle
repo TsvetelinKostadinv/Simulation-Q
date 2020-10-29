@@ -14,9 +14,6 @@ repositories
 dependencies 
 {
     implementation project( ':math' )
-    
-    testImplementation ('org.junit.jupiter:junit-jupiter-api:5.7.0')
-    testRuntimeOnly ('org.junit.jupiter:junit-jupiter-engine:5.7.0')
 }
 
 test
@@ -24,7 +21,7 @@ test
     useJUnitPlatform()
 }
 
-subprojects
+allprojects
 {
     apply plugin: 'java'
     apply plugin: 'eclipse'
@@ -38,8 +35,11 @@ subprojects
     
     dependencies
     {
-        testImplementation ('org.junit.jupiter:junit-jupiter-api:5.7.0')
-        testRuntimeOnly ('org.junit.jupiter:junit-jupiter-engine:5.7.0')
+	    implementation 'org.projectlombok:lombok:1.18.16'
+	    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     }
     
     test
