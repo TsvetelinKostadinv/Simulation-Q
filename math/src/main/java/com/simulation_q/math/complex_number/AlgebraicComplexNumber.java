@@ -2,7 +2,7 @@
  * 26/09/2019 16:01:30
  * ComplexNumber.java created by Tsvetelin
  */
-package com.simulation_q.math.complex_numbers;
+package com.simulation_q.math.complex_number;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

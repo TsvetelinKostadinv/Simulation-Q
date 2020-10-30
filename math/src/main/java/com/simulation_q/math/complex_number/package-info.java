@@ -7,4 +7,4 @@
  * 
  * @author Tsvetelin
  */
-package com.simulation_q.math.complex_numbers;
+package com.simulation_q.math.complex_number;

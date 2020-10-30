@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
+import com.simulation_q.math.complex_number.AlgebraicComplexNumber;
+import com.simulation_q.math.complex_number.ComplexNumber;
+
 /**
  * Tests the algebraic complex numbers for various errors, namely
  * precision loss and correctness of calculations
