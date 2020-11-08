@@ -5,10 +5,10 @@
 package com.simulationQ.simulation.computation.gates.impl;
 
 import com.simulationQ.simulation.computation.gates.QGate;
-import com.simulationQ.simulation.util.math.matrices.Matrix;
-import com.simulation_q.math.complex_numbers.ComplexNumber;
+import com.simulation_q.math.complex_number.ComplexNumber;
+import com.simulation_q.math.matrix.Matrix;
 
-import static com.simulation_q.math.complex_numbers.ComplexNumber.Algebraic.*;
+import static com.simulation_q.math.complex_number.ComplexConstants.*;
 
 /**
  * @author Tsvetelin
@@ -19,11 +19,11 @@ public class Hadamard extends QGate
     public static final String NAME = "Hadamard";
     
     public static final Matrix OPERATION_MATRIX =
-        new Matrix(
+        Matrix.of(
             new ComplexNumber[][] {
-                { realUnit() , realUnit() } ,
-                { realUnit() , realUnit().negate() }
-            } );//.multiplyWithScalar( ComplexNumber.ONE_OVER_SQRT_2 );
+                { _1.value , _1.value } ,
+                { _1.value , _1.value.negate() }
+            } ).get();//.multiplyWithScalar( ComplexNumber.ONE_OVER_SQRT_2 );
     
     public static final int NUMBER_OF_INPUT_BITS = 1;
     

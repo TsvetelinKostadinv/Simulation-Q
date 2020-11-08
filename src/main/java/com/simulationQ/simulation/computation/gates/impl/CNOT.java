@@ -7,10 +7,10 @@ package com.simulationQ.simulation.computation.gates.impl;
 import java.io.Serializable;
 
 import com.simulationQ.simulation.computation.gates.QGate;
-import com.simulationQ.simulation.util.math.matrices.Matrix;
-import com.simulation_q.math.complex_numbers.ComplexNumber;
+import com.simulation_q.math.complex_number.ComplexNumber;
+import com.simulation_q.math.matrix.Matrix;
 
-import static com.simulation_q.math.complex_numbers.ComplexNumber.Algebraic.*;
+import static com.simulation_q.math.complex_number.ComplexConstants.*;
 
 /**
  * @author Tsvetelin
@@ -23,13 +23,13 @@ public class CNOT extends QGate implements Serializable
     public static final String NAME = "CNOT";
     
     public static final Matrix OPERATION =
-        new Matrix(
+        Matrix.of(
             new ComplexNumber[][] {
-                { realUnit() , origin() , origin() , origin() } ,
-                { origin() , realUnit() , origin() , origin() } ,
-                { origin() , origin() , origin() , realUnit() } ,
-                { origin() , origin() , realUnit() , origin() }
-            } );
+                { _1.value , _0.value , _0.value , _0.value } ,
+                { _0.value , _1.value , _0.value , _0.value } ,
+                { _0.value , _0.value , _0.value , _1.value } ,
+                { _0.value , _0.value , _1.value , _0.value }
+            } ).get();
     
     public CNOT ()
     {

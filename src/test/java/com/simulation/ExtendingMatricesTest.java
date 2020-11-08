@@ -5,8 +5,7 @@
 package com.simulation;
 
 import com.simulationQ.simulation.computation.gates.impl.NOT;
-import com.simulationQ.simulation.util.math.matrices.Matrix;
-import com.simulationQ.simulation.util.math.matrices.MatrixOperations;
+import com.simulation_q.math.matrix.Matrix;
 
 /**
  * @author Tsvetelin
@@ -17,10 +16,10 @@ public abstract class ExtendingMatricesTest
     {
         final Matrix oper = NOT.OPERATION_MATRIX;
         final Matrix identity =
-            Matrix.multiplicativeIdentity( oper.getRows() , oper.getColons() );
+            Matrix.multiplicativeIdentity( oper.getRows() , oper.getColumns() );
         
         System.out
-            .println( MatrixOperations.productKronecker( oper , identity ) );
+            .println( oper.productKronecker( identity ) );
         
     }
 }

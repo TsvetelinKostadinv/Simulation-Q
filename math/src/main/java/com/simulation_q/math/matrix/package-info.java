@@ -3,6 +3,8 @@
  * package-info.java created by Tsvetelin
  */
 /**
+ * Matrix classes and operations
+ * 
  * @author Tsvetelin
  */
 package com.simulation_q.math.matrix;

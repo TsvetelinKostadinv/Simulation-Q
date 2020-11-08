@@ -9,10 +9,10 @@ import com.simulationQ.simulation.computation.QFinalStateCalculator;
 import com.simulationQ.simulation.computation.gates.QGate;
 import com.simulationQ.simulation.computation.program.QProgram;
 import com.simulationQ.simulation.computation.qubits.register.CRegister;
-import com.simulationQ.simulation.util.math.matrices.Matrix;
-import com.simulation_q.math.complex_numbers.ComplexNumber;
+import com.simulation_q.math.complex_number.ComplexNumber;
+import com.simulation_q.math.matrix.Matrix;
 
-import static com.simulation_q.math.complex_numbers.ComplexNumber.Algebraic.*;
+import static com.simulation_q.math.complex_number.ComplexConstants.*;
 
 
 /**
@@ -26,13 +26,13 @@ public class BiggerGatesImplTest
     }
     
     private static final Matrix operation =
-        new Matrix(
+        Matrix.of(
             new ComplexNumber[][] {
-                { realUnit() , origin() , origin() , origin() } ,
-                { origin() , realUnit() , origin() , origin() } ,
-                { origin() , origin() , origin() , realUnit() } ,
-                { origin() , origin() , realUnit() , origin() }
-            } );
+                { _1.value , _0.value , _0.value , _0.value } ,
+                { _0.value , _1.value , _0.value , _0.value } ,
+                { _0.value , _0.value , _0.value , _1.value } ,
+                { _0.value , _0.value , _1.value , _0.value }
+            } ).get();
     
     /**
      * @param args

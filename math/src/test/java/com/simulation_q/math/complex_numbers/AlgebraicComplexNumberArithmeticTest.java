@@ -249,4 +249,38 @@ class AlgebraicComplexNumberArithmeticTest
             "The precision of multiplication is off" );
     }
     
+    @Test
+    void inversionTest ()
+    {
+        final ComplexNumber complex2 = ComplexNumber.Algebraic.real( two );
+        assertEquals(
+            AlgebraicComplexNumber.REAL_UNIT
+                .divide( complex2 ) ,
+            complex2.invert() );
+        
+        final ComplexNumber complex3 = ComplexNumber.Algebraic.real( three );
+        
+        assertEquals(
+            AlgebraicComplexNumber.REAL_UNIT
+                .divide( complex3 ) ,
+            complex3.invert() );
+        
+        assertEquals( complex2.invert().power( 2 ) , complex2.power( -2 ) );
+    }
+    
+    @Test
+    void powerTest ()
+    {
+        final ComplexNumber complex2 = ComplexNumber.Algebraic.real( two );
+        
+        assertEquals(
+            complex2.power( 2 ) ,
+            ComplexNumber.Algebraic.real( complex2.modulus().pow( 2 ) ) ,
+            "Complex to the second power is like taking the square modulus" );
+        
+        assertEquals(
+            complex2.invert().power( 2 ) ,
+            complex2.power( -2 ) ,
+            "The negative power should invert the number and then apply the power" );
+    }
 }

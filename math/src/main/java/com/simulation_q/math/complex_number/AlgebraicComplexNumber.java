@@ -6,6 +6,7 @@ package com.simulation_q.math.complex_number;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AlgebraicComplexNumber implements ComplexNumber
 {
+    
+    public static final int MAX_PRECISION = 100;
     
     /**
      * This is the number that represents the origin point = 0 + 0i
@@ -102,9 +105,11 @@ public class AlgebraicComplexNumber implements ComplexNumber
         return new AlgebraicComplexNumber(
             this.getReal()
                 .add( other.getReal() )
+                .setScale( MAX_PRECISION , RoundingMode.HALF_UP )
                 .stripTrailingZeros() ,
             this.getImaginary()
                 .add( other.getImaginary() )
+                .setScale( MAX_PRECISION , RoundingMode.HALF_UP )
                 .stripTrailingZeros() );
     }
     
@@ -137,6 +142,7 @@ public class AlgebraicComplexNumber implements ComplexNumber
                 .subtract(
                     this.getImaginary()
                         .multiply( other.getImaginary() ) )
+                .setScale( MAX_PRECISION , RoundingMode.HALF_UP )
                 .stripTrailingZeros();
         
         final BigDecimal imaginary =
@@ -145,6 +151,7 @@ public class AlgebraicComplexNumber implements ComplexNumber
                 .add(
                     this.getImaginary()
                         .multiply( other.getReal() ) )
+                .setScale( MAX_PRECISION , RoundingMode.HALF_UP )
                 .stripTrailingZeros();
         
         return new AlgebraicComplexNumber( real , imaginary );
@@ -167,10 +174,18 @@ public class AlgebraicComplexNumber implements ComplexNumber
         BigDecimal divisor = other.modulus().pow( 2 );
         return new AlgebraicComplexNumber(
             output.getReal()
-                .divide( divisor )
+                .divide(
+                    divisor ,
+                    new MathContext( MAX_PRECISION , RoundingMode.HALF_UP ) )
+                .setScale(
+                    MAX_PRECISION ,
+                    RoundingMode.HALF_UP )
                 .stripTrailingZeros() ,
             output.getImaginary()
-                .divide( divisor )
+                .divide(
+                    divisor ,
+                    new MathContext( MAX_PRECISION , RoundingMode.HALF_UP ) )
+                .setScale( MAX_PRECISION , RoundingMode.HALF_UP )
                 .stripTrailingZeros() );
     }
     
@@ -202,7 +217,7 @@ public class AlgebraicComplexNumber implements ComplexNumber
     {
         // TODO Add polar coordinate representation
         ComplexNumber res = REAL_UNIT;
-        for ( int i = 0 ; i < power ; i++ )
+        for ( int i = 0 ; i < Math.abs( power ) ; i++ )
         {
             if ( power > 0 )
             {

@@ -6,7 +6,7 @@ package com.simulationQ.simulation.computation.qubits.register;
 
 import com.simulationQ.simulation.computation.qubits.Qubit;
 import com.simulationQ.simulation.util.math.QMath;
-import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
+import com.simulation_q.math.matrix.vector.Vector;
 
 /**
  * @author Tsvetelin

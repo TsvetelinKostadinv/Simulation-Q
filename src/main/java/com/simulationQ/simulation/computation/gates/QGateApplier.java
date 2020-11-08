@@ -9,9 +9,8 @@ import java.util.Objects;
 import com.simulationQ.simulation.computation.qubits.Qubit;
 import com.simulationQ.simulation.computation.qubits.register.QRegister;
 import com.simulationQ.simulation.util.math.QMath;
-import com.simulationQ.simulation.util.math.matrices.Matrix;
-import com.simulationQ.simulation.util.math.matrices.MatrixOperations;
-import com.simulationQ.simulation.util.math.matrices.vectors.Vector;
+import com.simulation_q.math.matrix.Matrix;
+import com.simulation_q.math.matrix.vector.Vector;
 
 /**
  * @author Tsvetelin
@@ -67,22 +66,16 @@ public interface QGateApplier
         for ( int i = 0 ; i < startingVerticalIndex ; i++ )
         {
             extended =
-                MatrixOperations.productKronecker(
-                    extended ,
-                    ident_2x2 );
+                extended.productKronecker( ident_2x2 );
         }
         
         extended =
-            MatrixOperations.productKronecker(
-                extended ,
-                operation );
+            extended.productKronecker( operation );
         
-        while ( extended.getColons() < sizeOfVector )
+        while ( extended.getColumns() < sizeOfVector )
         {
             extended =
-                MatrixOperations.productKronecker(
-                    extended ,
-                    ident_2x2 );
+                extended.productKronecker( ident_2x2 );
         }
         
         return extended;
@@ -108,7 +101,7 @@ public interface QGateApplier
             new Vector(
                 reg.getComputationalVector()
                     .multiply( gate.getOperation() )
-                    .getMatrix()[0] );
+                    .getRowVector( 0 ) );
         
         return new QRegister( res );
     }
@@ -120,7 +113,8 @@ public interface QGateApplier
         final Vector qbit = qubit.getAsVector();
         final Matrix operation = gate.getOperation();
         
-        final Vector res = MatrixOperations.multiply( operation , qbit );
+        final Vector res =
+            new Vector( operation.multiply( qbit ).getRowVector( 0 ) );
         
         return new Qubit( res.getAt( 0 ) , res.getAt( 1 ) );
     }
@@ -132,7 +126,7 @@ public interface QGateApplier
     {
         final Vector vec = reg.getComputationalVector();
         
-        final Vector res = MatrixOperations.multiply( operation , vec );
+        final Vector res = new Vector( operation.multiply( vec ).getRowVector( 0 ) );
         
         return new QRegister( res );
     }

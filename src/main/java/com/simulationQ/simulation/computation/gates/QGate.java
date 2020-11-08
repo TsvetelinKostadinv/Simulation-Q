@@ -6,7 +6,7 @@ package com.simulationQ.simulation.computation.gates;
 
 import java.util.Objects;
 
-import com.simulationQ.simulation.util.math.matrices.Matrix;
+import com.simulation_q.math.matrix.Matrix;
 
 /**
  * @author Tsvetelin
@@ -113,7 +113,7 @@ public abstract class QGate
     
     private static final boolean isMatrixSquare ( Matrix a )
     {
-        return a.getRows() == a.getColons();
+        return a.getRows() == a.getColumns();
     }
     
     @Override

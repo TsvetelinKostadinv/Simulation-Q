@@ -5,10 +5,10 @@
 package com.simulationQ.simulation.computation.gates.impl;
 
 import com.simulationQ.simulation.computation.gates.QGate;
-import com.simulationQ.simulation.util.math.matrices.Matrix;
-import com.simulation_q.math.complex_numbers.ComplexNumber;
+import com.simulation_q.math.complex_number.ComplexNumber;
+import com.simulation_q.math.matrix.Matrix;
 
-import static com.simulation_q.math.complex_numbers.ComplexNumber.Algebraic.*;
+import static com.simulation_q.math.complex_number.ComplexConstants.*;
 
 /**
  * @author Tsvetelin
@@ -19,11 +19,11 @@ public class QIdentity extends QGate
     public static final String name = "#";
     
     public static final Matrix operation =
-        new Matrix(
+        Matrix.of(
             new ComplexNumber[][] {
-                { realUnit() , origin() } ,
-                { origin() , realUnit() } ,
-            } );
+                { _1.value , _0.value } ,
+                { _0.value , _1.value } ,
+            } ).get();
     
     public QIdentity ()
     {

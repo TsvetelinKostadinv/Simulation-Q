@@ -1,5 +1,5 @@
 /*
- * 26/09/2019 16:01:37
+ * 06/10/2019 22:56:49
  * package-info.java created by Tsvetelin
  */
 /**
@@ -7,4 +7,4 @@
  * 
  * @author Tsvetelin
  */
-package com.simulationQ.simulation.util.math.matrices;
+package com.simulation_q.math.matrix.vector;

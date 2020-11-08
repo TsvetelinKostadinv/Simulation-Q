@@ -5,10 +5,10 @@
 package com.simulationQ.simulation.computation.gates.impl;
 
 import com.simulationQ.simulation.computation.gates.QGate;
-import com.simulationQ.simulation.util.math.matrices.Matrix;
-import com.simulation_q.math.complex_numbers.ComplexNumber;
+import com.simulation_q.math.complex_number.ComplexNumber;
+import com.simulation_q.math.matrix.Matrix;
 
-import static com.simulation_q.math.complex_numbers.ComplexNumber.Algebraic.*;
+import static com.simulation_q.math.complex_number.ComplexConstants.*;
 
 /**
  * @author Tsvetelin
@@ -19,11 +19,11 @@ public class PauliZ extends QGate
     public static final String NAME = "Pauli-Z";
     
     public static final Matrix OPERATION_MATRIX =
-        new Matrix(
+        Matrix.of(
             new ComplexNumber[][] {
-                { realUnit(), origin() } ,
-                { origin() , realUnit().negate() }
-            } );
+                { _1.value , _0.value } ,
+                { _0.value , _1.value.negate() }
+            } ).get();
     
     public static final int NUMBER_OF_INPUT_BITS = 1;
     
