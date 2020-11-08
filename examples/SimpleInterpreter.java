@@ -2,7 +2,6 @@
  * 04/03/2020 14:30:17
  * Presenting.java created by Tsvetelin
  */
-package com.presenting;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,14 +19,18 @@ import com.simulationQ.simulation.computation.qubits.register.CRegister;
 import com.simulationQ.simulation.computation.qubits.register.QRegister;
 
 /**
+ * This class demonstrates how you would set up a register, a program
+ * and collapse it a number of times. Also it would be useful if you
+ * just wanted to verify some results. However, this class works with
+ * limited amount of gates.
+ * 
  * @author Tsvetelin
  */
-public abstract class Presenting
+public abstract class SimpleInterpreter
 {
     
     // Allowed symbols 0 and 1
     // Otherwise an exception is raised
-    
     public static final String REGISTER = "010";
     
     // Allowed symbols H, X, Y, Z
@@ -35,7 +38,6 @@ public abstract class Presenting
     // an error will be generated for all other inputs
     // the array should contain as many elements as the register
     // in all other circumstances an exception is raised
-    
     public static final String [] PROGRAM =
         new String[] {
             "" ,
@@ -46,9 +48,6 @@ public abstract class Presenting
     // Pretty much self explanatory
     public static final long COLLAPSES = 1_000_000L;
     
-    /**
-     * @param args
-     */
     public static void main ( String [] args )
     {
         final QRegister register = new QRegister( parseRegister() );
