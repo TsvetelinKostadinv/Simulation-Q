@@ -186,18 +186,4 @@ public final class QRegisterCollapser
         
         return index - 1;
     }
-    
-    public static void main ( String [] args )
-    {
-        QRegister reg =
-            new QRegister( new Qubit[] { Qubit.ON , Qubit.ON , Qubit.ON } );
-        
-        System.out.println(
-            "Res ZERO: "
-                + QRegisterCollapser.collapse( reg , () -> BigDecimal.ZERO ) );
-        
-        System.out.println(
-            "Res ONE: "
-                + QRegisterCollapser.collapse( reg , () -> BigDecimal.ONE ) );
-    }
 }
