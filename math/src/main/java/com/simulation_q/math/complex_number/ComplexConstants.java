@@ -4,6 +4,10 @@
  */
 package com.simulation_q.math.complex_number;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 /**
  * Complex constants with the default implementation
  * 
@@ -31,6 +35,13 @@ public enum ComplexConstants
      * classes
      */
     _i(ComplexNumber.Algebraic.imaginaryUnit()),
+    SQRT_2(
+        ComplexNumber.Algebraic.real(
+            new BigDecimal( "2" ).sqrt(
+                new MathContext(
+                    AlgebraicComplexNumber.MAX_PRECISION ,
+                    RoundingMode.HALF_UP ) ) )),
+    _1_OVER_SQRT_2(_1.value.divide( SQRT_2.value )),
     ;
     
     public final ComplexNumber value;

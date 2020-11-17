@@ -4,7 +4,7 @@
  */
 package com.scripting;
 
-import com.simulationQ.simulation.computation.QCollapser;
+import com.simulation_q.engine.collapse.QRegisterCollapser;
 
 /**
  * @author Tsvetelin
@@ -14,7 +14,7 @@ public interface ScriptTesting
     public static void main ( String [] args )
     {
         ScriptExecutor.executeScript( "src/test/java/com/scripting/test.sqr" )
-            .map( reg -> QCollapser.collapse( reg ) )
+            .map( reg -> QRegisterCollapser.collapse( reg ) )
             .ifPresent( System.out::println );
         
     }

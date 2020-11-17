@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import com.simulationQ.simulation.computation.gates.QGate;
+import com.simulation_q.engine.gate.QGate;
 
 /**
  * @author Tsvetelin

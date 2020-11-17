@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import com.simulationQ.simulation.computation.qubits.register.QRegister;
+import com.simulation_q.engine.qubit.QRegister;
 
 /**
  * @author Tsvetelin

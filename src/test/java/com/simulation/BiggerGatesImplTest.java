@@ -4,16 +4,15 @@
  */
 package com.simulation;
 
-import com.simulationQ.simulation.computation.QCollapser;
 import com.simulationQ.simulation.computation.QFinalStateCalculator;
-import com.simulationQ.simulation.computation.gates.QGate;
 import com.simulationQ.simulation.computation.program.QProgram;
-import com.simulationQ.simulation.computation.qubits.register.CRegister;
+import com.simulation_q.engine.collapse.QRegisterCollapser;
+import com.simulation_q.engine.gate.QGate;
+import com.simulation_q.engine.qubit.CRegister;
 import com.simulation_q.math.complex_number.ComplexNumber;
 import com.simulation_q.math.matrix.Matrix;
 
 import static com.simulation_q.math.complex_number.ComplexConstants.*;
-
 
 /**
  * @author Tsvetelin
@@ -42,14 +41,14 @@ public class BiggerGatesImplTest
         final var reg = new CRegister( "11" );
         final var program = new QProgram();
         
-        final var cnot = new QGate( "CNOT" , operation , 2 , 2 , "" ) {};
+        final var cnot = new QGate( operation , 2 , 2 );
         
         program.addPart( cnot , 0 );
         
         final var finalState =
             QFinalStateCalculator.calculateFinalState( program , reg );
         
-        System.out.println( QCollapser.collapseToString( finalState ) );
+        System.out.println( QRegisterCollapser.collapseToString( finalState ) );
         
     }
     

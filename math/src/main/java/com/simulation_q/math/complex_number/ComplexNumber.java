@@ -195,5 +195,19 @@ public interface ComplexNumber extends Field< ComplexNumber >
                 BigDecimal.ZERO ,
                 new BigDecimal( imaginary ) );
         }
+        
+        /**
+         * Creates a complex number in the form real + imaginary*i
+         * 
+         * @param  real      - the real part
+         * @param  imaginary - the imaginary part
+         * @return           real + imaginary*i
+         */
+        public static AlgebraicComplexNumber of (
+            BigDecimal real ,
+            BigDecimal imaginary )
+        {
+            return new AlgebraicComplexNumber( real , imaginary );
+        }
     }
 }

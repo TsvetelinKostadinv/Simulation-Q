@@ -14,6 +14,7 @@ repositories
 dependencies 
 {
     implementation project( ':math' )
+    implementation project( ':engine' )
 }
 
 test

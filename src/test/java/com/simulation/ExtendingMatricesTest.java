@@ -4,7 +4,7 @@
  */
 package com.simulation;
 
-import com.simulationQ.simulation.computation.gates.impl.NOT;
+import com.simulation_q.engine.gate.QGates;
 import com.simulation_q.math.matrix.Matrix;
 
 /**
@@ -14,7 +14,7 @@ public abstract class ExtendingMatricesTest
 {
     public static void main ( String [] args )
     {
-        final Matrix oper = NOT.OPERATION_MATRIX;
+        final Matrix oper = QGates.NOT.getOperation();
         final Matrix identity =
             Matrix.multiplicativeIdentity( oper.getRows() , oper.getColumns() );
         

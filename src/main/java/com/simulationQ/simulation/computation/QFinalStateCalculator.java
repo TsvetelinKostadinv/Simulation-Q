@@ -4,9 +4,9 @@
  */
 package com.simulationQ.simulation.computation;
 
-import com.simulationQ.simulation.computation.gates.QGateApplier;
 import com.simulationQ.simulation.computation.program.QProgram;
-import com.simulationQ.simulation.computation.qubits.register.QRegister;
+import com.simulation_q.engine.gate.QGateApplier;
+import com.simulation_q.engine.qubit.QRegister;
 
 /**
  * @author Tsvetelin

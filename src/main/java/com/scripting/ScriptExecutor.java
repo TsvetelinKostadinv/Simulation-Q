@@ -14,10 +14,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.simulationQ.simulation.computation.QFinalStateCalculator;
-import com.simulationQ.simulation.computation.gates.QGates;
 import com.simulationQ.simulation.computation.program.QProgram;
-import com.simulationQ.simulation.computation.qubits.register.CRegister;
-import com.simulationQ.simulation.computation.qubits.register.QRegister;
+import com.simulation_q.engine.qubit.CRegister;
+import com.simulation_q.engine.qubit.QRegister;
 
 /**
  * @author Tsvetelin
@@ -75,24 +74,25 @@ public interface ScriptExecutor
                 String [] instructions = line.split( "->" );
                 try
                 {
-                    final int index =
-                        Integer.parseInt( instructions[0].trim() );
-                    final int rowNumber = i;
+// final int index =Integer.parseInt( instructions[0].trim() );
+// final int rowNumber = i;
                     for ( int j = 1 ; j < instructions.length ; j++ )
                     {
-                        QGates.getGateByNameIgnoreCase( instructions[j].trim() )
-                            .ifPresentOrElse(
-                                gate -> program.addPart(
-                                    gate ,
-                                    index ) ,
-                                () -> {
-                                    printError(
-                                        rowNumber ,
-                                        line ,
-                                        0 ,
-                                        line.length() ,
-                                        "Invalid gate identifier!" );
-                                } );
+                        // FIXME the gates no longer have names so we cannot get
+                        // them by name
+// QGates.getGateByNameIgnoreCase( instructions[j].trim() )
+// .ifPresentOrElse(
+// gate -> program.addPart(
+// gate ,
+// index ) ,
+// () -> {
+// printError(
+// rowNumber ,
+// line ,
+// 0 ,
+// line.length() ,
+// "Invalid gate identifier!" );
+// } );
                     }
                     
                 } catch ( NumberFormatException e )

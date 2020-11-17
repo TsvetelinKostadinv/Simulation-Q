@@ -4,10 +4,10 @@
  */
 package com.simulation;
 
-import com.simulationQ.simulation.computation.gates.QGate;
-import com.simulationQ.simulation.computation.gates.QGateApplier;
-import com.simulationQ.simulation.computation.gates.impl.Hadamard;
-import com.simulationQ.simulation.computation.qubits.Qubit;
+import com.simulation_q.engine.gate.QGate;
+import com.simulation_q.engine.gate.QGateApplier;
+import com.simulation_q.engine.gate.QGates;
+import com.simulation_q.engine.qubit.Qubit;
 
 /**
  * @author Tsvetelin
@@ -17,18 +17,18 @@ public abstract class QGateApplierTest
     
     public static void main ( String [] args )
     {
-        final Qubit on = Qubit.QUBIT_ON;
-        final Qubit off = Qubit.QUBIT_OFF;
+        final Qubit on = Qubit.ON;
+        final Qubit off = Qubit.OFF;
         
-        final QGate oper = new Hadamard();
+        final QGate oper = QGates.HADAMARD;
         
         System.out.println( "------ H * |1>" );
-        System.out.println( QGateApplier.applyGateToQubit( oper , on ) );
+        System.out.println( QGateApplier.apply( oper , on ) );
         
         System.out.println();
         
         System.out.println( "------ H * |0>" );
-        System.out.println( QGateApplier.applyGateToQubit( oper , off ) );
+        System.out.println( QGateApplier.apply( oper , off ) );
         
     }
     

@@ -5,10 +5,11 @@
 package com.simulation;
 
 import com.simulationQ.simulation.computation.QFinalStateCalculator;
-import com.simulationQ.simulation.computation.gates.impl.Hadamard;
 import com.simulationQ.simulation.computation.program.QProgram;
-import com.simulationQ.simulation.computation.qubits.Qubit;
-import com.simulationQ.simulation.computation.qubits.register.QRegister;
+import com.simulation_q.engine.gate.QGate;
+import com.simulation_q.engine.gate.QGates;
+import com.simulation_q.engine.qubit.QRegister;
+import com.simulation_q.engine.qubit.Qubit;
 
 /**
  * @author Tsvetelin
@@ -18,8 +19,8 @@ public abstract class QProgramTesting
     
     public static void main ( String [] args )
     {
-        final QRegister reg = new QRegister( Qubit.QUBIT_ON , Qubit.QUBIT_ON );
-        final Hadamard gate = new Hadamard();
+        final QRegister reg = new QRegister( Qubit.ON , Qubit.ON );
+        final QGate gate = QGates.HADAMARD;
         
         final QProgram program = new QProgram();
         

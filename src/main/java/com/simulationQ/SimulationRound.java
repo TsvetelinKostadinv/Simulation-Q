@@ -4,8 +4,8 @@
  */
 package com.simulationQ;
 
-import com.simulationQ.simulation.computation.QCollapser;
-import com.simulationQ.simulation.computation.qubits.register.QRegister;
+import com.simulation_q.engine.collapse.QRegisterCollapser;
+import com.simulation_q.engine.qubit.QRegister;
 
 /**
  * @author Tsvetelin
@@ -15,7 +15,7 @@ public class SimulationRound implements Runnable
     
     private final QRegister qReg;
     
-    private final long rounds;
+// private final long rounds; FIXME needs to use these rounds
     
     private QRegister results;
     
@@ -31,7 +31,7 @@ public class SimulationRound implements Runnable
     public SimulationRound ( final QRegister qReg , final long rounds )
     {
         this.qReg = qReg;
-        this.rounds = rounds;
+// this.rounds = rounds;
     }
     
     @Override
@@ -45,7 +45,8 @@ public class SimulationRound implements Runnable
      */
     public QRegister runSimulation ()
     {
-        return QCollapser.collapse( this.qReg , this.rounds );
+        // FIXME this.rounds);
+        return QRegisterCollapser.collapse( this.qReg );
     }
     
     /**
