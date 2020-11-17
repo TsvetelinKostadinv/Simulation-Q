@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.IntStream;
 
 import com.simulation_q.math.Field;
 import com.simulation_q.math.complex_number.ComplexNumber;
+import com.simulation_q.math.util.TriFunction;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -130,8 +130,26 @@ public class Matrix implements Field< Matrix >
             ( rowIndex + 1 ) * columns );
     }
     
+    /**
+     * Maps every element of the matrix using the given function
+     * 
+     * @param  mapper
+     * @return        a new matrix with the mapped values
+     */
     public Matrix map (
         Function< ComplexNumber , ComplexNumber > mapper )
+    {
+        return map( ( __ , ___ , element ) -> mapper.apply( element ) );
+    }
+    
+    /**
+     * Maps every element of the matrix using the given function
+     * 
+     * @param  mapper
+     * @return        a new matrix with the mapped values
+     */
+    public Matrix map (
+        TriFunction< Integer , Integer , ComplexNumber , ComplexNumber > mapper )
     {
         Objects.requireNonNull( mapper );
         ComplexNumber [] [] res =
@@ -140,7 +158,7 @@ public class Matrix implements Field< Matrix >
         {
             for ( int j = 0 ; j < this.getColumns() ; j++ )
             {
-                res[i][j] = mapper.apply( this.getAt( i , j ) );
+                res[i][j] = mapper.apply( i , j , this.getAt( i , j ) );
             }
         }
         return new Matrix( res );
@@ -169,29 +187,14 @@ public class Matrix implements Field< Matrix >
                 "The matrices must be the same size(have to have the same number of rows and columns)" );
         }
         
-        ComplexNumber [] [] res = new ComplexNumber[this.rows][this.columns];
-        for ( int i = 0 ; i < res.length ; i++ )
-        {
-            for ( int j = 0 ; j < res[i].length ; j++ )
-            {
-                res[i][j] = this.getAt( i , j ).add( other.getAt( i , j ) );
-            }
-        }
-        return new Matrix( res );
+        return this.map(
+            ( i , j , number ) -> number.add( other.getAt( i , j ) ) );
     }
     
     @Override
     public Matrix negate ()
     {
-        ComplexNumber [] [] res = new ComplexNumber[this.rows][this.columns];
-        for ( int i = 0 ; i < res.length ; i++ )
-        {
-            for ( int j = 0 ; j < res[i].length ; j++ )
-            {
-                res[i][j] = this.getAt( i , j ).negate();
-            }
-        }
-        return new Matrix( res );
+        return this.map( number -> number.negate() );
     }
     
     /**
@@ -233,18 +236,7 @@ public class Matrix implements Field< Matrix >
     
     public Matrix multiply ( ComplexNumber scalar )
     {
-        ComplexNumber [] [] matrix =
-            IntStream.range( 0 , rows )
-                .mapToObj( rowIndex -> this.getRowVector( rowIndex ) )
-                .map( row -> {
-                    for ( int i = 0 ; i < row.length ; i++ )
-                    {
-                        row[i] = row[i].multiply( scalar );
-                    }
-                    return row;
-                } )
-                .toArray( __ -> new ComplexNumber[this.rows][this.columns] );
-        return new Matrix( matrix );
+        return this.map( number -> number.multiply( scalar ) );
     }
     
     @Override
