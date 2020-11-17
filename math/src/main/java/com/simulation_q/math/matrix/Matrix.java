@@ -5,7 +5,9 @@
 package com.simulation_q.math.matrix;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import com.simulation_q.math.Field;
@@ -17,7 +19,8 @@ import lombok.Getter;
 import static com.simulation_q.math.complex_number.ComplexConstants.*;
 
 /**
- * Represents a matrix from linear algebra
+ * Represents a matrix from linear algebra, whose components are
+ * complex numbers
  * 
  * @author Tsvetelin
  */
@@ -127,6 +130,22 @@ public class Matrix implements Field< Matrix >
             ( rowIndex + 1 ) * columns );
     }
     
+    public Matrix map (
+        Function< ComplexNumber , ComplexNumber > mapper )
+    {
+        Objects.requireNonNull( mapper );
+        ComplexNumber [] [] res =
+            new ComplexNumber[this.getRows()][this.getColumns()];
+        for ( int i = 0 ; i < this.getRows() ; i++ )
+        {
+            for ( int j = 0 ; j < this.getColumns() ; j++ )
+            {
+                res[i][j] = mapper.apply( this.getAt( i , j ) );
+            }
+        }
+        return new Matrix( res );
+    }
+    
     /**
      * @apiNote returns the additive identity for the given size of matrix
      */
@@ -188,10 +207,10 @@ public class Matrix implements Field< Matrix >
     @Override
     public Matrix multiply ( Matrix other ) throws ArithmeticException
     {
-        if ( this.rows != other.columns )
+        if ( this.columns != other.rows )
         {
             throw new ArithmeticException(
-                "The first matrix's rows must be the same number as the seconds columns" );
+                "The first matrix's columns must be the same number as the seconds rows" );
         }
         
         ComplexNumber [] [] res = allZeroes( this.rows , other.columns );
