@@ -92,4 +92,33 @@ class QGateTest
             Matrix.multiplicativeIdentity( 16 , 16 ) );
     }
     
+    @Test
+    void hadamardStretch ()
+    {
+        QGate hadamard = QGates.HADAMARD;
+        
+        QGate expected =
+            new QGate(
+                Matrix.of(
+                    new ComplexNumber[][] {
+                        { _1.value , _1.value , _1.value , _1.value } ,
+                        {
+                            _1.value , _1.value.negate() ,
+                            _1.value , _1.value.negate() } ,
+                        {
+                            _1.value , _1.value ,
+                            _1.value.negate() , _1.value.negate() } ,
+                        {
+                            _1.value , _1.value.negate() ,
+                            _1.value.negate() , _1.value } ,
+                    } ).get().multiply( _1_OVER_SQRT_2.value.power( 2 ) ) ,
+                2 ,
+                2 );
+        
+        assertEquals(
+            hadamard.above( hadamard ) ,
+            expected ,
+            "Hadamard extended to 2 qubits looks like the expected" );
+    }
+    
 }

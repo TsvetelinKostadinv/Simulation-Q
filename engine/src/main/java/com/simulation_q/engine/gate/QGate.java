@@ -17,11 +17,7 @@ import lombok.Data;
  * This is the atomic operation performed on a qubit or a register of
  * qubits
  * 
- * @author  Tsvetelin
- * @apiNote TODO: implement composition of gates in the fashion of
- *              stretchFor(int, int), which would just translate to
- *              maybe:
- *              <code>this.composeWith( identity2x2 )</code>
+ * @author Tsvetelin
  */
 @Data
 public class QGate
@@ -107,15 +103,13 @@ public class QGate
             
             BigDecimal realPart =
                 oldReal.setScale(
-                    oldReal.scale() < 2 ? 1 : oldReal.scale() - 1 ,
-                    // eliminating the least significant digit
+                    1 ,
                     RoundingMode.HALF_UP )
                     .stripTrailingZeros();
             
             BigDecimal imgPart =
                 oldImg.setScale(
-                    oldImg.scale() < 2 ? 1 : oldImg.scale() - 1 ,
-                    // eliminating the least significant digit
+                    1 ,
                     RoundingMode.HALF_UP )
                     .stripTrailingZeros();
             
@@ -153,23 +147,106 @@ public class QGate
                 "The size of the register has to be greater than zero" );
         }
         
-        Matrix extended = Matrix.multiplicativeIdentity( 1 , 1 );
-        final Matrix ident_2x2 = Matrix.multiplicativeIdentity( 2 , 2 );
+        QGate res = new QGate( Matrix.multiplicativeIdentity( 1 , 1 ) , 0 , 0 );
+        QGate identity2x2 =
+            new QGate( Matrix.multiplicativeIdentity( 2 , 2 ) , 1 , 0 );
         
         for ( int i = 0 ; i < startingIndex ; i++ )
         {
-            extended = extended.productKronecker( ident_2x2 );
+            res = res.above( identity2x2 );
         }
         
-        extended =
-            extended.productKronecker( operation );
+        res =
+            res.above( this );
         
-        while ( extended.getColumns() < vectorSize )
+        while ( res.getNumberOfInputBits() < registerSize )
         {
-            extended = extended.productKronecker( ident_2x2 );
+            res = res.above( identity2x2 );
         }
         
-        return new QGate( extended , registerSize , this.periodOfOperation );
+        return res;
+    }
+    
+    /**
+     * Gives back a gate that is as if we have this above the other gate
+     * in a schematic representation:
+     * <br>
+     * 
+     * <pre>
+     *            ___________
+     * qubits1 => |=> this  | => | the same |
+     * qubits2 => |=> other | => | register |
+     *            -----------
+     * </pre>
+     * 
+     * @param  other                - the other gate which should be
+     *                                  applied
+     * @return                      a composition of gates: this above
+     *                                  other
+     * @throws NullPointerException - if the other gate is null
+     */
+    public QGate above ( QGate other ) throws NullPointerException
+    {
+        Objects.requireNonNull( other );
+        // TODO this formula always will work but is not efficient
+        int period =
+            this.periodOfOperation > other.periodOfOperation ?
+                this.periodOfOperation :
+                    other.periodOfOperation;
+        int inputQubits = this.numberOfInputBits + other.numberOfInputBits;
+        Matrix operation = other.operation.productKronecker( this.operation );
+        return new QGate( operation , inputQubits , period );
+    }
+    
+    /**
+     * Gives back a gate that is as if we have this above the other gate
+     * in a schematic representation:
+     * <br>
+     * 
+     * <pre>
+     *            ___________
+     * qubits1 => |=> other | => | the same |
+     * qubits2 => |=> this  | => | register |
+     *            -----------
+     * </pre>
+     * 
+     * @param  other - the other gate which should be applied
+     * @return       a composition of gates: this below other
+     *                   (other above this)
+     */
+    public QGate below ( QGate other )
+    {
+        return other.above( this );
+    }
+    
+    /**
+     * The serial application of this and the other gate
+     * 
+     * <pre>
+     *              __________    ___________
+     * register  => |=> this | => |=> other | => | the same |
+     *              ----------    -----------
+     * </pre>
+     * 
+     * @param  other
+     * @return                      a composition of the 2 gates
+     * @throws NullPointerException - if the other gate is null
+     */
+    public QGate andThen ( QGate other ) throws NullPointerException
+    {
+        Objects.requireNonNull( other );
+        if ( other.numberOfInputBits != this.numberOfInputBits )
+        {
+            throw new IllegalArgumentException(
+                "To compose 2 gates they have to have the same number of input qubits" );
+        }
+        int period =
+            this.periodOfOperation > other.periodOfOperation ?
+                this.periodOfOperation :
+                    other.periodOfOperation;
+        int inputQubits = this.numberOfInputBits;
+        Matrix operation = other.operation.multiply( this.operation );
+        return new QGate( operation , inputQubits , period );
     }
     
     /**

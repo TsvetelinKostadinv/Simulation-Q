@@ -30,6 +30,27 @@ public enum ComplexConstants
     _1(ComplexNumber.Algebraic.realUnit()),
     
     /**
+     * Standard implementation of the 2 + 0i
+     * If you want specific implementation just look at the factory
+     * classes
+     */
+    _2(_1.value.divide( _1.value )),
+    
+    /**
+     * Standard implementation of the 1/2 + 0i
+     * If you want specific implementation just look at the factory
+     * classes
+     */
+    _HALF(ComplexNumber.Algebraic.real( "0.5" )),
+    
+    /**
+     * Standard implementation of the 1/4 + 0i
+     * If you want specific implementation just look at the factory
+     * classes
+     */
+    _QUARTER(ComplexNumber.Algebraic.real( "0.25" )),
+    
+    /**
      * Standard implementation of the 0 + 1i
      * If you want specific implementation just look at the factory
      * classes
