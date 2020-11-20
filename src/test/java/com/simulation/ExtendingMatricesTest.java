@@ -4,22 +4,22 @@
  */
 package com.simulation;
 
-import com.simulationQ.simulation.computation.gates.impl.NOT;
-import com.simulationQ.simulation.util.math.matrices.Matrix;
-import com.simulationQ.simulation.util.math.matrices.MatrixOperations;
+import com.simulation_q.engine.gate.QGates;
+import com.simulation_q.math.matrix.Matrix;
 
 /**
  * @author Tsvetelin
- *
  */
 public abstract class ExtendingMatricesTest
 {
     public static void main ( String [] args )
     {
-        final Matrix oper = NOT.OPERATION_MATRIX;
-        final Matrix identity = Matrix.multiplicativeIdentity( oper.getRows() , oper.getColons() );
+        final Matrix oper = QGates.NOT.getOperation();
+        final Matrix identity =
+            Matrix.multiplicativeIdentity( oper.getRows() , oper.getColumns() );
         
-        System.out.println( MatrixOperations.productKronecker( oper , identity ) );
+        System.out
+            .println( oper.productKronecker( identity ) );
         
     }
 }

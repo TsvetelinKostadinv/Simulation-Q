@@ -23,7 +23,13 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="txt_number_of_collapses" layoutX="333.0" layoutY="314.0" prefHeight="41.0" prefWidth="149.0" promptText="Number of collapses" AnchorPane.bottomAnchor="14.000000000000021" />
+                  <TextField fx:id="txt_number_of_collapses" layoutX="333.0" layoutY="314.0" prefHeight="41.0" prefWidth="149.0" promptText="Number of collapses" AnchorPane.bottomAnchor="14.000000000000021" AnchorPane.rightAnchor="117.4" />
+                  <TextField fx:id="txt_path" layoutX="14.0" layoutY="314.0" prefHeight="41.0" prefWidth="149.0" promptText="Path" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+                  <Button fx:id="btn_select_script" layoutX="178.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#selectScript" prefHeight="44.0" prefWidth="123.0" text="Select Script" textAlignment="JUSTIFY" AnchorPane.bottomAnchor="12.600000000000023" AnchorPane.leftAnchor="178.0">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
       </content>
     </Tab>

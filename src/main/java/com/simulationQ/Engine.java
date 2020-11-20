@@ -4,29 +4,26 @@
  */
 package com.simulationQ;
 
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import com.simulationQ.simulation.computation.qubits.register.QRegister;
-
+import com.simulation_q.engine.qubit.QRegister;
 
 /**
  * @author Tsvetelin
- *
  */
 public class Engine implements Closeable
 {
-
-    public static final Engine instance       = new Engine();
-
-    private static final int   NEEDED_THREADS = 2;
-
-    private ExecutorService    ex;
-
+    
+    public static final Engine instance = new Engine();
+    
+    private static final int NEEDED_THREADS = 2;
+    
+    private ExecutorService ex;
+    
     /**
      * 
      */
@@ -34,16 +31,16 @@ public class Engine implements Closeable
     {
         this.ex = Executors.newFixedThreadPool( NEEDED_THREADS );
     }
-
+    
     public Future< QRegister > runSimulation ( SimulationRound round )
     {
         return ex.submit( round::runSimulation );
     }
-
+    
     @Override
     public void close () throws IOException
     {
         ex.shutdown();
     }
-
+    
 }

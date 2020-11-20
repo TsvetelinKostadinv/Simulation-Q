@@ -9,13 +9,15 @@ import java.util.concurrent.Future;
 
 /**
  * @author Tsvetelin
- *
  */
 public interface ASyncWaiter
 {
-    public static <T> T awaitRes( final Future< T > f ) throws InterruptedException, ExecutionException
+    public static < T > T awaitRes ( final Future< T > f )
+        throws InterruptedException ,
+        ExecutionException
     {
-        while(!f.isDone());
+        while ( !f.isDone() )
+            ;
         return f.get();
     }
 }
